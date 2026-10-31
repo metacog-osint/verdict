@@ -1,7 +1,7 @@
 # Verdict
 
 **The Intelligence Company's forecast record: every forecast logged before it can be known, then scored, misses
-left in.**
+left in.** Scorecard: https://metacog-osint.github.io/verdict/
 
 Verdict keeps a public, append-only ledger of probability forecasts, each with the rule that will settle it written
 at the moment it is made. Git's commit history is the timestamp lock: a forecast in `ledger/forecasts.jsonl` was
