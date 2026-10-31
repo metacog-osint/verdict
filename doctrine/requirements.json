@@ -1,0 +1,33 @@
+{
+  "program": "verdict",
+  "customer": "Readers judging the suite's track record, every program, and COP. Written by the program owner.",
+  "reviewed": "2026-10-31",
+  "review_by": "2027-01-31",
+  "requirements": [
+    {
+      "id": "VD-SQ-1",
+      "type": "standing",
+      "question": "How good are the suite's forecasts and warnings, and is the record honest?"
+    },
+    {
+      "id": "VD-PIR-1",
+      "type": "pir",
+      "parent": "VD-SQ-1",
+      "question": "Do scheduled, dated events resolve as forecast?",
+      "series": [
+        "pre-registered event forecasts (ledger/forecasts.jsonl)",
+        "resolutions (ledger/resolutions.jsonl)"
+      ]
+    },
+    {
+      "id": "VD-PIR-2",
+      "type": "pir",
+      "parent": "VD-SQ-1",
+      "question": "How well calibrated are the programs' probability forecasts, by program, lead time and method version?",
+      "series": [
+        "forecast items in each program's contract v2 feed",
+        "resolutions"
+      ]
+    }
+  ]
+}

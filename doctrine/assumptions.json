@@ -1,0 +1,27 @@
+{
+  "program": "verdict",
+  "assumptions": [
+    {
+      "id": "VD-AS-1",
+      "text": "Each resolution source publishes on time and stays reachable.",
+      "test": {
+        "type": "auto",
+        "rule": "resolution.known_at and resolve_by on every forecast; evidence URL archived at resolution"
+      },
+      "status": "untested",
+      "reviewed": "2026-10-31",
+      "linked": []
+    },
+    {
+      "id": "VD-AS-2",
+      "text": "A resolution rule written at issue time can be applied later without judgment.",
+      "test": {
+        "type": "manual",
+        "rule": "Each resolution records its evidence; any rule that needed interpretation is noted and the rule template fixed"
+      },
+      "status": "untested",
+      "reviewed": "2026-10-31",
+      "linked": []
+    }
+  ]
+}

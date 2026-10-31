@@ -1,0 +1,28 @@
+name: ci
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  ledger:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }   # history, for the append-only check
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: Doctrine kit copy and registers (tic-doctrine)
+        run: python doctrine/kit/tic.py kitcheck && python doctrine/kit/tic.py registers doctrine
+      - name: Tests
+        run: python tests/test_verdict.py
+      - name: Ledger valid, linted, and append-only since the previous commit
+        env:
+          BASE: ${{ github.event_name == 'pull_request' && format('origin/{0}', github.base_ref) || github.event.before }}
+        run: |
+          if [ -n "$BASE" ] && git cat-file -e "$BASE^{commit}" 2>/dev/null; then
+            python tools/verdict.py check --base "$BASE"
+          else
+            python tools/verdict.py check
+          fi

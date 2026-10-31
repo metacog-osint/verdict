@@ -1,0 +1,7 @@
+{
+  "program": "verdict",
+  "indicator_rule": "Verdict watches no situation of its own; it scores the forecasts other programs and its own event calendar make.",
+  "emerging_concerns": "None.",
+  "indicators": [],
+  "warning_problems": []
+}

@@ -1,0 +1,6 @@
+{
+  "program": "verdict",
+  "register": "each forecast names its own resolution source (resolution.source)",
+  "note": "Verdict's evidence is the resolution source each forecast names at issue time, archived when the forecast is resolved.",
+  "extra": {}
+}
