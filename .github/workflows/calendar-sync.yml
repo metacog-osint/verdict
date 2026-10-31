@@ -1,0 +1,49 @@
+name: calendar-sync
+# Daily: pull Cordon's dated events (EASA bulletin expiries, State advisory and embassy-status changes) into
+# calendar/events.json, link them to the forecasts that name them, rebuild site/, commit when anything changed, and
+# redeploy GitHub Pages (a commit made here does not trigger pages.yml). Free; no secrets.
+on:
+  schedule:
+    - cron: "40 13 * * *"     # 13:40 UTC, before the 14:15 due check
+  workflow_dispatch:
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: false
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main }
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: Sync from Cordon and check
+        run: |
+          python tools/verdict.py calendar --sync
+          python tools/verdict.py check
+          python tools/build_site.py
+          python tools/build_site.py --check
+      - name: Commit when the calendar changed
+        run: |
+          if [ -n "$(git status --porcelain -- calendar site)" ]; then
+            git config user.name "verdict-bot"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add calendar site
+            git commit -q -m "calendar: sync from Cordon $(date -u +%Y-%m-%d)"
+            git push -q origin HEAD:main
+          else
+            echo "calendar unchanged"
+          fi
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with: { path: site }
+      - id: deployment
+        uses: actions/deploy-pages@v4

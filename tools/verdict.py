@@ -27,7 +27,9 @@ FORECASTS = Path("ledger") / "forecasts.jsonl"
 RESOLUTIONS = Path("ledger") / "resolutions.jsonl"
 CALENDAR = Path("calendar") / "events.json"
 BINS = 10
-EVENT_KINDS = {"data_release", "rule_date", "bulletin_expiry", "mandate_deadline", "election", "summit", "deadline"}
+EVENT_KINDS = {"data_release", "rule_date", "bulletin_expiry", "mandate_deadline", "election", "summit", "deadline",
+               "advisory_change"}
+CORDON_EVENTS = "https://metacog-osint.github.io/cordon/data/events.json"
 
 
 def now_utc() -> str:
@@ -160,7 +162,8 @@ def calendar_item(ev: dict, generated: str) -> dict:
     src = ev["source"]
     return {
         "contract": "tic-feed/2", "id": f"verdict:calendar:{ev['id']}", "program": "verdict",
-        "title": f"Scheduled {ev['date']}: {ev['title']}", "kind": "observation", "tier": "routine",
+        "title": f"{'On' if ev.get('occurred') else 'Scheduled'} {ev['date']}: {ev['title']}", "kind": "observation",
+        "tier": "routine",
         "status": "actual", "msg_type": "new", "human_review": "full", "us_person_data": "none",
         "status_class": "reported" if ev.get("verified", True) else "claimed", "product_category": "current",
         "data_as_of": f"{ev['added']}T00:00:00Z", "published_at": generated, "valid_until": when,
@@ -170,8 +173,49 @@ def calendar_item(ev: dict, generated: str) -> dict:
                      "licence": src.get("licence", "public"), "descriptor": src.get("descriptor", ev["title"]),
                      "accessed_at": f"{ev['added']}T00:00:00Z"}],
         "event": {"kind": ev["kind"], "date": ev["date"], "at": ev.get("at"), "verified": ev.get("verified", True),
-                  "forecast_ids": ev.get("forecast_ids", []), "note": ev.get("note")},
+                  "forecast_ids": ev.get("forecast_ids", []), "note": ev.get("note"),
+                  "occurred": bool(ev.get("occurred")), "origin": ev.get("origin", "verdict"), "ref": ev.get("ref")},
     }
+
+
+def sync_calendar(root: Path, incoming: dict, today: str | None = None) -> dict:
+    """Merge another program's dated events (Cordon's data/events.json) into calendar/events.json.
+
+    Events from that origin dated today or later are replaced by the incoming set (a renewed bulletin moves to its new
+    expiry); past ones stay as history. Hand-entered events are never touched. An event whose ref is a bulletin
+    number (CZIB-...) is linked to every forecast whose resolution rule names it.
+    """
+    today = today or now_utc()[:10]
+    origin = incoming.get("source", "unknown")
+    path = root / CALENDAR
+    cal = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {"events": []}
+    before = {e["id"]: e for e in cal["events"]}
+    fc = read_lines(root / FORECASTS)
+    fresh = []
+    for e in incoming.get("events", []):
+        if e["date"] < today and e["id"] not in before and not e.get("occurred"):
+            continue  # an expiry already past when first seen
+        prev = before.get(e["id"], {})
+        item = {k: e[k] for k in ("id", "date", "title", "kind", "countries", "source", "ref") if k in e}
+        item["origin"] = origin
+        if e.get("occurred"):
+            item["occurred"] = True
+        item["added"] = prev.get("added", today)
+        ref = e.get("ref") or ""
+        links = [f["id"] for f in fc if ref.startswith("CZIB-") and ref in (f.get("resolution") or {}).get("rule", "")]
+        item["forecast_ids"] = sorted(set(links) | set(prev.get("forecast_ids", [])))
+        if not item["forecast_ids"]:
+            item.pop("forecast_ids")
+        fresh.append(item)
+    fresh_ids = {e["id"] for e in fresh}
+    kept = [e for e in cal["events"] if e["id"] not in fresh_ids
+            and not (e.get("origin") == origin and e["date"] >= today)]
+    cal["events"] = sorted(kept + fresh, key=lambda e: (e["date"], e["id"]))
+    path.parent.mkdir(exist_ok=True)
+    path.write_text(json.dumps(cal, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
+    dropped = [i for i in before if i not in {e["id"] for e in cal["events"]}]
+    return {"origin": origin, "incoming": len(fresh), "added": sorted(fresh_ids - set(before)),
+            "dropped": dropped, "total": len(cal["events"])}
 
 
 def calendar_problems(root: Path, regs: dict) -> list[str]:
@@ -316,12 +360,22 @@ def main(argv=None) -> int:
     du.add_argument("--markdown", action="store_true")
     ca = sub.add_parser("calendar")
     ca.add_argument("--feed")
+    ca.add_argument("--sync", nargs="?", const=CORDON_EVENTS, help="merge another program's events (default: Cordon)")
     a = ap.parse_args(argv)
     if a.cmd == "due":
         d = due(ROOT, days=a.days)
         print(due_markdown(d) if a.markdown else json.dumps(d, indent=2), end="" if a.markdown else "\n")
         return 0
     if a.cmd == "calendar":
+        if a.sync:
+            if a.sync.startswith(("http://", "https://")):
+                import urllib.request
+                req = urllib.request.Request(a.sync, headers={"User-Agent": "Verdict (The Intelligence Company)"})
+                with urllib.request.urlopen(req, timeout=40) as r:
+                    incoming = json.loads(r.read(4_000_000))
+            else:
+                incoming = json.loads(Path(a.sync).read_text(encoding="utf-8"))
+            print(json.dumps(sync_calendar(ROOT, incoming)))
         errs = calendar_problems(ROOT, registers.ids(ROOT / "doctrine"))
         for e in errs:
             print("  -", e)

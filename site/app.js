@@ -153,8 +153,10 @@
       ul.append(h("li", { "class": "tl-item" + (has ? " has" : "") }, [
         h("span", { "class": "tl-dot", "aria-hidden": "true" }),
         h("span", { "class": "tl-date" }, [day(ev.date)]),
-        h("span", { "class": "tl-title" }, [e.title.replace(/^Scheduled [0-9-]+: /, ""),
+        h("span", { "class": "tl-title" }, [e.title.replace(/^(Scheduled|On) [0-9-]+: /, ""),
           has ? h("span", { "class": "chip" }, [ev.forecast_ids.length === 1 ? "1 forecast" : ev.forecast_ids.length + " forecasts"]) : null,
+          ev.occurred ? h("span", { "class": "chip" }, ["happened"]) : null,
+          ev.origin === "cordon" ? h("a", { "class": "chip", href: "https://metacog-osint.github.io/cordon/" }, ["from Cordon"]) : null,
           ev.verified === false ? h("span", { "class": "chip conf" }, ["date unconfirmed"]) : null]),
         ]));
     });

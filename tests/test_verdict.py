@@ -160,6 +160,41 @@ class Calendar(unittest.TestCase):
         item = verdict.calendar_item({**self.EV, "verified": False}, "2026-10-31T00:00:00Z")
         self.assertEqual(item["status_class"], "claimed")
 
+    def test_sync_merges_links_and_keeps_history(self):
+        from tic_doctrine import registers
+        # a registered forecast whose rule names CZIB-2026-04
+        (self.tmp / "ledger").mkdir()
+        fc = copy.deepcopy(ITEM)
+        fc.update({"id": "verdict:t:iran", "status": "actual", "approved_by": "T"})
+        fc["resolution"] = {**ITEM["resolution"], "rule": "Yes if EASA shows CZIB-2026-04 active after 16 Nov"}
+        (self.tmp / "ledger" / "forecasts.jsonl").write_text(json.dumps(fc) + "\n", encoding="utf-8")
+        manual = {**self.EV, "id": "m1", "date": "2026-12-15"}
+        past = {**self.EV, "id": "2026-10-01-easa-czib-2026-01", "date": "2026-10-01", "origin": "cordon"}
+        stale = {**self.EV, "id": "2026-11-16-easa-czib-2026-05", "date": "2026-11-16", "origin": "cordon"}
+        self.write(manual, past, stale)
+        src = {"publisher": "EASA", "url": "https://example.org"}
+        incoming = {"source": "cordon", "events": [
+            {"id": "2026-11-16-easa-czib-2026-04", "date": "2026-11-16", "title": "Iran bulletin expires",
+             "kind": "bulletin_expiry", "countries": ["IR"], "source": src, "ref": "CZIB-2026-04"},
+            {"id": "2026-10-20-state-sa-posture", "date": "2026-10-20", "title": "Saudi Arabia: ordered departure",
+             "kind": "advisory_change", "occurred": True, "countries": ["SA"], "source": src, "ref": "SA"},
+            {"id": "2026-10-02-easa-czib-2026-02", "date": "2026-10-02", "title": "old expiry", "kind": "bulletin_expiry",
+             "source": src, "ref": "CZIB-2026-02"}]}
+        r = verdict.sync_calendar(self.tmp, incoming, today="2026-10-31")
+        ev = {e["id"]: e for e in verdict.read_calendar(self.tmp)}
+        self.assertEqual(ev["2026-11-16-easa-czib-2026-04"]["forecast_ids"], ["verdict:t:iran"])
+        self.assertNotIn("forecast_ids", ev["2026-10-20-state-sa-posture"], "only bulletin numbers link forecasts")
+        self.assertTrue(ev["2026-10-20-state-sa-posture"]["occurred"])
+        self.assertIn("m1", ev, "hand-entered events stay")
+        self.assertIn("2026-10-01-easa-czib-2026-01", ev, "past synced events stay as history")
+        self.assertNotIn("2026-11-16-easa-czib-2026-05", ev, "a future synced event no longer sent is dropped")
+        self.assertNotIn("2026-10-02-easa-czib-2026-02", ev, "an expiry already past when first seen is skipped")
+        self.assertEqual(r["dropped"], ["2026-11-16-easa-czib-2026-05"])
+        self.assertEqual(verdict.calendar_problems(self.tmp, registers.ids(self.tmp / "doctrine")), [])
+        again = verdict.sync_calendar(self.tmp, incoming, today="2026-11-01")
+        self.assertEqual((again["added"], again["dropped"]), ([], []))
+        self.assertEqual(verdict.read_calendar(self.tmp)[0]["date"] <= verdict.read_calendar(self.tmp)[-1]["date"], True)
+
 
 class Site(unittest.TestCase):
     def test_build_is_deterministic_and_complete(self):

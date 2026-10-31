@@ -54,7 +54,10 @@
      "forecast_ids": [
       "verdict:2026-11-06:fao-ffpi-october-up"
      ],
-     "note": null
+     "note": null,
+     "occurred": false,
+     "origin": "verdict",
+     "ref": null
     }
    }
   },
@@ -108,7 +111,10 @@
      "forecast_ids": [
       "verdict:2026-11-10:bis-affiliates-rule-stay-extended"
      ],
-     "note": null
+     "note": null,
+     "occurred": false,
+     "origin": "verdict",
+     "ref": null
     }
    }
   },
@@ -117,9 +123,9 @@
    "geometry": null,
    "properties": {
     "contract": "tic-feed/2",
-    "id": "verdict:calendar:2026-11-16-easa-middle-east-czibs",
+    "id": "verdict:calendar:2026-11-16-easa-czib-2026-04",
     "program": "verdict",
-    "title": "Scheduled 2026-11-16: Six EASA Middle East conflict-zone bulletins expire (Iran, Iraq, Lebanon, Gulf, Jordan, Saudi Arabia)",
+    "title": "Scheduled 2026-11-16: EASA conflict-zone bulletin CZIB-2026-04-R2 (airspace of Iran) expires unless renewed",
     "kind": "observation",
     "tier": "routine",
     "status": "actual",
@@ -132,15 +138,290 @@
     "published_at": "2026-10-31T20:27:38Z",
     "valid_until": "2026-11-16T00:00:00Z",
     "countries": [
-     "IR",
-     "IQ",
-     "LB",
+     "IR"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.easa.europa.eu/en/domains/air-operations/czibs"
+    },
+    "sources": [
+     {
+      "id": "2026-11-16-easa-czib-2026-04",
+      "publisher": "EASA",
+      "url": "https://www.easa.europa.eu/en/domains/air-operations/czibs",
+      "licence": "public",
+      "descriptor": "CZIB-2026-04-R2, valid until 2026-11-16 (read by Cordon)",
+      "accessed_at": "2026-10-31T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "bulletin_expiry",
+     "date": "2026-11-16",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [
+      "verdict:2026-11-16:easa-iran-czib-renewed"
+     ],
+     "note": null,
+     "occurred": false,
+     "origin": "cordon",
+     "ref": "CZIB-2026-04"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2026-11-16-easa-czib-2026-05",
+    "program": "verdict",
+    "title": "Scheduled 2026-11-16: EASA conflict-zone bulletin CZIB-2026-05-R2 (airspace of Iraq) expires unless renewed",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-10-31T00:00:00Z",
+    "published_at": "2026-10-31T20:27:38Z",
+    "valid_until": "2026-11-16T00:00:00Z",
+    "countries": [
+     "IQ"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.easa.europa.eu/en/domains/air-operations/czibs"
+    },
+    "sources": [
+     {
+      "id": "2026-11-16-easa-czib-2026-05",
+      "publisher": "EASA",
+      "url": "https://www.easa.europa.eu/en/domains/air-operations/czibs",
+      "licence": "public",
+      "descriptor": "CZIB-2026-05-R2, valid until 2026-11-16 (read by Cordon)",
+      "accessed_at": "2026-10-31T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "bulletin_expiry",
+     "date": "2026-11-16",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [
+      "verdict:2026-11-16:easa-iraq-czib-renewed"
+     ],
+     "note": null,
+     "occurred": false,
+     "origin": "cordon",
+     "ref": "CZIB-2026-05"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2026-11-16-easa-czib-2026-06",
+    "program": "verdict",
+    "title": "Scheduled 2026-11-16: EASA conflict-zone bulletin CZIB-2026-06-R2 (airspace of Lebanon) expires unless renewed",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-10-31T00:00:00Z",
+    "published_at": "2026-10-31T20:27:38Z",
+    "valid_until": "2026-11-16T00:00:00Z",
+    "countries": [
+     "LB"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.easa.europa.eu/en/domains/air-operations/czibs"
+    },
+    "sources": [
+     {
+      "id": "2026-11-16-easa-czib-2026-06",
+      "publisher": "EASA",
+      "url": "https://www.easa.europa.eu/en/domains/air-operations/czibs",
+      "licence": "public",
+      "descriptor": "CZIB-2026-06-R2, valid until 2026-11-16 (read by Cordon)",
+      "accessed_at": "2026-10-31T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "bulletin_expiry",
+     "date": "2026-11-16",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [
+      "verdict:2026-11-16:easa-lebanon-czib-renewed"
+     ],
+     "note": null,
+     "occurred": false,
+     "origin": "cordon",
+     "ref": "CZIB-2026-06"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2026-11-16-easa-czib-2026-07",
+    "program": "verdict",
+    "title": "Scheduled 2026-11-16: EASA conflict-zone bulletin CZIB-2026-07R3 (airspace of the Persian Gulf and Gulf of Oman) expires unless renewed",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-10-31T00:00:00Z",
+    "published_at": "2026-10-31T20:27:38Z",
+    "valid_until": "2026-11-16T00:00:00Z",
+    "countries": [
      "BH",
      "KW",
      "QA",
-     "AE",
      "OM",
-     "JO",
+     "AE"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.easa.europa.eu/en/domains/air-operations/czibs"
+    },
+    "sources": [
+     {
+      "id": "2026-11-16-easa-czib-2026-07",
+      "publisher": "EASA",
+      "url": "https://www.easa.europa.eu/en/domains/air-operations/czibs",
+      "licence": "public",
+      "descriptor": "CZIB-2026-07R3, valid until 2026-11-16 (read by Cordon)",
+      "accessed_at": "2026-10-31T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "bulletin_expiry",
+     "date": "2026-11-16",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [
+      "verdict:2026-11-16:easa-gulf-czib-renewed"
+     ],
+     "note": null,
+     "occurred": false,
+     "origin": "cordon",
+     "ref": "CZIB-2026-07"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2026-11-16-easa-czib-2026-08",
+    "program": "verdict",
+    "title": "Scheduled 2026-11-16: EASA conflict-zone bulletin CZIB-2026-08-R3 (airspace of Jordan) expires unless renewed",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-10-31T00:00:00Z",
+    "published_at": "2026-10-31T20:27:38Z",
+    "valid_until": "2026-11-16T00:00:00Z",
+    "countries": [
+     "JO"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.easa.europa.eu/en/domains/air-operations/czibs"
+    },
+    "sources": [
+     {
+      "id": "2026-11-16-easa-czib-2026-08",
+      "publisher": "EASA",
+      "url": "https://www.easa.europa.eu/en/domains/air-operations/czibs",
+      "licence": "public",
+      "descriptor": "CZIB-2026-08-R3, valid until 2026-11-16 (read by Cordon)",
+      "accessed_at": "2026-10-31T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "bulletin_expiry",
+     "date": "2026-11-16",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [
+      "verdict:2026-11-16:easa-jordan-czib-renewed"
+     ],
+     "note": null,
+     "occurred": false,
+     "origin": "cordon",
+     "ref": "CZIB-2026-08"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2026-11-16-easa-czib-2026-09",
+    "program": "verdict",
+    "title": "Scheduled 2026-11-16: EASA conflict-zone bulletin CZIB-2026-09-R1 (airspace of Saudi Arabia) expires unless renewed",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-10-31T00:00:00Z",
+    "published_at": "2026-10-31T20:27:38Z",
+    "valid_until": "2026-11-16T00:00:00Z",
+    "countries": [
      "SA"
     ],
     "requirement_ids": [
@@ -154,11 +435,11 @@
     },
     "sources": [
      {
-      "id": "2026-11-16-easa-middle-east-czibs",
+      "id": "2026-11-16-easa-czib-2026-09",
       "publisher": "EASA",
       "url": "https://www.easa.europa.eu/en/domains/air-operations/czibs",
       "licence": "public",
-      "descriptor": "CZIB table: each valid until 16/11/2026, unless reviewed earlier",
+      "descriptor": "CZIB-2026-09-R1, valid until 2026-11-16 (read by Cordon)",
       "accessed_at": "2026-10-31T00:00:00Z"
      }
     ],
@@ -168,14 +449,12 @@
      "at": null,
      "verified": true,
      "forecast_ids": [
-      "verdict:2026-11-16:easa-iran-czib-renewed",
-      "verdict:2026-11-16:easa-iraq-czib-renewed",
-      "verdict:2026-11-16:easa-lebanon-czib-renewed",
-      "verdict:2026-11-16:easa-gulf-czib-renewed",
-      "verdict:2026-11-16:easa-jordan-czib-renewed",
       "verdict:2026-11-16:easa-saudi-czib-renewed"
      ],
-     "note": null
+     "note": null,
+     "occurred": false,
+     "origin": "cordon",
+     "ref": "CZIB-2026-09"
     }
    }
   },
@@ -226,7 +505,10 @@
      "at": null,
      "verified": true,
      "forecast_ids": [],
-     "note": "A Trump-Xi meeting is expected but no White House schedule was found (31 Oct 2026)."
+     "note": "A Trump-Xi meeting is expected but no White House schedule was found (31 Oct 2026).",
+     "occurred": false,
+     "origin": "verdict",
+     "ref": null
     }
    }
   },
@@ -235,9 +517,9 @@
    "geometry": null,
    "properties": {
     "contract": "tic-feed/2",
-    "id": "verdict:calendar:2026-11-30-easa-syria-czib",
+    "id": "verdict:calendar:2026-11-30-easa-czib-2017-03",
     "program": "verdict",
-    "title": "Scheduled 2026-11-30: EASA Syria conflict-zone bulletin CZIB-2017-03R20 expires",
+    "title": "Scheduled 2026-11-30: EASA conflict-zone bulletin CZIB-2017-03R20 (airspace of Syria) expires unless renewed",
     "kind": "observation",
     "tier": "routine",
     "status": "actual",
@@ -263,11 +545,11 @@
     },
     "sources": [
      {
-      "id": "2026-11-30-easa-syria-czib",
+      "id": "2026-11-30-easa-czib-2017-03",
       "publisher": "EASA",
       "url": "https://www.easa.europa.eu/en/domains/air-operations/czibs",
       "licence": "public",
-      "descriptor": "CZIB-2017-03R20, revised 1 Oct 2026, valid until 30 Nov 2026",
+      "descriptor": "CZIB-2017-03R20, valid until 2026-11-30 (read by Cordon)",
       "accessed_at": "2026-10-31T00:00:00Z"
      }
     ],
@@ -277,7 +559,10 @@
      "at": null,
      "verified": true,
      "forecast_ids": [],
-     "note": "A standing 2017 bulletin: these have renewed every time since at least Sep 2022."
+     "note": null,
+     "occurred": false,
+     "origin": "cordon",
+     "ref": "CZIB-2017-03"
     }
    }
   },
@@ -328,7 +613,10 @@
      "at": null,
      "verified": false,
      "forecast_ids": [],
-     "note": "Read UNSCR 2819 before registering a forecast on it."
+     "note": "Read UNSCR 2819 before registering a forecast on it.",
+     "occurred": false,
+     "origin": "verdict",
+     "ref": null
     }
    }
   },
@@ -380,7 +668,10 @@
      "at": null,
      "verified": false,
      "forecast_ids": [],
-     "note": "A proposal open for comment, not a final date."
+     "note": "A proposal open for comment, not a final date.",
+     "occurred": false,
+     "origin": "verdict",
+     "ref": null
     }
    }
   },
@@ -432,7 +723,10 @@
      "at": null,
      "verified": false,
      "forecast_ids": [],
-     "note": "Announced by Treasury and China's commerce ministry; no single legal instrument sets the date."
+     "note": "Announced by Treasury and China's commerce ministry; no single legal instrument sets the date.",
+     "occurred": false,
+     "origin": "verdict",
+     "ref": null
     }
    }
   },
@@ -441,9 +735,441 @@
    "geometry": null,
    "properties": {
     "contract": "tic-feed/2",
-    "id": "verdict:calendar:2027-04-30-easa-yemen-czib",
+    "id": "verdict:calendar:2027-01-31-easa-czib-2017-02",
     "program": "verdict",
-    "title": "Scheduled 2027-04-30: EASA Yemen (Sana'a FIR) conflict-zone bulletin CZIB-2017-07R20 expires",
+    "title": "Scheduled 2027-01-31: EASA conflict-zone bulletin CZIB-2017-02R20 (airspace of Libya) expires unless renewed",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-10-31T00:00:00Z",
+    "published_at": "2026-10-31T20:27:38Z",
+    "valid_until": "2027-01-31T00:00:00Z",
+    "countries": [
+     "LY"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.easa.europa.eu/en/domains/air-operations/czibs"
+    },
+    "sources": [
+     {
+      "id": "2027-01-31-easa-czib-2017-02",
+      "publisher": "EASA",
+      "url": "https://www.easa.europa.eu/en/domains/air-operations/czibs",
+      "licence": "public",
+      "descriptor": "CZIB-2017-02R20, valid until 2027-01-31 (read by Cordon)",
+      "accessed_at": "2026-10-31T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "bulletin_expiry",
+     "date": "2027-01-31",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": false,
+     "origin": "cordon",
+     "ref": "CZIB-2017-02"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2027-01-31-easa-czib-2017-08",
+    "program": "verdict",
+    "title": "Scheduled 2027-01-31: EASA conflict-zone bulletin CZIB-2017-08R19 (airspace of Afghanistan) expires unless renewed",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-10-31T00:00:00Z",
+    "published_at": "2026-10-31T20:27:38Z",
+    "valid_until": "2027-01-31T00:00:00Z",
+    "countries": [
+     "AF"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.easa.europa.eu/en/domains/air-operations/czibs"
+    },
+    "sources": [
+     {
+      "id": "2027-01-31-easa-czib-2017-08",
+      "publisher": "EASA",
+      "url": "https://www.easa.europa.eu/en/domains/air-operations/czibs",
+      "licence": "public",
+      "descriptor": "CZIB-2017-08R19, valid until 2027-01-31 (read by Cordon)",
+      "accessed_at": "2026-10-31T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "bulletin_expiry",
+     "date": "2027-01-31",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": false,
+     "origin": "cordon",
+     "ref": "CZIB-2017-08"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2027-01-31-easa-czib-2018-02",
+    "program": "verdict",
+    "title": "Scheduled 2027-01-31: EASA conflict-zone bulletin CZIB-2018-02R21 (airspace of Pakistan – Baluchistan and Khyber Pakhtunkhwa provinces) expires unless renewed",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-10-31T00:00:00Z",
+    "published_at": "2026-10-31T20:27:38Z",
+    "valid_until": "2027-01-31T00:00:00Z",
+    "countries": [
+     "PK"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.easa.europa.eu/en/domains/air-operations/czibs"
+    },
+    "sources": [
+     {
+      "id": "2027-01-31-easa-czib-2018-02",
+      "publisher": "EASA",
+      "url": "https://www.easa.europa.eu/en/domains/air-operations/czibs",
+      "licence": "public",
+      "descriptor": "CZIB-2018-02R21, valid until 2027-01-31 (read by Cordon)",
+      "accessed_at": "2026-10-31T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "bulletin_expiry",
+     "date": "2027-01-31",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": false,
+     "origin": "cordon",
+     "ref": "CZIB-2018-02"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2027-01-31-easa-czib-2022-01",
+    "program": "verdict",
+    "title": "Scheduled 2027-01-31: EASA conflict-zone bulletin CZIB-2022-01R14 (airspace of Ukraine) expires unless renewed",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-10-31T00:00:00Z",
+    "published_at": "2026-10-31T20:27:38Z",
+    "valid_until": "2027-01-31T00:00:00Z",
+    "countries": [
+     "UA"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.easa.europa.eu/en/domains/air-operations/czibs"
+    },
+    "sources": [
+     {
+      "id": "2027-01-31-easa-czib-2022-01",
+      "publisher": "EASA",
+      "url": "https://www.easa.europa.eu/en/domains/air-operations/czibs",
+      "licence": "public",
+      "descriptor": "CZIB-2022-01R14, valid until 2027-01-31 (read by Cordon)",
+      "accessed_at": "2026-10-31T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "bulletin_expiry",
+     "date": "2027-01-31",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": false,
+     "origin": "cordon",
+     "ref": "CZIB-2022-01"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2027-01-31-easa-czib-2023-01",
+    "program": "verdict",
+    "title": "Scheduled 2027-01-31: EASA conflict-zone bulletin CZIB-2023-01R8 (airspace of Sudan) expires unless renewed",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-10-31T00:00:00Z",
+    "published_at": "2026-10-31T20:27:38Z",
+    "valid_until": "2027-01-31T00:00:00Z",
+    "countries": [
+     "SD"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.easa.europa.eu/en/domains/air-operations/czibs"
+    },
+    "sources": [
+     {
+      "id": "2027-01-31-easa-czib-2023-01",
+      "publisher": "EASA",
+      "url": "https://www.easa.europa.eu/en/domains/air-operations/czibs",
+      "licence": "public",
+      "descriptor": "CZIB-2023-01R8, valid until 2027-01-31 (read by Cordon)",
+      "accessed_at": "2026-10-31T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "bulletin_expiry",
+     "date": "2027-01-31",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": false,
+     "origin": "cordon",
+     "ref": "CZIB-2023-01"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2027-01-31-easa-czib-2025-01",
+    "program": "verdict",
+    "title": "Scheduled 2027-01-31: EASA conflict-zone bulletin 2025-01 R3 (airspace of the Russian Federation) expires unless renewed",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-10-31T00:00:00Z",
+    "published_at": "2026-10-31T20:27:38Z",
+    "valid_until": "2027-01-31T00:00:00Z",
+    "countries": [
+     "RU"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.easa.europa.eu/en/domains/air-operations/czibs"
+    },
+    "sources": [
+     {
+      "id": "2027-01-31-easa-czib-2025-01",
+      "publisher": "EASA",
+      "url": "https://www.easa.europa.eu/en/domains/air-operations/czibs",
+      "licence": "public",
+      "descriptor": "2025-01 R3, valid until 2027-01-31 (read by Cordon)",
+      "accessed_at": "2026-10-31T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "bulletin_expiry",
+     "date": "2027-01-31",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": false,
+     "origin": "cordon",
+     "ref": "CZIB-2025-01"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2027-04-30-easa-czib-2017-01",
+    "program": "verdict",
+    "title": "Scheduled 2027-04-30: EASA conflict-zone bulletin CZIB-2017-01R21 (airspace of Mali) expires unless renewed",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-10-31T00:00:00Z",
+    "published_at": "2026-10-31T20:27:38Z",
+    "valid_until": "2027-04-30T00:00:00Z",
+    "countries": [
+     "ML"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.easa.europa.eu/en/domains/air-operations/czibs"
+    },
+    "sources": [
+     {
+      "id": "2027-04-30-easa-czib-2017-01",
+      "publisher": "EASA",
+      "url": "https://www.easa.europa.eu/en/domains/air-operations/czibs",
+      "licence": "public",
+      "descriptor": "CZIB-2017-01R21, valid until 2027-04-30 (read by Cordon)",
+      "accessed_at": "2026-10-31T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "bulletin_expiry",
+     "date": "2027-04-30",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": false,
+     "origin": "cordon",
+     "ref": "CZIB-2017-01"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2027-04-30-easa-czib-2017-05",
+    "program": "verdict",
+    "title": "Scheduled 2027-04-30: EASA conflict-zone bulletin CZIB-2017-05R20 (airspace of Somalia) expires unless renewed",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-10-31T00:00:00Z",
+    "published_at": "2026-10-31T20:27:38Z",
+    "valid_until": "2027-04-30T00:00:00Z",
+    "countries": [
+     "SO"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.easa.europa.eu/en/domains/air-operations/czibs"
+    },
+    "sources": [
+     {
+      "id": "2027-04-30-easa-czib-2017-05",
+      "publisher": "EASA",
+      "url": "https://www.easa.europa.eu/en/domains/air-operations/czibs",
+      "licence": "public",
+      "descriptor": "CZIB-2017-05R20, valid until 2027-04-30 (read by Cordon)",
+      "accessed_at": "2026-10-31T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "bulletin_expiry",
+     "date": "2027-04-30",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": false,
+     "origin": "cordon",
+     "ref": "CZIB-2017-05"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2027-04-30-easa-czib-2017-07",
+    "program": "verdict",
+    "title": "Scheduled 2027-04-30: EASA conflict-zone bulletin CZIB-2017-07R20 (airspace of Yemen – Sana’a Flight Information Region) expires unless renewed",
     "kind": "observation",
     "tier": "routine",
     "status": "actual",
@@ -469,11 +1195,11 @@
     },
     "sources": [
      {
-      "id": "2027-04-30-easa-yemen-czib",
+      "id": "2027-04-30-easa-czib-2017-07",
       "publisher": "EASA",
       "url": "https://www.easa.europa.eu/en/domains/air-operations/czibs",
       "licence": "public",
-      "descriptor": "CZIB-2017-07R20, revised 30 Sep 2026, valid until 30 Apr 2027",
+      "descriptor": "CZIB-2017-07R20, valid until 2027-04-30 (read by Cordon)",
       "accessed_at": "2026-10-31T00:00:00Z"
      }
     ],
@@ -483,7 +1209,10 @@
      "at": null,
      "verified": true,
      "forecast_ids": [],
-     "note": null
+     "note": null,
+     "occurred": false,
+     "origin": "cordon",
+     "ref": "CZIB-2017-07"
     }
    }
   }
