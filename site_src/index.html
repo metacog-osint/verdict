@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Verdict: forecast record</title>
+<meta name="description" content="The Intelligence Company's forecast record: every forecast logged before it can be known, then scored, misses left in.">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="tic-time.css">
+<script src="tic-time.js"></script>
+</head>
+<body>
+<header class="top">
+  <div class="wrap top-row">
+    <div class="brand"><strong>Verdict</strong><span class="muted">The Intelligence Company</span></div>
+    <nav class="top-nav">
+      <a href="https://theintelligence.company/">All programs</a>
+      <a href="https://github.com/metacog-osint/verdict">Ledger</a>
+      <span id="time-settings"></span>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <h1>Every forecast, logged before anyone could know, then scored.</h1>
+    <p class="lede">Each forecast below was made public in an append-only ledger before its outcome could be known,
+      with the rule that settles it written at the same time. When it resolves, it is scored here. Misses stay in.</p>
+    <div class="tiles" id="tiles" aria-live="polite"></div>
+  </section>
+
+  <section class="card" aria-labelledby="board-h">
+    <div class="card-head">
+      <h2 id="board-h">The forecasts</h2>
+      <p class="muted small">Dot: the probability we gave that the event happens. Ring: still open. Filled: resolved
+        (✓ it happened, ✗ it did not). Hover or tap a row for the rule that settles it.</p>
+    </div>
+    <div id="board" class="board"></div>
+  </section>
+
+  <div class="two">
+    <section class="card" aria-labelledby="cal-h">
+      <div class="card-head">
+        <h2 id="cal-h">How well calibrated</h2>
+        <p class="muted small">Forecasts grouped by the probability we gave, against how often those events happened.
+          On the diagonal is perfect calibration.</p>
+      </div>
+      <div id="calibration"></div>
+      <div id="scores" class="small"></div>
+    </section>
+
+    <section class="card" aria-labelledby="ev-h">
+      <div class="card-head">
+        <h2 id="ev-h">Coming up</h2>
+        <p class="muted small">The event calendar: dated events worth forecasting. Filled dots carry a forecast.</p>
+      </div>
+      <div id="timeline"></div>
+    </section>
+  </div>
+
+  <section class="card" aria-labelledby="list-h">
+    <div class="card-head"><h2 id="list-h">The ledger in full</h2></div>
+    <div id="list"></div>
+  </section>
+
+  <section class="card prose" aria-labelledby="how-h">
+    <h2 id="how-h">How it works</h2>
+    <ul>
+      <li><strong>Pre-registration.</strong> A forecast enters <a href="https://github.com/metacog-osint/verdict/blob/main/ledger/forecasts.jsonl">the ledger</a>
+        before its outcome can be known; the public commit is the timestamp. A forecast registered after the deciding
+        news was public is void.</li>
+      <li><strong>Words and numbers.</strong> Each probability is stored as a number and named with the US intelligence
+        community's likelihood terms (ICD 203). Confidence is rated separately and never folded into the odds.
+        <a href="https://github.com/metacog-osint/tic-doctrine/blob/main/docs/language-key.md">Language key</a>.</li>
+      <li><strong>Scoring.</strong> The Brier score: the squared gap between the probability and what happened (0 is
+        perfect, 0.25 is a coin toss on every question), with its breakdown into calibration and resolution as the
+        record grows.</li>
+      <li><strong>Nothing is edited.</strong> A correction is a new ledger line that names the one it replaces; both stay
+        public. <a href="https://github.com/metacog-osint/verdict/blob/main/doctrine/method.md">Method</a>.</li>
+    </ul>
+  </section>
+</main>
+
+<footer class="wrap foot small muted">
+  <p>A project of The Intelligence Company. Ledger updated <time id="asof" data-tic="datetime"></time>.
+    Code under the MIT licence; each forecast cites its sources. Aligned with ICD 203's analytic standards, which bind
+    US intelligence agencies, not us.</p>
+</footer>
+<script src="app.js"></script>
+</body>
+</html>

@@ -106,6 +106,73 @@ class Ledger(unittest.TestCase):
                         encoding="utf-8")
         self.assertTrue(verdict.append_only(self.tmp, "HEAD"), "an edited line must fail")
 
+    def test_due_lists_knowable_unresolved_forecasts(self):
+        later = copy.deepcopy(ITEM)
+        later.update({"id": "verdict:test:later"})
+        later["resolution"] = {**ITEM["resolution"], "known_at": "2026-12-20T00:00:00Z", "resolve_by": "2026-12-21T00:00:00Z"}
+        later["valid_until"] = "2026-12-20T00:00:00Z"
+        self.write_drafts(ITEM, later)
+        verdict.register(self.drafts, self.tmp, when="2026-11-01T12:00:00Z")
+        d = verdict.due(self.tmp, now="2026-11-06T12:00:00Z", days=14)
+        self.assertEqual([r["id"] for r in d["due"]], ["verdict:test:one"])
+        self.assertEqual(d["soon"], [])
+        self.assertIn("verdict:test:one", verdict.due_markdown(d))
+        verdict.resolve("verdict:test:one", 1, "https://example.org", root=self.tmp, when="2026-11-06T13:00:00Z")
+        d = verdict.due(self.tmp, now="2026-12-10T00:00:00Z", days=14)
+        self.assertEqual(([r["id"] for r in d["due"]], [r["id"] for r in d["soon"]]), ([], ["verdict:test:later"]))
+
+
+class Calendar(unittest.TestCase):
+    def setUp(self):
+        self.tmp = Path(tempfile.mkdtemp())
+        shutil.copytree(ROOT / "doctrine", self.tmp / "doctrine")
+        (self.tmp / "calendar").mkdir()
+
+    def tearDown(self):
+        shutil.rmtree(self.tmp, ignore_errors=True)
+
+    def write(self, *events):
+        (self.tmp / "calendar" / "events.json").write_text(json.dumps({"events": list(events)}), encoding="utf-8")
+
+    EV = {"id": "e1", "date": "2026-11-16", "title": "Test bulletin expires", "kind": "bulletin_expiry",
+          "source": {"publisher": "Test", "url": "https://example.org"}, "added": "2026-10-31"}
+
+    def test_good_event_passes_and_exports_a_lintable_feed(self):
+        from tic_doctrine import contract, registers
+        self.write(self.EV)
+        self.assertEqual(verdict.calendar_problems(self.tmp, registers.ids(self.tmp / "doctrine")), [])
+        fc = verdict.calendar_feed(self.tmp, generated="2026-10-31T00:00:00Z")
+        regs = registers.ids(self.tmp / "doctrine")
+        for f in fc["features"]:
+            self.assertEqual([p for p in contract.check(f, regs) if p[1] == "error"], [])
+        self.assertEqual(fc["features"][0]["properties"]["valid_until"], "2026-11-16T00:00:00Z")
+
+    def test_bad_kind_missing_fields_and_unknown_forecasts_fail(self):
+        from tic_doctrine import registers
+        regs = registers.ids(self.tmp / "doctrine")
+        self.write({**self.EV, "kind": "party"}, {"id": "e2", "date": "2026-11-17"},
+                   {**self.EV, "id": "e3", "forecast_ids": ["verdict:nope"]})
+        msgs = " ".join(verdict.calendar_problems(self.tmp, regs))
+        for needle in ("kind must be one of", "e2: missing", "unknown forecast"):
+            self.assertIn(needle, msgs)
+
+    def test_unconfirmed_dates_are_marked_claimed(self):
+        item = verdict.calendar_item({**self.EV, "verified": False}, "2026-10-31T00:00:00Z")
+        self.assertEqual(item["status_class"], "claimed")
+
+
+class Site(unittest.TestCase):
+    def test_build_is_deterministic_and_complete(self):
+        sys.path.insert(0, str(ROOT / "tools"))
+        import build_site
+        a, b = build_site.build(), build_site.build()
+        self.assertEqual(a, b)
+        for rel in ("index.html", "app.js", "style.css", "tic-time.js", "data/forecasts.json", "data/scores.json",
+                    "data/calendar.geojson", "data/feed.geojson"):
+            self.assertIn(rel, a)
+        rows = json.loads(a["data/forecasts.json"])["forecasts"]
+        self.assertTrue(all(r["event_date"] and len(r["event_date"]) == 10 for r in rows))
+
 
 if __name__ == "__main__":
     unittest.main()

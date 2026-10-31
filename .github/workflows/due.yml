@@ -1,0 +1,39 @@
+name: due
+# Daily reminder: when a forecast's outcome becomes knowable, open (or refresh) one GitHub issue listing what to
+# resolve, with each rule, source and the resolve command. Closes the issue when nothing is due. Free; no secrets.
+on:
+  schedule:
+    - cron: "15 14 * * *"     # 14:15 UTC (8:15 AM CST)
+  workflow_dispatch:
+permissions:
+  contents: read
+  issues: write
+jobs:
+  remind:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
+      LABEL: verdict-due
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: Work out what is due
+        run: |
+          python tools/verdict.py due --markdown > body.md
+          python tools/verdict.py due | python -c "import json,sys; print(len(json.load(sys.stdin)['due']))" > count.txt
+          cat body.md
+      - name: Open, refresh or close the reminder issue
+        run: |
+          gh label create "$LABEL" --color B60205 --description "Forecasts due for resolution" 2>/dev/null || true
+          open=$(gh issue list --label "$LABEL" --state open --json number --jq '.[0].number // empty')
+          if [ "$(cat count.txt)" -gt 0 ]; then
+            if [ -n "$open" ]; then
+              gh issue edit "$open" --body-file body.md
+            else
+              gh issue create --title "Verdict: forecasts due for resolution" --label "$LABEL" --body-file body.md
+            fi
+          elif [ -n "$open" ]; then
+            gh issue close "$open" --comment "Nothing is due now."
+          fi

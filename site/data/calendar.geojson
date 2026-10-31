@@ -1,0 +1,491 @@
+{
+ "type": "FeatureCollection",
+ "contract": "tic-feed/2",
+ "program": "verdict",
+ "generated_at": "2026-10-31T20:27:38Z",
+ "licence": "Verdict (MIT); each event's source as cited",
+ "attribution": "Verdict event calendar, The Intelligence Company",
+ "language_key": "https://github.com/metacog-osint/tic-doctrine/blob/main/docs/language-key.md",
+ "features": [
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2026-11-06-fao-ffpi",
+    "program": "verdict",
+    "title": "Scheduled 2026-11-06: FAO Food Price Index for October 2026 released",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-10-31T00:00:00Z",
+    "published_at": "2026-10-31T20:27:38Z",
+    "valid_until": "2026-11-06T00:00:00Z",
+    "countries": [],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.fao.org/statistics/events/events-detail/fao-food-price-index-and-commodity-price-indices-october-2026-update/en"
+    },
+    "sources": [
+     {
+      "id": "2026-11-06-fao-ffpi",
+      "publisher": "FAO",
+      "url": "https://www.fao.org/statistics/events/events-detail/fao-food-price-index-and-commodity-price-indices-october-2026-update/en",
+      "licence": "public",
+      "descriptor": "FAO release calendar entry for the October 2026 update",
+      "accessed_at": "2026-10-31T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "data_release",
+     "date": "2026-11-06",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [
+      "verdict:2026-11-06:fao-ffpi-october-up"
+     ],
+     "note": null
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2026-11-10-bis-affiliates-rule",
+    "program": "verdict",
+    "title": "Scheduled 2026-11-10: BIS Affiliates (50 percent) rule returns unless its stay is extended",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-10-31T00:00:00Z",
+    "published_at": "2026-10-31T20:27:38Z",
+    "valid_until": "2026-11-10T00:00:00Z",
+    "countries": [
+     "US",
+     "CN"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.federalregister.gov/documents/2025/11/12/2025-19846/one-year-suspension-of-expansion-of-end-user-controls-for-affiliates-of-certain-listed-entities"
+    },
+    "sources": [
+     {
+      "id": "2026-11-10-bis-affiliates-rule",
+      "publisher": "Federal Register (BIS)",
+      "url": "https://www.federalregister.gov/documents/2025/11/12/2025-19846/one-year-suspension-of-expansion-of-end-user-controls-for-affiliates-of-certain-listed-entities",
+      "licence": "public",
+      "descriptor": "90 FR 50857: amendments stayed until 9 Nov 2026, re-added 'Effective November 10, 2026'",
+      "accessed_at": "2026-10-31T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "rule_date",
+     "date": "2026-11-10",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [
+      "verdict:2026-11-10:bis-affiliates-rule-stay-extended"
+     ],
+     "note": null
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2026-11-16-easa-middle-east-czibs",
+    "program": "verdict",
+    "title": "Scheduled 2026-11-16: Six EASA Middle East conflict-zone bulletins expire (Iran, Iraq, Lebanon, Gulf, Jordan, Saudi Arabia)",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-10-31T00:00:00Z",
+    "published_at": "2026-10-31T20:27:38Z",
+    "valid_until": "2026-11-16T00:00:00Z",
+    "countries": [
+     "IR",
+     "IQ",
+     "LB",
+     "BH",
+     "KW",
+     "QA",
+     "AE",
+     "OM",
+     "JO",
+     "SA"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.easa.europa.eu/en/domains/air-operations/czibs"
+    },
+    "sources": [
+     {
+      "id": "2026-11-16-easa-middle-east-czibs",
+      "publisher": "EASA",
+      "url": "https://www.easa.europa.eu/en/domains/air-operations/czibs",
+      "licence": "public",
+      "descriptor": "CZIB table: each valid until 16/11/2026, unless reviewed earlier",
+      "accessed_at": "2026-10-31T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "bulletin_expiry",
+     "date": "2026-11-16",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [
+      "verdict:2026-11-16:easa-iran-czib-renewed",
+      "verdict:2026-11-16:easa-iraq-czib-renewed",
+      "verdict:2026-11-16:easa-lebanon-czib-renewed",
+      "verdict:2026-11-16:easa-gulf-czib-renewed",
+      "verdict:2026-11-16:easa-jordan-czib-renewed",
+      "verdict:2026-11-16:easa-saudi-czib-renewed"
+     ],
+     "note": null
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2026-11-18-apec-leaders-shenzhen",
+    "program": "verdict",
+    "title": "Scheduled 2026-11-18: 33rd APEC Economic Leaders' Meeting opens in Shenzhen (18 to 19 Nov)",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-10-31T00:00:00Z",
+    "published_at": "2026-10-31T20:27:38Z",
+    "valid_until": "2026-11-18T00:00:00Z",
+    "countries": [
+     "CN"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://english.www.gov.cn/news/202512/12/content_WS693c1432c6d00ca5f9a080e6.html"
+    },
+    "sources": [
+     {
+      "id": "2026-11-18-apec-leaders-shenzhen",
+      "publisher": "Government of the People's Republic of China",
+      "url": "https://english.www.gov.cn/news/202512/12/content_WS693c1432c6d00ca5f9a080e6.html",
+      "licence": "public",
+      "descriptor": "Foreign ministry announcement of the dates (12 Dec 2025)",
+      "accessed_at": "2026-10-31T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "summit",
+     "date": "2026-11-18",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": "A Trump-Xi meeting is expected but no White House schedule was found (31 Oct 2026)."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2026-11-30-easa-syria-czib",
+    "program": "verdict",
+    "title": "Scheduled 2026-11-30: EASA Syria conflict-zone bulletin CZIB-2017-03R20 expires",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-10-31T00:00:00Z",
+    "published_at": "2026-10-31T20:27:38Z",
+    "valid_until": "2026-11-30T00:00:00Z",
+    "countries": [
+     "SY"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.easa.europa.eu/en/domains/air-operations/czibs"
+    },
+    "sources": [
+     {
+      "id": "2026-11-30-easa-syria-czib",
+      "publisher": "EASA",
+      "url": "https://www.easa.europa.eu/en/domains/air-operations/czibs",
+      "licence": "public",
+      "descriptor": "CZIB-2017-03R20, revised 1 Oct 2026, valid until 30 Nov 2026",
+      "accessed_at": "2026-10-31T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "bulletin_expiry",
+     "date": "2026-11-30",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": "A standing 2017 bulletin: these have renewed every time since at least Sep 2022."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2026-12-15-libya-panel-interim-report",
+    "program": "verdict",
+    "title": "Scheduled 2026-12-15: UN Libya sanctions panel of experts interim report due",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "claimed",
+    "product_category": "current",
+    "data_as_of": "2026-10-31T00:00:00Z",
+    "published_at": "2026-10-31T20:27:38Z",
+    "valid_until": "2026-12-15T00:00:00Z",
+    "countries": [
+     "LY"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://press.un.org/en/content/security-council"
+    },
+    "sources": [
+     {
+      "id": "2026-12-15-libya-panel-interim-report",
+      "publisher": "UN Security Council (resolution 2819)",
+      "url": "https://press.un.org/en/content/security-council",
+      "licence": "public",
+      "descriptor": "Due date as summarised in search results; not yet read in the resolution text",
+      "accessed_at": "2026-10-31T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "mandate_deadline",
+     "date": "2026-12-15",
+     "at": null,
+     "verified": false,
+     "forecast_ids": [],
+     "note": "Read UNSCR 2819 before registering a forecast on it."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2027-01-09-ustr-port-fees",
+    "program": "verdict",
+    "title": "Scheduled 2027-01-09: Proposed end of USTR's suspended Section 301 port fees on Chinese-linked vessels",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "claimed",
+    "product_category": "current",
+    "data_as_of": "2026-10-31T00:00:00Z",
+    "published_at": "2026-10-31T20:27:38Z",
+    "valid_until": "2027-01-09T00:00:00Z",
+    "countries": [
+     "US",
+     "CN"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.federalregister.gov/documents/2026/10/26/2026-21755/request-for-comments-on-further-suspension-of-section-301-action-chinas-targeting-of-the-maritime"
+    },
+    "sources": [
+     {
+      "id": "2027-01-09-ustr-port-fees",
+      "publisher": "Federal Register (USTR)",
+      "url": "https://www.federalregister.gov/documents/2026/10/26/2026-21755/request-for-comments-on-further-suspension-of-section-301-action-chinas-targeting-of-the-maritime",
+      "licence": "public",
+      "descriptor": "91 FR 67388 (26 Oct 2026): request for comments on extending the suspension to 9 Jan 2027",
+      "accessed_at": "2026-10-31T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "rule_date",
+     "date": "2027-01-09",
+     "at": null,
+     "verified": false,
+     "forecast_ids": [],
+     "note": "A proposal open for comment, not a final date."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2027-01-10-us-china-truce",
+    "program": "verdict",
+    "title": "Scheduled 2027-01-10: US-China trade truce, as extended in September 2026, ends",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "claimed",
+    "product_category": "current",
+    "data_as_of": "2026-10-31T00:00:00Z",
+    "published_at": "2026-10-31T20:27:38Z",
+    "valid_until": "2027-01-10T00:00:00Z",
+    "countries": [
+     "US",
+     "CN"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.nbcnews.com/business/economy/us-china-extend-trade-truce-trump-rcna599525"
+    },
+    "sources": [
+     {
+      "id": "2027-01-10-us-china-truce",
+      "publisher": "NBC News",
+      "url": "https://www.nbcnews.com/business/economy/us-china-extend-trade-truce-trump-rcna599525",
+      "licence": "public",
+      "descriptor": "Treasury Secretary Bessent: the truce runs to 10 Jan 2027 (23 Sep 2026)",
+      "accessed_at": "2026-10-31T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "deadline",
+     "date": "2027-01-10",
+     "at": null,
+     "verified": false,
+     "forecast_ids": [],
+     "note": "Announced by Treasury and China's commerce ministry; no single legal instrument sets the date."
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2027-04-30-easa-yemen-czib",
+    "program": "verdict",
+    "title": "Scheduled 2027-04-30: EASA Yemen (Sana'a FIR) conflict-zone bulletin CZIB-2017-07R20 expires",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-10-31T00:00:00Z",
+    "published_at": "2026-10-31T20:27:38Z",
+    "valid_until": "2027-04-30T00:00:00Z",
+    "countries": [
+     "YE"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.easa.europa.eu/en/domains/air-operations/czibs"
+    },
+    "sources": [
+     {
+      "id": "2027-04-30-easa-yemen-czib",
+      "publisher": "EASA",
+      "url": "https://www.easa.europa.eu/en/domains/air-operations/czibs",
+      "licence": "public",
+      "descriptor": "CZIB-2017-07R20, revised 30 Sep 2026, valid until 30 Apr 2027",
+      "accessed_at": "2026-10-31T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "bulletin_expiry",
+     "date": "2027-04-30",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null
+    }
+   }
+  }
+ ]
+}

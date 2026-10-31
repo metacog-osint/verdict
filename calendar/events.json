@@ -1,0 +1,108 @@
+{
+  "about": "Verdict's event calendar: dated, resolvable events worth forecasting. Each event cites where its date comes from; 'verified': false marks a date taken from secondary reporting. Exported as a feed contract v2 feed with: python tools/verdict.py calendar --feed site/data/calendar.geojson",
+  "events": [
+    {
+      "id": "2026-11-06-fao-ffpi",
+      "date": "2026-11-06",
+      "title": "FAO Food Price Index for October 2026 released",
+      "kind": "data_release",
+      "countries": [],
+      "source": {"publisher": "FAO", "url": "https://www.fao.org/statistics/events/events-detail/fao-food-price-index-and-commodity-price-indices-october-2026-update/en",
+                 "descriptor": "FAO release calendar entry for the October 2026 update"},
+      "forecast_ids": ["verdict:2026-11-06:fao-ffpi-october-up"],
+      "added": "2026-10-31"
+    },
+    {
+      "id": "2026-11-10-bis-affiliates-rule",
+      "date": "2026-11-10",
+      "title": "BIS Affiliates (50 percent) rule returns unless its stay is extended",
+      "kind": "rule_date",
+      "countries": ["US", "CN"],
+      "source": {"publisher": "Federal Register (BIS)", "url": "https://www.federalregister.gov/documents/2025/11/12/2025-19846/one-year-suspension-of-expansion-of-end-user-controls-for-affiliates-of-certain-listed-entities",
+                 "descriptor": "90 FR 50857: amendments stayed until 9 Nov 2026, re-added 'Effective November 10, 2026'"},
+      "forecast_ids": ["verdict:2026-11-10:bis-affiliates-rule-stay-extended"],
+      "added": "2026-10-31"
+    },
+    {
+      "id": "2026-11-16-easa-middle-east-czibs",
+      "date": "2026-11-16",
+      "title": "Six EASA Middle East conflict-zone bulletins expire (Iran, Iraq, Lebanon, Gulf, Jordan, Saudi Arabia)",
+      "kind": "bulletin_expiry",
+      "countries": ["IR", "IQ", "LB", "BH", "KW", "QA", "AE", "OM", "JO", "SA"],
+      "source": {"publisher": "EASA", "url": "https://www.easa.europa.eu/en/domains/air-operations/czibs",
+                 "descriptor": "CZIB table: each valid until 16/11/2026, unless reviewed earlier"},
+      "forecast_ids": ["verdict:2026-11-16:easa-iran-czib-renewed", "verdict:2026-11-16:easa-iraq-czib-renewed",
+                       "verdict:2026-11-16:easa-lebanon-czib-renewed", "verdict:2026-11-16:easa-gulf-czib-renewed",
+                       "verdict:2026-11-16:easa-jordan-czib-renewed", "verdict:2026-11-16:easa-saudi-czib-renewed"],
+      "added": "2026-10-31"
+    },
+    {
+      "id": "2026-11-18-apec-leaders-shenzhen",
+      "date": "2026-11-18",
+      "title": "33rd APEC Economic Leaders' Meeting opens in Shenzhen (18 to 19 Nov)",
+      "kind": "summit",
+      "countries": ["CN"],
+      "source": {"publisher": "Government of the People's Republic of China", "url": "https://english.www.gov.cn/news/202512/12/content_WS693c1432c6d00ca5f9a080e6.html",
+                 "descriptor": "Foreign ministry announcement of the dates (12 Dec 2025)"},
+      "note": "A Trump-Xi meeting is expected but no White House schedule was found (31 Oct 2026).",
+      "added": "2026-10-31"
+    },
+    {
+      "id": "2026-11-30-easa-syria-czib",
+      "date": "2026-11-30",
+      "title": "EASA Syria conflict-zone bulletin CZIB-2017-03R20 expires",
+      "kind": "bulletin_expiry",
+      "countries": ["SY"],
+      "source": {"publisher": "EASA", "url": "https://www.easa.europa.eu/en/domains/air-operations/czibs",
+                 "descriptor": "CZIB-2017-03R20, revised 1 Oct 2026, valid until 30 Nov 2026"},
+      "note": "A standing 2017 bulletin: these have renewed every time since at least Sep 2022.",
+      "added": "2026-10-31"
+    },
+    {
+      "id": "2026-12-15-libya-panel-interim-report",
+      "date": "2026-12-15",
+      "title": "UN Libya sanctions panel of experts interim report due",
+      "kind": "mandate_deadline",
+      "countries": ["LY"],
+      "source": {"publisher": "UN Security Council (resolution 2819)", "url": "https://press.un.org/en/content/security-council",
+                 "descriptor": "Due date as summarised in search results; not yet read in the resolution text"},
+      "verified": false,
+      "note": "Read UNSCR 2819 before registering a forecast on it.",
+      "added": "2026-10-31"
+    },
+    {
+      "id": "2027-01-09-ustr-port-fees",
+      "date": "2027-01-09",
+      "title": "Proposed end of USTR's suspended Section 301 port fees on Chinese-linked vessels",
+      "kind": "rule_date",
+      "countries": ["US", "CN"],
+      "source": {"publisher": "Federal Register (USTR)", "url": "https://www.federalregister.gov/documents/2026/10/26/2026-21755/request-for-comments-on-further-suspension-of-section-301-action-chinas-targeting-of-the-maritime",
+                 "descriptor": "91 FR 67388 (26 Oct 2026): request for comments on extending the suspension to 9 Jan 2027"},
+      "verified": false,
+      "note": "A proposal open for comment, not a final date.",
+      "added": "2026-10-31"
+    },
+    {
+      "id": "2027-01-10-us-china-truce",
+      "date": "2027-01-10",
+      "title": "US-China trade truce, as extended in September 2026, ends",
+      "kind": "deadline",
+      "countries": ["US", "CN"],
+      "source": {"publisher": "NBC News", "url": "https://www.nbcnews.com/business/economy/us-china-extend-trade-truce-trump-rcna599525",
+                 "descriptor": "Treasury Secretary Bessent: the truce runs to 10 Jan 2027 (23 Sep 2026)"},
+      "verified": false,
+      "note": "Announced by Treasury and China's commerce ministry; no single legal instrument sets the date.",
+      "added": "2026-10-31"
+    },
+    {
+      "id": "2027-04-30-easa-yemen-czib",
+      "date": "2027-04-30",
+      "title": "EASA Yemen (Sana'a FIR) conflict-zone bulletin CZIB-2017-07R20 expires",
+      "kind": "bulletin_expiry",
+      "countries": ["YE"],
+      "source": {"publisher": "EASA", "url": "https://www.easa.europa.eu/en/domains/air-operations/czibs",
+                 "descriptor": "CZIB-2017-07R20, revised 30 Sep 2026, valid until 30 Apr 2027"},
+      "added": "2026-10-31"
+    }
+  ]
+}

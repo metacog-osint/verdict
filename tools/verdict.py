@@ -4,6 +4,8 @@
     python tools/verdict.py register drafts/<file>.json  move approved drafts into the ledger, timestamped now
     python tools/verdict.py resolve <id> <0|1> --url <evidence> [--note "..."] [--by "..."]
     python tools/verdict.py score [--out scores.json]    Brier score, Murphy decomposition, skill, by program
+    python tools/verdict.py due [--days 14] [--markdown]  forecasts to resolve now, and those coming up
+    python tools/verdict.py calendar [--feed out.geojson] check the event calendar; export it as a contract v2 feed
 
 The ledger is two append-only JSON-lines files in git: ledger/forecasts.jsonl (feed contract tic-feed/2 forecast
 items, each with its resolution rule written at issue time) and ledger/resolutions.jsonl. A registered line is never
@@ -23,7 +25,9 @@ from tic_doctrine import contract, registers  # noqa: E402
 
 FORECASTS = Path("ledger") / "forecasts.jsonl"
 RESOLUTIONS = Path("ledger") / "resolutions.jsonl"
+CALENDAR = Path("calendar") / "events.json"
 BINS = 10
+EVENT_KINDS = {"data_release", "rule_date", "bulletin_expiry", "mandate_deadline", "election", "summit", "deadline"}
 
 
 def now_utc() -> str:
@@ -101,9 +105,106 @@ def check(root: Path = ROOT, base: str | None = None) -> list[str]:
             errs.append(f"resolutions line {i}: evidence.url missing")
         if r.get("resolved_at") and _t(r["resolved_at"]) < _t(by_id[rid]["published_at"]):
             errs.append(f"resolutions line {i}: resolved before the forecast was registered")
+    errs += calendar_problems(root, regs)
     if base:
         errs += append_only(root, base)
     return errs
+
+
+def due(root: Path = ROOT, now: str | None = None, days: int = 14) -> dict:
+    """Unresolved forecasts whose outcome is knowable now ('due'), and those knowable within `days` ('soon')."""
+    t_now = _t(now or now_utc())
+    resolved = {r.get("id") for r in read_lines(root / RESOLUTIONS)}
+    fc = read_lines(root / FORECASTS)
+    superseded = {f.get("supersedes") for f in fc if f.get("supersedes")}
+    out = {"now": now or now_utc(), "due": [], "soon": []}
+    for f in fc:
+        if f["id"] in resolved or f["id"] in superseded or f.get("msg_type") == "cancel":
+            continue
+        res = f.get("resolution") or {}
+        known = _t(res["known_at"])
+        row = {"id": f["id"], "title": f["title"], "probability": f["probability"], "known_at": res["known_at"],
+               "resolve_by": res.get("resolve_by"), "rule": res.get("rule"), "source": res.get("source")}
+        if known <= t_now:
+            out["due"].append(row)
+        elif (known - t_now).total_seconds() <= days * 86400:
+            out["soon"].append(row)
+    for k in ("due", "soon"):
+        out[k].sort(key=lambda r: r["known_at"])
+    return out
+
+
+def due_markdown(d: dict) -> str:
+    lines = [f"Checked {d['now']}.", ""]
+    if d["due"]:
+        lines += ["## Due now", ""]
+        for r in d["due"]:
+            lines += [f"- **{r['title']}** (`{r['id']}`, {round(r['probability'] * 100)}%), resolve by {r['resolve_by']}",
+                      f"  - Rule: {r['rule']}", f"  - Source: {r['source']}",
+                      f"  - `python tools/verdict.py resolve {r['id']} 1|0 --url <evidence>`"]
+    else:
+        lines += ["Nothing is due."]
+    if d["soon"]:
+        lines += ["", "## Coming up", ""] + [f"- {r['known_at'][:10]}: {r['title']} (`{r['id']}`)" for r in d["soon"]]
+    return "\n".join(lines) + "\n"
+
+
+def read_calendar(root: Path = ROOT) -> list[dict]:
+    p = root / CALENDAR
+    return json.loads(p.read_text(encoding="utf-8"))["events"] if p.exists() else []
+
+
+def calendar_item(ev: dict, generated: str) -> dict:
+    """One calendar event as a feed contract v2 item: a scheduled fact (kind observation), not a forecast."""
+    when = ev.get("at") or f"{ev['date']}T00:00:00Z"
+    src = ev["source"]
+    return {
+        "contract": "tic-feed/2", "id": f"verdict:calendar:{ev['id']}", "program": "verdict",
+        "title": f"Scheduled {ev['date']}: {ev['title']}", "kind": "observation", "tier": "routine",
+        "status": "actual", "msg_type": "new", "human_review": "full", "us_person_data": "none",
+        "status_class": "reported" if ev.get("verified", True) else "claimed", "product_category": "current",
+        "data_as_of": f"{ev['added']}T00:00:00Z", "published_at": generated, "valid_until": when,
+        "countries": ev.get("countries", []), "requirement_ids": ["VD-PIR-1"], "method_version": "verdict-calendar-1.0",
+        "precision_class": "none", "geometry": None, "visual": {"type": "page", "url": src["url"]},
+        "sources": [{"id": src.get("id", ev["id"]), "publisher": src["publisher"], "url": src["url"],
+                     "licence": src.get("licence", "public"), "descriptor": src.get("descriptor", ev["title"]),
+                     "accessed_at": f"{ev['added']}T00:00:00Z"}],
+        "event": {"kind": ev["kind"], "date": ev["date"], "at": ev.get("at"), "verified": ev.get("verified", True),
+                  "forecast_ids": ev.get("forecast_ids", []), "note": ev.get("note")},
+    }
+
+
+def calendar_problems(root: Path, regs: dict) -> list[str]:
+    errs, seen = [], set()
+    fids = {f.get("id") for f in read_lines(root / FORECASTS)}
+    for ev in read_calendar(root):
+        tag = f"calendar {ev.get('id')}"
+        missing = [k for k in ("id", "date", "title", "kind", "source", "added") if not ev.get(k)]
+        if missing:
+            errs.append(f"{tag}: missing {missing}")
+            continue
+        if ev["id"] in seen:
+            errs.append(f"{tag}: duplicate id")
+        seen.add(ev["id"])
+        if ev["kind"] not in EVENT_KINDS:
+            errs.append(f"{tag}: kind must be one of {sorted(EVENT_KINDS)}")
+        for fid in ev.get("forecast_ids", []):
+            if fid not in fids:
+                errs.append(f"{tag}: forecast_ids names unknown forecast {fid!r}")
+        errs += [f"{tag}: {std}: {m}" for std, sev, m in contract.check(calendar_item(ev, now_utc()), regs)
+                 if sev == "error"]
+    return errs
+
+
+def calendar_feed(root: Path = ROOT, generated: str | None = None) -> dict:
+    generated = generated or now_utc()
+    items = [calendar_item(ev, generated) for ev in sorted(read_calendar(root), key=lambda e: e.get("at") or e["date"])]
+    return {"type": "FeatureCollection", "contract": "tic-feed/2", "program": "verdict", "generated_at": generated,
+            "licence": "Verdict (MIT); each event's source as cited",
+            "attribution": "Verdict event calendar, The Intelligence Company",
+            "language_key": "https://github.com/metacog-osint/tic-doctrine/blob/main/docs/language-key.md",
+            "features": [{"type": "Feature", "geometry": None, "properties": {k: v for k, v in it.items()
+                                                                              if k != "geometry"}} for it in items]}
 
 
 def append_only(root: Path, base: str) -> list[str]:
@@ -210,7 +311,25 @@ def main(argv=None) -> int:
     s.add_argument("--by", default="")
     sc = sub.add_parser("score")
     sc.add_argument("--out")
+    du = sub.add_parser("due")
+    du.add_argument("--days", type=int, default=14)
+    du.add_argument("--markdown", action="store_true")
+    ca = sub.add_parser("calendar")
+    ca.add_argument("--feed")
     a = ap.parse_args(argv)
+    if a.cmd == "due":
+        d = due(ROOT, days=a.days)
+        print(due_markdown(d) if a.markdown else json.dumps(d, indent=2), end="" if a.markdown else "\n")
+        return 0
+    if a.cmd == "calendar":
+        errs = calendar_problems(ROOT, registers.ids(ROOT / "doctrine"))
+        for e in errs:
+            print("  -", e)
+        if a.feed and not errs:
+            Path(a.feed).write_text(json.dumps(calendar_feed(ROOT), indent=1, ensure_ascii=False) + "\n",
+                                    encoding="utf-8", newline="\n")
+        print(f"Calendar: {len(read_calendar(ROOT))} events: {'PASS' if not errs else f'FAIL ({len(errs)} problems)'}")
+        return 1 if errs else 0
     if a.cmd == "check":
         errs = check(ROOT, a.base)
         for e in errs:

@@ -26,3 +26,5 @@ jobs:
           else
             python tools/verdict.py check
           fi
+      - name: Scorecard site matches the ledger (site/ is generated; run python tools/build_site.py)
+        run: python tools/build_site.py --check
