@@ -14,7 +14,7 @@ public before its outcome could be known, and nothing registered is ever edited 
 | `ledger/forecasts.jsonl` | One forecast per line, in feed contract v2 (`tic-feed/2`): the question, the probability and its ICD 203 term, confidence kept separate, the alternatives, the resolution rule and source, when the outcome becomes knowable (`resolution.known_at`) and who set the number (`approved_by`). |
 | `ledger/resolutions.jsonl` | One line per resolved forecast: the outcome (1 or 0), when, and the evidence link. |
 | `drafts/` | Forecasts being prepared. A draft enters the ledger only once its probability is approved. |
-| `calendar/events.json` | The event calendar: dated, resolvable events worth forecasting, each with the source of its date (`verified: false` where the date comes from secondary reporting). EASA bulletin expiries and State advisory changes arrive daily from [Cordon](https://metacog-osint.github.io/cordon/) (`origin: cordon`) and are linked to the forecasts that name them (`calendar-sync.yml`). |
+| `calendar/events.json` | The event calendar: dated, resolvable events worth forecasting, each with the source of its date (`verified: false` where the date comes from secondary reporting). EASA bulletin expiries and State advisory changes arrive daily from [Cordon](https://cordon.theintelligence.company/) (`origin: cordon`) and are linked to the forecasts that name them (`calendar-sync.yml`). |
 | `site/` | The public scorecard page and its data, generated from the above by `tools/build_site.py` (edit `site_src/`, never `site/`). `site/data/feed.geojson` and `site/data/calendar.geojson` are feed contract v2 feeds for COP. |
 
 A correction is a new line that supersedes the old one (`msg_type` update or cancel); scores use the latest live line

@@ -29,7 +29,7 @@ CALENDAR = Path("calendar") / "events.json"
 BINS = 10
 EVENT_KINDS = {"data_release", "rule_date", "bulletin_expiry", "mandate_deadline", "election", "summit", "deadline",
                "advisory_change"}
-CORDON_EVENTS = "https://metacog-osint.github.io/cordon/data/events.json"
+CORDON_EVENTS = "https://cordon.theintelligence.company/data/events.json"
 
 
 def now_utc() -> str:

@@ -156,7 +156,7 @@
         h("span", { "class": "tl-title" }, [e.title.replace(/^(Scheduled|On) [0-9-]+: /, ""),
           has ? h("span", { "class": "chip" }, [ev.forecast_ids.length === 1 ? "1 forecast" : ev.forecast_ids.length + " forecasts"]) : null,
           ev.occurred ? h("span", { "class": "chip" }, ["happened"]) : null,
-          ev.origin === "cordon" ? h("a", { "class": "chip", href: "https://metacog-osint.github.io/cordon/" }, ["from Cordon"]) : null,
+          ev.origin === "cordon" ? h("a", { "class": "chip", href: "https://cordon.theintelligence.company/" }, ["from Cordon"]) : null,
           ev.verified === false ? h("span", { "class": "chip conf" }, ["date unconfirmed"]) : null]),
         ]));
     });
