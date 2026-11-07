@@ -1,59 +1,6 @@
 {
- "as_of": "2026-10-31T20:27:38Z",
+ "as_of": "2026-11-07T23:08:00Z",
  "forecasts": [
-  {
-   "id": "verdict:2026-11-06:fao-ffpi-october-up",
-   "title": "FAO Food Price Index for October 2026 higher than September (6 Nov 2026 release)",
-   "summary": "5% chance FAO's 6 Nov release shows October's index above September's: October price data through 29 Oct put cereals, vegetable oils and meat lower and only sugar higher, about 2.4 points down.",
-   "probability": 0.05,
-   "likelihood": "Very unlikely (05-20%)",
-   "confidence": "moderate",
-   "raise_by": [
-    "resolve the contradicting line of evidence",
-    "a scored Verdict record for this method version"
-   ],
-   "published_at": "2026-10-31T20:27:38Z",
-   "approved_by": "Tom Brummer",
-   "event_date": "2026-11-06",
-   "known_at": "2026-11-06T08:00:00Z",
-   "resolve_by": "2026-11-07T23:59:00Z",
-   "rule": "Yes if, in FAO's 6 Nov 2026 release, the October 2026 FAO Food Price Index is higher than the September 2026 value printed in that same release (equal to one decimal is No).",
-   "resolution_source": "FAO World Food Situation: FAO Food Price Index page and the FFPI data file",
-   "void_if": "FAO publishes the October value before this forecast's published_at",
-   "alternatives": [
-    {
-     "hypothesis": "The October index is lower than September's",
-     "tell_apart": "the October and September values in FAO's 6 Nov release"
-    },
-    {
-     "hypothesis": "Unchanged to one decimal (counts as No)",
-     "tell_apart": "the same release"
-    }
-   ],
-   "countries": [],
-   "sources": [
-    {
-     "publisher": "FAO",
-     "url": "https://www.fao.org/worldfoodsituation/foodpricesindex/en/",
-     "descriptor": "September 2026 index 136.0 (+1.5%), sub-indices and weights; release calendar (6 Nov)"
-    },
-    {
-     "publisher": "International Grains Council",
-     "url": "https://igc.int/en/public-site/markets/marketinfo-goi.aspx",
-     "descriptor": "Grains and Oilseeds Index daily data to 29 Oct 2026: wheat -5.4%, maize -6.9%"
-    },
-    {
-     "publisher": "Malaysian Palm Oil Board",
-     "url": "https://bepi.mpob.gov.my/",
-     "descriptor": "Local delivered crude palm oil prices, October average -4.0% (not export quotes)"
-    }
-   ],
-   "status": "open",
-   "outcome": null,
-   "resolved_at": null,
-   "evidence": null,
-   "brier": null
-  },
   {
    "id": "verdict:2026-11-10:bis-affiliates-rule-stay-extended",
    "title": "BIS keeps the Affiliates (50 percent) rule suspended past 10 Nov 2026",
@@ -412,6 +359,59 @@
    "resolved_at": null,
    "evidence": null,
    "brier": null
+  },
+  {
+   "id": "verdict:2026-11-06:fao-ffpi-october-up",
+   "title": "FAO Food Price Index for October 2026 higher than September (6 Nov 2026 release)",
+   "summary": "5% chance FAO's 6 Nov release shows October's index above September's: October price data through 29 Oct put cereals, vegetable oils and meat lower and only sugar higher, about 2.4 points down.",
+   "probability": 0.05,
+   "likelihood": "Very unlikely (05-20%)",
+   "confidence": "moderate",
+   "raise_by": [
+    "resolve the contradicting line of evidence",
+    "a scored Verdict record for this method version"
+   ],
+   "published_at": "2026-10-31T20:27:38Z",
+   "approved_by": "Tom Brummer",
+   "event_date": "2026-11-06",
+   "known_at": "2026-11-06T08:00:00Z",
+   "resolve_by": "2026-11-07T23:59:00Z",
+   "rule": "Yes if, in FAO's 6 Nov 2026 release, the October 2026 FAO Food Price Index is higher than the September 2026 value printed in that same release (equal to one decimal is No).",
+   "resolution_source": "FAO World Food Situation: FAO Food Price Index page and the FFPI data file",
+   "void_if": "FAO publishes the October value before this forecast's published_at",
+   "alternatives": [
+    {
+     "hypothesis": "The October index is lower than September's",
+     "tell_apart": "the October and September values in FAO's 6 Nov release"
+    },
+    {
+     "hypothesis": "Unchanged to one decimal (counts as No)",
+     "tell_apart": "the same release"
+    }
+   ],
+   "countries": [],
+   "sources": [
+    {
+     "publisher": "FAO",
+     "url": "https://www.fao.org/worldfoodsituation/foodpricesindex/en/",
+     "descriptor": "September 2026 index 136.0 (+1.5%), sub-indices and weights; release calendar (6 Nov)"
+    },
+    {
+     "publisher": "International Grains Council",
+     "url": "https://igc.int/en/public-site/markets/marketinfo-goi.aspx",
+     "descriptor": "Grains and Oilseeds Index daily data to 29 Oct 2026: wheat -5.4%, maize -6.9%"
+    },
+    {
+     "publisher": "Malaysian Palm Oil Board",
+     "url": "https://bepi.mpob.gov.my/",
+     "descriptor": "Local delivered crude palm oil prices, October average -4.0% (not export quotes)"
+    }
+   ],
+   "status": "resolved",
+   "outcome": 0,
+   "resolved_at": "2026-11-07T23:08:00Z",
+   "evidence": "https://www.fao.org/worldfoodsituation/foodpricesindex/en/",
+   "brier": 0.0025
   }
  ]
 }
