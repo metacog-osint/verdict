@@ -6,6 +6,10 @@
     python tools/verdict.py score [--out scores.json]    Brier score, Murphy decomposition, skill, by program
     python tools/verdict.py due [--days 14] [--markdown]  forecasts to resolve now, and those coming up
     python tools/verdict.py calendar [--feed out.geojson] check the event calendar; export it as a contract v2 feed
+    python tools/verdict.py ingest-feed <path-or-url> [--drafts drafts/ingested.json] [--approve "<name>"]
+    python tools/verdict.py auto-resolve [--now <iso>] [--apply --by "<name>"] [--out drafts/resolutions_proposed.json]
+                                         propose resolutions for due forecasts (tools/auto_resolve.py); --apply
+                                         writes only those that need no review, under the named resolver
 
 The ledger is two append-only JSON-lines files in git: ledger/forecasts.jsonl (feed contract tic-feed/2 forecast
 items, each with its resolution rule written at issue time) and ledger/resolutions.jsonl. A registered line is never
@@ -62,7 +66,8 @@ def append_lines(path: Path, items: list[dict]) -> None:
 
 def forecast_problems(item: dict, regs: dict) -> list[str]:
     """Contract errors plus Verdict's own rules for one ledger forecast."""
-    errs = [f"{std}: {m}" for std, sev, m in contract.check(item, regs) if sev == "error"]
+    item_regs = regs if item.get("program") == "verdict" else None
+    errs = [f"{std}: {m}" for std, sev, m in contract.check(item, item_regs) if sev == "error"]
     if item.get("kind") != "forecast":
         errs.append("verdict: only kind=forecast items go in the ledger")
     if item.get("status") != "actual":
@@ -267,6 +272,42 @@ def append_only(root: Path, base: str) -> list[str]:
     return errs
 
 
+def ingest_feed(root: Path, feed_doc: dict, draft_path: Path | None = None,
+                approved: str | None = None, when: str | None = None) -> dict:
+    """Ingest kind=forecast items from a contract-v2 feed into a drafts file, and optionally register them."""
+    when = when or now_utc()
+    t_when = _t(when)
+    draft_path = draft_path or (root / "drafts" / "ingested.json")
+    doc = json.loads(draft_path.read_text(encoding="utf-8")) if draft_path.exists() else {"drafts": []}
+    existing_ledger = {f.get("id") for f in read_lines(root / FORECASTS)}
+    existing_drafts = {d.get("item", {}).get("id") for d in doc.get("drafts", [])}
+    added_ids = []
+    skipped = 0
+    for feat in feed_doc.get("features") or []:
+        props, geom = contract.split(feat)
+        if props.get("kind") != "forecast":
+            continue
+        res = props.get("resolution") or {}
+        known_at = res.get("known_at")
+        fid = props.get("id")
+        if not fid or not known_at:
+            skipped += 1
+            continue
+        if fid in existing_ledger or fid in existing_drafts or t_when >= _t(known_at):
+            skipped += 1
+            continue
+        item = {k: v for k, v in props.items()}
+        item["geometry"] = geom
+        item["status"] = "draft"
+        doc.setdefault("drafts", []).append({"approved": approved, "item": item})
+        existing_drafts.add(fid)
+        added_ids.append(fid)
+    draft_path.parent.mkdir(parents=True, exist_ok=True)
+    draft_path.write_text(json.dumps(doc, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
+    registered = register(draft_path, root=root, when=when) if approved else []
+    return {"ingested": added_ids, "registered": registered, "skipped": skipped, "draft_path": str(draft_path)}
+
+
 def register(draft_path: Path, root: Path = ROOT, when: str | None = None) -> list[str]:
     """Append every approved draft to the ledger with status actual and published_at = now; return their ids."""
     doc = json.loads(draft_path.read_text(encoding="utf-8"))
@@ -361,7 +402,33 @@ def main(argv=None) -> int:
     ca = sub.add_parser("calendar")
     ca.add_argument("--feed")
     ca.add_argument("--sync", nargs="?", const=CORDON_EVENTS, help="merge another program's events (default: Cordon)")
+    ig = sub.add_parser("ingest-feed")
+    ig.add_argument("source", help="path or URL to a contract-v2 feed.geojson")
+    ig.add_argument("--drafts", default="drafts/ingested.json")
+    ig.add_argument("--approve", default=None)
+    ar = sub.add_parser("auto-resolve")
+    ar.add_argument("--now", default=None, help="ISO UTC time that decides what is due (default: now)")
+    ar.add_argument("--apply", action="store_true",
+                    help="write proposals that need no review to ledger/resolutions.jsonl (needs --by)")
+    ar.add_argument("--by", default=None, help="the person resolving, recorded as resolved_by")
+    ar.add_argument("--out", default="drafts/resolutions_proposed.json")
     a = ap.parse_args(argv)
+    if a.cmd == "auto-resolve":
+        import auto_resolve
+        res = auto_resolve.auto_resolve(ROOT, now=a.now, apply=a.apply, by=a.by, out_path=ROOT / a.out)
+        print(json.dumps(res, indent=2, ensure_ascii=False))
+        return 0
+    if a.cmd == "ingest-feed":
+        if a.source.startswith(("http://", "https://")):
+            import urllib.request
+            req = urllib.request.Request(a.source, headers={"User-Agent": "Verdict (The Intelligence Company)"})
+            with urllib.request.urlopen(req, timeout=40) as r:
+                feed_doc = json.loads(r.read(8_000_000))
+        else:
+            feed_doc = json.loads(Path(a.source).read_text(encoding="utf-8"))
+        res = ingest_feed(ROOT, feed_doc, draft_path=ROOT / a.drafts, approved=a.approve)
+        print(json.dumps(res, indent=2))
+        return 0
     if a.cmd == "due":
         d = due(ROOT, days=a.days)
         print(due_markdown(d) if a.markdown else json.dumps(d, indent=2), end="" if a.markdown else "\n")
