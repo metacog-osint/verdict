@@ -1,61 +1,6 @@
 {
- "as_of": "2026-11-07T23:08:00Z",
+ "as_of": "2026-11-12T23:46:14Z",
  "forecasts": [
-  {
-   "id": "verdict:2026-11-10:bis-affiliates-rule-stay-extended",
-   "title": "BIS keeps the Affiliates (50 percent) rule suspended past 10 Nov 2026",
-   "summary": "85% chance BIS files a further stay before the rule returns automatically on 10 Nov: Treasury and China's commerce ministry say the trade truce runs to 10 Jan 2027, and USTR has proposed extending its matching suspension; BIS had filed nothing by 30 Oct.",
-   "probability": 0.85,
-   "likelihood": "Very likely (80-95%)",
-   "confidence": "moderate",
-   "raise_by": [
-    "a scored Verdict record for this method version"
-   ],
-   "published_at": "2026-10-31T20:27:38Z",
-   "approved_by": "Tom Brummer",
-   "event_date": "2026-11-10",
-   "known_at": "2026-11-10T05:00:00Z",
-   "resolve_by": "2026-11-18T04:59:00Z",
-   "rule": "Yes if a BIS Federal Register document that stays or delays the 10 Nov 2026 reimposition of the Affiliates rule (90 FR 47201; stay 90 FR 50857), with an effective date on or before 10 Nov 2026, is on public inspection or published by 11:59 PM ET on 17 Nov 2026. No otherwise.",
-   "resolution_source": "federalregister.gov (RIN 0694-AK34 family) and the eCFR for 15 CFR 744",
-   "void_if": "a deciding BIS document was on public inspection before this forecast's published_at",
-   "alternatives": [
-    {
-     "hypothesis": "The rule returns to effect on 10 Nov 2026",
-     "tell_apart": "a BIS stay document on Federal Register public inspection by 10 Nov"
-    },
-    {
-     "hypothesis": "BIS replaces the rule with a modified version",
-     "tell_apart": "the text of any BIS document filed 2 to 10 Nov"
-    }
-   ],
-   "countries": [
-    "US",
-    "CN"
-   ],
-   "sources": [
-    {
-     "publisher": "Federal Register (BIS)",
-     "url": "https://www.federalregister.gov/documents/2025/11/12/2025-19846/one-year-suspension-of-expansion-of-end-user-controls-for-affiliates-of-certain-listed-entities",
-     "descriptor": "The one-year stay: amendments return 'Effective November 10, 2026'"
-    },
-    {
-     "publisher": "Federal Register (USTR)",
-     "url": "https://www.federalregister.gov/documents/2026/10/26/2026-21755/request-for-comments-on-further-suspension-of-section-301-action-chinas-targeting-of-the-maritime",
-     "descriptor": "USTR proposes extending its port-fee suspension to 9 Jan 2027 (26 Oct 2026)"
-    },
-    {
-     "publisher": "Export Compliance Daily",
-     "url": "https://exportcompliancedaily.com/article/2026/09/25/uschina-trade-truce-including-bis-affiliates-rule-extended-2-months-us-says-2609240049",
-     "descriptor": "Unnamed US official: the two-month truce extension includes the Affiliates rule"
-    }
-   ],
-   "status": "open",
-   "outcome": null,
-   "resolved_at": null,
-   "evidence": null,
-   "brier": null
-  },
   {
    "id": "verdict:2026-11-16:easa-gulf-czib-renewed",
    "title": "EASA renews its Persian Gulf and Gulf of Oman conflict-zone bulletin (CZIB-2026-07R3) past 16 Nov 2026",
@@ -412,6 +357,61 @@
    "resolved_at": "2026-11-07T23:08:00Z",
    "evidence": "https://www.fao.org/worldfoodsituation/foodpricesindex/en/",
    "brier": 0.0025
+  },
+  {
+   "id": "verdict:2026-11-10:bis-affiliates-rule-stay-extended",
+   "title": "BIS keeps the Affiliates (50 percent) rule suspended past 10 Nov 2026",
+   "summary": "85% chance BIS files a further stay before the rule returns automatically on 10 Nov: Treasury and China's commerce ministry say the trade truce runs to 10 Jan 2027, and USTR has proposed extending its matching suspension; BIS had filed nothing by 30 Oct.",
+   "probability": 0.85,
+   "likelihood": "Very likely (80-95%)",
+   "confidence": "moderate",
+   "raise_by": [
+    "a scored Verdict record for this method version"
+   ],
+   "published_at": "2026-10-31T20:27:38Z",
+   "approved_by": "Tom Brummer",
+   "event_date": "2026-11-10",
+   "known_at": "2026-11-10T05:00:00Z",
+   "resolve_by": "2026-11-18T04:59:00Z",
+   "rule": "Yes if a BIS Federal Register document that stays or delays the 10 Nov 2026 reimposition of the Affiliates rule (90 FR 47201; stay 90 FR 50857), with an effective date on or before 10 Nov 2026, is on public inspection or published by 11:59 PM ET on 17 Nov 2026. No otherwise.",
+   "resolution_source": "federalregister.gov (RIN 0694-AK34 family) and the eCFR for 15 CFR 744",
+   "void_if": "a deciding BIS document was on public inspection before this forecast's published_at",
+   "alternatives": [
+    {
+     "hypothesis": "The rule returns to effect on 10 Nov 2026",
+     "tell_apart": "a BIS stay document on Federal Register public inspection by 10 Nov"
+    },
+    {
+     "hypothesis": "BIS replaces the rule with a modified version",
+     "tell_apart": "the text of any BIS document filed 2 to 10 Nov"
+    }
+   ],
+   "countries": [
+    "US",
+    "CN"
+   ],
+   "sources": [
+    {
+     "publisher": "Federal Register (BIS)",
+     "url": "https://www.federalregister.gov/documents/2025/11/12/2025-19846/one-year-suspension-of-expansion-of-end-user-controls-for-affiliates-of-certain-listed-entities",
+     "descriptor": "The one-year stay: amendments return 'Effective November 10, 2026'"
+    },
+    {
+     "publisher": "Federal Register (USTR)",
+     "url": "https://www.federalregister.gov/documents/2026/10/26/2026-21755/request-for-comments-on-further-suspension-of-section-301-action-chinas-targeting-of-the-maritime",
+     "descriptor": "USTR proposes extending its port-fee suspension to 9 Jan 2027 (26 Oct 2026)"
+    },
+    {
+     "publisher": "Export Compliance Daily",
+     "url": "https://exportcompliancedaily.com/article/2026/09/25/uschina-trade-truce-including-bis-affiliates-rule-extended-2-months-us-says-2609240049",
+     "descriptor": "Unnamed US official: the two-month truce extension includes the Affiliates rule"
+    }
+   ],
+   "status": "resolved",
+   "outcome": 1,
+   "resolved_at": "2026-11-12T23:46:14Z",
+   "evidence": "https://www.federalregister.gov/documents/2026/11/09/2026-22793/extension-of-the-suspension-of-expansion-of-end-user-controls-for-affiliates-of-certain-listed",
+   "brier": 0.0225
   }
  ]
 }

@@ -2,7 +2,7 @@
  "type": "FeatureCollection",
  "contract": "tic-feed/2",
  "program": "verdict",
- "generated_at": "2026-11-07T23:08:00Z",
+ "generated_at": "2026-11-12T23:46:14Z",
  "licence": "Verdict (MIT); each event's source as cited",
  "attribution": "Verdict event calendar, The Intelligence Company",
  "language_key": "https://github.com/metacog-osint/tic-doctrine/blob/main/docs/language-key.md",
@@ -24,7 +24,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-10-31T00:00:00Z",
-    "published_at": "2026-11-07T23:08:00Z",
+    "published_at": "2026-11-12T23:46:14Z",
     "valid_until": "2026-11-06T00:00:00Z",
     "countries": [],
     "requirement_ids": [
@@ -78,7 +78,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-10-31T00:00:00Z",
-    "published_at": "2026-11-07T23:08:00Z",
+    "published_at": "2026-11-12T23:46:14Z",
     "valid_until": "2026-11-10T00:00:00Z",
     "countries": [
      "US",
@@ -135,7 +135,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-10-31T00:00:00Z",
-    "published_at": "2026-11-07T23:08:00Z",
+    "published_at": "2026-11-12T23:46:14Z",
     "valid_until": "2026-11-16T00:00:00Z",
     "countries": [
      "IR"
@@ -191,7 +191,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-10-31T00:00:00Z",
-    "published_at": "2026-11-07T23:08:00Z",
+    "published_at": "2026-11-12T23:46:14Z",
     "valid_until": "2026-11-16T00:00:00Z",
     "countries": [
      "IQ"
@@ -247,7 +247,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-10-31T00:00:00Z",
-    "published_at": "2026-11-07T23:08:00Z",
+    "published_at": "2026-11-12T23:46:14Z",
     "valid_until": "2026-11-16T00:00:00Z",
     "countries": [
      "LB"
@@ -303,7 +303,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-10-31T00:00:00Z",
-    "published_at": "2026-11-07T23:08:00Z",
+    "published_at": "2026-11-12T23:46:14Z",
     "valid_until": "2026-11-16T00:00:00Z",
     "countries": [
      "BH",
@@ -363,7 +363,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-10-31T00:00:00Z",
-    "published_at": "2026-11-07T23:08:00Z",
+    "published_at": "2026-11-12T23:46:14Z",
     "valid_until": "2026-11-16T00:00:00Z",
     "countries": [
      "JO"
@@ -419,7 +419,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-10-31T00:00:00Z",
-    "published_at": "2026-11-07T23:08:00Z",
+    "published_at": "2026-11-12T23:46:14Z",
     "valid_until": "2026-11-16T00:00:00Z",
     "countries": [
      "SA"
@@ -475,7 +475,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-10-31T00:00:00Z",
-    "published_at": "2026-11-07T23:08:00Z",
+    "published_at": "2026-11-12T23:46:14Z",
     "valid_until": "2026-11-18T00:00:00Z",
     "countries": [
      "CN"
@@ -529,7 +529,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-10-31T00:00:00Z",
-    "published_at": "2026-11-07T23:08:00Z",
+    "published_at": "2026-11-12T23:46:14Z",
     "valid_until": "2026-11-30T00:00:00Z",
     "countries": [
      "SY"
@@ -583,7 +583,7 @@
     "status_class": "claimed",
     "product_category": "current",
     "data_as_of": "2026-10-31T00:00:00Z",
-    "published_at": "2026-11-07T23:08:00Z",
+    "published_at": "2026-11-12T23:46:14Z",
     "valid_until": "2026-12-15T00:00:00Z",
     "countries": [
      "LY"
@@ -637,7 +637,7 @@
     "status_class": "claimed",
     "product_category": "current",
     "data_as_of": "2026-10-31T00:00:00Z",
-    "published_at": "2026-11-07T23:08:00Z",
+    "published_at": "2026-11-12T23:46:14Z",
     "valid_until": "2027-01-09T00:00:00Z",
     "countries": [
      "US",
@@ -692,7 +692,7 @@
     "status_class": "claimed",
     "product_category": "current",
     "data_as_of": "2026-10-31T00:00:00Z",
-    "published_at": "2026-11-07T23:08:00Z",
+    "published_at": "2026-11-12T23:46:14Z",
     "valid_until": "2027-01-10T00:00:00Z",
     "countries": [
      "US",
@@ -747,7 +747,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-10-31T00:00:00Z",
-    "published_at": "2026-11-07T23:08:00Z",
+    "published_at": "2026-11-12T23:46:14Z",
     "valid_until": "2027-01-31T00:00:00Z",
     "countries": [
      "LY"
@@ -801,7 +801,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-10-31T00:00:00Z",
-    "published_at": "2026-11-07T23:08:00Z",
+    "published_at": "2026-11-12T23:46:14Z",
     "valid_until": "2027-01-31T00:00:00Z",
     "countries": [
      "AF"
@@ -855,7 +855,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-10-31T00:00:00Z",
-    "published_at": "2026-11-07T23:08:00Z",
+    "published_at": "2026-11-12T23:46:14Z",
     "valid_until": "2027-01-31T00:00:00Z",
     "countries": [
      "PK"
@@ -909,7 +909,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-10-31T00:00:00Z",
-    "published_at": "2026-11-07T23:08:00Z",
+    "published_at": "2026-11-12T23:46:14Z",
     "valid_until": "2027-01-31T00:00:00Z",
     "countries": [
      "UA"
@@ -963,7 +963,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-10-31T00:00:00Z",
-    "published_at": "2026-11-07T23:08:00Z",
+    "published_at": "2026-11-12T23:46:14Z",
     "valid_until": "2027-01-31T00:00:00Z",
     "countries": [
      "SD"
@@ -1017,7 +1017,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-10-31T00:00:00Z",
-    "published_at": "2026-11-07T23:08:00Z",
+    "published_at": "2026-11-12T23:46:14Z",
     "valid_until": "2027-01-31T00:00:00Z",
     "countries": [
      "RU"
@@ -1071,7 +1071,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-10-31T00:00:00Z",
-    "published_at": "2026-11-07T23:08:00Z",
+    "published_at": "2026-11-12T23:46:14Z",
     "valid_until": "2027-04-30T00:00:00Z",
     "countries": [
      "ML"
@@ -1125,7 +1125,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-10-31T00:00:00Z",
-    "published_at": "2026-11-07T23:08:00Z",
+    "published_at": "2026-11-12T23:46:14Z",
     "valid_until": "2027-04-30T00:00:00Z",
     "countries": [
      "SO"
@@ -1179,7 +1179,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-10-31T00:00:00Z",
-    "published_at": "2026-11-07T23:08:00Z",
+    "published_at": "2026-11-12T23:46:14Z",
     "valid_until": "2027-04-30T00:00:00Z",
     "countries": [
      "YE"

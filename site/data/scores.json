@@ -1,26 +1,26 @@
 {
- "generated_at": "2026-11-07T23:08:00Z",
+ "generated_at": "2026-11-12T23:46:14Z",
  "registered": 8,
- "resolved": 1,
+ "resolved": 2,
  "by_program": {
   "all": {
-   "n": 1,
-   "brier": 0.0025,
-   "base_rate": 0.0,
-   "reliability": 0.0025,
-   "resolution": 0.0,
-   "uncertainty": 0.0,
-   "skill_vs_base_rate": null,
+   "n": 2,
+   "brier": 0.0125,
+   "base_rate": 0.5,
+   "reliability": 0.0125,
+   "resolution": 0.25,
+   "uncertainty": 0.25,
+   "skill_vs_base_rate": 0.95,
    "note": "decomposition is approximate within bins; skill_vs_base_rate uses the sample's own base rate"
   },
   "verdict": {
-   "n": 1,
-   "brier": 0.0025,
-   "base_rate": 0.0,
-   "reliability": 0.0025,
-   "resolution": 0.0,
-   "uncertainty": 0.0,
-   "skill_vs_base_rate": null,
+   "n": 2,
+   "brier": 0.0125,
+   "base_rate": 0.5,
+   "reliability": 0.0125,
+   "resolution": 0.25,
+   "uncertainty": 0.25,
+   "skill_vs_base_rate": 0.95,
    "note": "decomposition is approximate within bins; skill_vs_base_rate uses the sample's own base rate"
   }
  }
