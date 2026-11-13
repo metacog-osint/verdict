@@ -359,6 +359,71 @@ class AutoResolve(unittest.TestCase):
         res = self._run(None, now="2026-11-08T12:00:00Z", weather_archives=part)
         self.assertIn("all 24 hours", res["skipped"][0]["reason"])
 
+    # The exact text Blackout writes (blackout/eaglei.py verdict_rule; Blackout's test holds the same text).
+    EAGLEI_RULE = ("Yes if EAGLE-I's outage history (ORNL, figshare doi:10.6084/m9.figshare.24237376) shows California "
+                   "(CA) with more than {line} customers out (its counties summed in each 15-minute run; a run where a "
+                   "county shows more than 1.1 times EAGLE-I's modelled customers for it left out) in 4 or more runs, "
+                   "with no more than 3 runs under the line between them, between {a} and {b} UTC. No otherwise.")
+
+    def _eaglei_data(self):
+        """Real EAGLE-I rows (tests/fixtures/eaglei/MANIFEST.json), read the way fetch_eaglei reads a year file."""
+        import gzip
+        import auto_resolve
+
+        fx = ROOT / "tests" / "fixtures" / "eaglei"
+        caps = auto_resolve.eaglei_caps((fx / "MCC_CA.csv").read_text(encoding="utf-8"))
+        with gzip.open(fx / "eaglei_outages_2025_CA_2025-01-08T12Z_24h.csv.gz", "rt", encoding="utf-8-sig",
+                       newline="") as f:
+            got = auto_resolve.read_eaglei_year(f, {"CA"}, caps)
+        return {2025: {**got, "file": "eaglei_outages_2025.csv", "md5_ok": True}, "listed": list(range(2014, 2026))}
+
+    def _eaglei_forecast(self, fid, line, a, b, known_at):
+        fc = copy.deepcopy(ITEM)
+        fc.update({
+            "id": fid, "program": "blackout", "requirement_ids": ["BO-PIR-8"], "countries": ["US"],
+            "valid_until": known_at,
+            "resolution": {"rule": self.EAGLEI_RULE.format(line=line, a=a, b=b),
+                           "source": "ORNL EAGLE-I outage history, figshare https://doi.org/10.6084/m9.figshare.24237376 "
+                                     "(CC BY 4.0)",
+                           "known_at": known_at, "resolve_by": "2027-06-30T00:00:00Z"},
+        })
+        return fc
+
+    def test_blackout_us_outage_resolves_against_eaglei_history(self):
+        import auto_resolve
+
+        items = [
+            self._eaglei_forecast("blackout:us-power:ca:2025-01-08:500k", "500,000", "2025-01-08 12:00",
+                                  "2025-01-09 12:00", "2025-01-09T12:00:00Z"),
+            self._eaglei_forecast("blackout:us-power:ca:2025-01-08:1m", "1,000,000", "2025-01-08 12:00",
+                                  "2025-01-09 12:00", "2025-01-09T12:00:00Z"),
+            self._eaglei_forecast("blackout:us-power:ca:2026-11-14:50k", "50,000", "2026-11-14 00:00",
+                                  "2026-11-21 00:00", "2026-11-21T00:00:00Z"),
+        ]
+        feed_doc = {"type": "FeatureCollection", "contract": "tic-feed/2", "program": "blackout",
+                    "features": [{"type": "Feature", "geometry": None, "properties": it} for it in items]}
+        ing = verdict.ingest_feed(self.tmp, feed_doc, draft_path=self.drafts, approved="Tom Brummer",
+                                  when="2025-01-01T12:00:00Z")
+        self.assertEqual(len(ing["registered"]), 3)
+        res = auto_resolve.auto_resolve(root=self.tmp, now="2026-11-22T00:00:00Z", apply=True, by="Tom Brummer",
+                                        eaglei_data=self._eaglei_data(), fetch=False)
+        by_id = {r["id"]: r for r in res["proposed"]}
+        yes = by_id["blackout:us-power:ca:2025-01-08:500k"]
+        self.assertEqual((yes["outcome"], yes["needs_review"], yes["rule_type"]), (1, [], "blackout_eaglei"))
+        self.assertIn("from 2025-01-08 23:15 to 2025-01-09 02:00 UTC", yes["note"])
+        self.assertIn("510,705 or more held over 4 runs", yes["note"])
+        # Southern California Edison's broken report (Ventura County at 3.4 times its customers, 21:00-22:30 UTC)
+        # would read over a million; it is left out, so the No is held for a person to check, never applied.
+        no = by_id["blackout:us-power:ca:2025-01-08:1m"]
+        self.assertEqual(no["outcome"], 0)
+        self.assertIn("broken report left out", no["needs_review"][0])
+        self.assertEqual(res["applied"], ["blackout:us-power:ca:2025-01-08:500k"])
+        self.assertEqual(res["held_for_review"], ["blackout:us-power:ca:2025-01-08:1m"])
+        # A year figshare has not published yet stays due and unresolved.
+        skip = {r["id"]: r["reason"] for r in res["skipped"]}
+        self.assertEqual(skip["blackout:us-power:ca:2026-11-14:50k"],
+                         "EAGLE-I has not published 2026 on figshare yet (it lists 2014-2025)")
+
     def test_wake_portwatch_auto_resolve_and_program_calendar_sync(self):
         import auto_resolve
         from tic_doctrine import registers

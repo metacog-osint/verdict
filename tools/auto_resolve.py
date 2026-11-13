@@ -10,6 +10,7 @@ Rules it reads:
    METAR/SYNOP archive as its source; this module reads Open-Meteo's reanalysis archive at the station's
    coordinates instead, so every Vis proposal is held for a person to check against the station's reports.
 3. Wake IMF PortWatch chokepoint transits.
+4. Blackout US power outages against ORNL's EAGLE-I outage history (figshare), once figshare lists that year.
 
 Every result is a proposal in `drafts/resolutions_proposed.json`. A proposal that lists `needs_review` items is
 never written to the ledger by this module. `--apply` writes only the rest to `ledger/resolutions.jsonl`, and only
@@ -23,6 +24,7 @@ import json
 import re
 import urllib.parse
 import urllib.request
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import verdict
@@ -319,6 +321,222 @@ def evaluate_portwatch_rule(fc: dict, rule: str, portwatch_data: dict | None = N
             "rule_type": "wake_portwatch", "needs_review": []}
 
 
+# ---- Blackout US power: EAGLE-I outage history ----------------------------------------------------------------
+# Ground truth for US outage forecasts (Tom, 13 Nov 2026: "use EAGLE-I"). ORNL's EAGLE-I history on figshare
+# (doi:10.6084/m9.figshare.24237376, CC BY 4.0): one row per county and 15-minute run, UTC, zero rows left out. A
+# year's file comes out the next year (2024 on 10 Apr 2025, 2025 on 24 Feb 2026), so a forecast it settles stays
+# due and skipped until figshare lists that year; nothing is resolved from another source in the meantime. The rule
+# is the one Blackout's base rates use (blackout/eaglei.py): a state's total is its counties summed per run; a run
+# where any of its counties shows more than 1.1 times EAGLE-I's modelled customers for it (MCC.csv) is a broken report
+# and left out (7 runs on 8 Jan 2025 have Ventura County at 1,077,426 out of 317,658); runs missing or left out are
+# unknown and neither join nor split; Yes needs 4 or more runs above the line inside the window, with no more than 3
+# known runs under the line between them and no more than 6 hours from one to the next. The file is read from
+# figshare itself and checked against figshare's MD5 (about 1.0-1.4 GB a year, streamed once for every due forecast
+# in that year). A No with unknown runs adding up to an hour or more in a row in the window is held for review.
+
+EAGLEI_RE = re.compile(
+    r"EAGLE-I's outage history \(ORNL, figshare doi:10\.6084/m9\.figshare\.24237376\) shows (?P<name>[A-Za-z .]+?) "
+    r"\((?P<st>[A-Z]{2})\) with more than (?P<line>[\d,]+) customers out \(its counties summed in each 15-minute "
+    r"run; a run where a county shows more than 1\.1 times EAGLE-I's modelled customers for it left out\) in 4 or "
+    r"more runs, with no more than 3 runs under the line between them, between "
+    r"(?P<a>\d{4}-\d{2}-\d{2} \d{2}:\d{2}) and (?P<b>\d{4}-\d{2}-\d{2} \d{2}:\d{2}) UTC\."
+)
+EAGLEI_API = "https://api.figshare.com/v2/articles/24237376"
+EAGLEI_DOI = "https://doi.org/10.6084/m9.figshare.24237376"
+EAGLEI_FIPS = {
+    "01": "AL", "02": "AK", "04": "AZ", "05": "AR", "06": "CA", "08": "CO", "09": "CT", "10": "DE", "11": "DC",
+    "12": "FL", "13": "GA", "15": "HI", "16": "ID", "17": "IL", "18": "IN", "19": "IA", "20": "KS", "21": "KY",
+    "22": "LA", "23": "ME", "24": "MD", "25": "MA", "26": "MI", "27": "MN", "28": "MS", "29": "MO", "30": "MT",
+    "31": "NE", "32": "NV", "33": "NH", "34": "NJ", "35": "NM", "36": "NY", "37": "NC", "38": "ND", "39": "OH",
+    "40": "OK", "41": "OR", "42": "PA", "44": "RI", "45": "SC", "46": "SD", "47": "TN", "48": "TX", "49": "UT",
+    "50": "VT", "51": "VA", "53": "WA", "54": "WV", "55": "WI", "56": "WY", "60": "AS", "66": "GU", "69": "MP", "72": "PR", "78": "VI",
+}
+RUN_S = 900          # EAGLE-I's 15-minute collection run
+JOIN_BELOW = 3       # at most 3 known runs under the line (an hour) between runs above it
+JOIN_MAX_RUNS = 24   # and no more than 6 hours from one run above it to the next
+MIN_READINGS = 4     # an hour of 15-minute runs above the line
+
+
+def _run(t: datetime) -> int:
+    return int(t.replace(tzinfo=timezone.utc).timestamp() // RUN_S)
+
+
+def _utc(s: str) -> datetime:
+    return datetime.strptime(s, "%Y-%m-%d %H:%M").replace(tzinfo=timezone.utc)
+
+
+def eaglei_spec(rule: str) -> dict | None:
+    m = EAGLEI_RE.search(rule)
+    if not m:
+        return None
+    a, b = _utc(m.group("a")), _utc(m.group("b"))
+    return {"state": m.group("st"), "name": m.group("name"), "line": int(m.group("line").replace(",", "")),
+            "start": a, "end": b, "years": list(range(a.year, (b - timedelta(minutes=1)).year + 1))}
+
+
+def eaglei_caps(text: str) -> dict[str, int]:
+    """MCC.csv (County_FIPS, Customers) -> {5-digit FIPS: 1.1 x modelled customers}."""
+    out = {}
+    for r in csv.DictReader(io.StringIO(text.lstrip("﻿"))):
+        try:
+            out[r["County_FIPS"].strip().zfill(5)] = int(float(r["Customers"]) * 1.1)
+        except (KeyError, ValueError):
+            continue
+    return out
+
+
+def read_eaglei_year(lines, states: set[str], caps: dict[str, int] | None = None) -> dict:
+    """One EAGLE-I year CSV (text lines) -> {"totals": {state: {run: customers out}}, "runs": set of runs with rows,
+    "dropped": {state: set of runs left out as broken reports}}.
+
+    Columns by position (fips_code, county, state, count, run_start_time): the 2023 file calls the count "sum", the
+    2024 file adds a column and sorts by county, the 2020 file has empty counts (no customers out)."""
+    caps = caps or {}
+    totals: dict[str, dict[int, int]] = {s: {} for s in states}
+    dropped: dict[str, set[int]] = {s: set() for s in states}
+    runs: set[int] = set()
+    cache: dict[str, int | None] = {}
+    reader = csv.reader(lines)
+    head = next(reader, None)
+    if not head or head[0].strip().lstrip("﻿") != "fips_code":
+        raise ValueError(f"not an EAGLE-I outage file: {head!r}")
+    for r in reader:
+        if len(r) < 5:
+            continue
+        i = cache.get(r[4], -1)
+        if i == -1:
+            try:
+                i = _run(datetime.strptime(r[4].strip(), "%Y-%m-%d %H:%M:%S"))
+            except ValueError:
+                i = None
+            cache[r[4]] = i
+        if i is None:
+            continue
+        runs.add(i)
+        fips = r[0].strip().zfill(5)
+        st = EAGLEI_FIPS.get(fips[:2])
+        if st not in totals or not r[3].strip():
+            continue
+        try:
+            n = int(float(r[3]))
+        except ValueError:
+            continue
+        if n > caps.get(fips, n):
+            dropped[st].add(i)
+        if n > 0:
+            totals[st][i] = totals[st].get(i, 0) + n
+    for st, gone in dropped.items():
+        for i in gone:
+            totals[st].pop(i, None)
+    return {"totals": totals, "runs": runs, "dropped": dropped}
+
+
+def fetch_eaglei(needs: dict[int, set[str]]) -> dict:
+    """{year: read year} for each needed year figshare lists; {"missing": [...], "listed": [...]} for the rest."""
+    import hashlib
+
+    with urllib.request.urlopen(urllib.request.Request(EAGLEI_API, headers=UA), timeout=60) as r:
+        rec = json.loads(r.read().decode("utf-8"))
+    files = {f["name"]: f for f in rec.get("files", [])}
+    caps = {}
+    if "MCC.csv" in files:
+        with urllib.request.urlopen(urllib.request.Request(files["MCC.csv"]["download_url"], headers=UA),
+                                    timeout=60) as r:
+            caps = eaglei_caps(r.read().decode("utf-8-sig"))
+    out: dict = {"version": rec.get("version"),
+                 "listed": sorted(int(n[15:19]) for n in files if n.startswith("eaglei_outages_") and n[15:19].isdigit())}
+    for year, states in sorted(needs.items()):
+        f = files.get(f"eaglei_outages_{year}.csv")
+        if not f:
+            continue
+        md5 = hashlib.md5()
+
+        class _Hash(io.RawIOBase):
+            def __init__(self, raw):
+                self.raw = raw
+
+            def readable(self):
+                return True
+
+            def readinto(self, b):
+                chunk = self.raw.read(len(b))
+                b[:len(chunk)] = chunk
+                md5.update(chunk)
+                return len(chunk)
+
+        with urllib.request.urlopen(urllib.request.Request(f["download_url"], headers=UA), timeout=300) as raw:
+            text = io.TextIOWrapper(io.BufferedReader(_Hash(raw), 1 << 20), encoding="utf-8-sig", newline="")
+            got = read_eaglei_year(text, states, caps)
+        ok = md5.hexdigest() == f.get("computed_md5")
+        out[year] = {**got, "file": f["name"], "url": f["download_url"], "md5_ok": ok}
+    return out
+
+
+def evaluate_eaglei_rule(fc: dict, rule: str, eaglei_data: dict | None = None) -> dict | None:
+    """A US state outage rule against EAGLE-I's history (see the comment above EAGLEI_RE)."""
+    spec = eaglei_spec(rule)
+    if not spec:
+        return None
+    fid = fc["id"]
+    if eaglei_data is None:
+        return _skip(fid, "no EAGLE-I history supplied")
+    lacking = [y for y in spec["years"] if y not in eaglei_data]
+    if lacking:
+        listed = eaglei_data.get("listed") or []
+        return _skip(fid, f"EAGLE-I has not published {', '.join(map(str, lacking))} on figshare yet"
+                          + (f" (it lists {listed[0]}-{listed[-1]})" if listed else ""))
+    a, b = _run(spec["start"]), _run(spec["end"])
+    series: dict[int, int] = {}
+    runs: set[int] = set()
+    gone: set[int] = set()
+    review = []
+    for y in spec["years"]:
+        d = eaglei_data[y]
+        if d.get("md5_ok") is False:
+            review.append(f"{d.get('file', y)} did not match figshare's MD5")
+        series.update({i: n for i, n in d["totals"].get(spec["state"], {}).items() if a <= i < b})
+        runs |= {i for i in d["runs"] if a <= i < b}
+        gone |= {i for i in d.get("dropped", {}).get(spec["state"], ()) if a <= i < b}
+    unknown = (set(range(a, b)) - runs) | gone
+    above = sorted(i for i, n in series.items() if n > spec["line"])
+    spans, cur = [], None
+    for i in above:
+        known_between = (i - cur[1] - 1) - sum(1 for k in range(cur[1] + 1, i) if k in unknown) if cur else 0
+        if cur and i - cur[1] <= JOIN_MAX_RUNS and known_between <= JOIN_BELOW:
+            cur[1], cur[2] = i, cur[2] + 1
+        else:
+            cur = [i, i, 1]
+            spans.append(cur)
+    hits = [s for s in spans if s[2] >= MIN_READINGS]
+    when = lambda i: datetime.fromtimestamp(i * RUN_S, timezone.utc).strftime("%Y-%m-%d %H:%M")  # noqa: E731
+    files = ", ".join(eaglei_data[y].get("file", str(y)) for y in spec["years"])
+    if hits:
+        s = max(hits, key=lambda h: h[1] - h[0])
+        vals = [series[i] for i in range(s[0], s[1] + 1) if i in series]
+        held = max(min(vals[k:k + MIN_READINGS]) for k in range(len(vals) - MIN_READINGS + 1))
+        outcome = 1
+        note = (f"EAGLE-I ({files}): {spec['state']} above {spec['line']:,} customers out from {when(s[0])} to "
+                f"{when(s[1] + 1)} UTC ({s[2]} runs above), {held:,} or more held over 4 runs; {len(hits)} such "
+                f"stretch(es) in the window.")
+    else:
+        outcome = 0
+        top = max(series.items(), key=lambda kv: kv[1]) if series else None
+        note = (f"EAGLE-I ({files}): no hour with {spec['state']} above {spec['line']:,} customers out between "
+                f"{when(a)} and {when(b)} UTC; " + (f"highest {top[1]:,} at {when(top[0])} UTC." if top
+                                                       else "no customers out recorded."))
+        missing = sorted(unknown)
+        longest, run_len, prev = 0, 0, None
+        for i in missing:
+            run_len = run_len + 1 if prev is not None and i == prev + 1 else 1
+            longest, prev = max(longest, run_len), i
+        if longest >= MIN_READINGS:
+            review.append(f"EAGLE-I has no usable run for {len(missing)} of the window's {b - a} runs (missing, or a "
+                          f"broken report left out; longest gap {longest * RUN_S / 3600:.2f} h); a No may hide an "
+                          f"outage in a gap")
+    return {"id": fid, "outcome": outcome, "url": EAGLEI_DOI, "note": note, "rule_type": "blackout_eaglei",
+            "needs_review": review}
+
+
 # ---- Driver ----------------------------------------------------------------------------------------------------
 
 def auto_resolve(
@@ -329,6 +547,7 @@ def auto_resolve(
     weather_archives: dict | None = None,
     easa: dict | None = None,
     portwatch_data: dict | None = None,
+    eaglei_data: dict | None = None,
     out_path: Path | None = None,
     fetch: bool = True,
 ) -> dict:
@@ -347,6 +566,13 @@ def auto_resolve(
     rules = {fid: ((fc.get("resolution") or {}).get("rule") or "") for fid, fc in fc_by_id.items()}
     if easa is None and fetch and any(CZIB_RE.search(r) for r in rules.values()):
         easa = fetch_easa()
+    eaglei_needs: dict[int, set[str]] = {}
+    for r in rules.values():
+        spec = eaglei_spec(r)
+        for y in (spec["years"] if spec else []):
+            eaglei_needs.setdefault(y, set()).add(spec["state"])
+    if eaglei_data is None and fetch and eaglei_needs:
+        eaglei_data = fetch_eaglei(eaglei_needs)
 
     proposed, skipped, applied, held = [], [], [], []
     for row in due_rows:
@@ -360,6 +586,8 @@ def auto_resolve(
             res = evaluate_vis_rule(fc, rule, weather_archives=weather_archives, allow_fetch=fetch)
         if res is None:
             res = evaluate_portwatch_rule(fc, rule, portwatch_data=portwatch_data)
+        if res is None:
+            res = evaluate_eaglei_rule(fc, rule, eaglei_data=eaglei_data)
         if res is None:
             skipped.append({"id": fid, "reason": "no machine-checkable rule; resolve by hand"})
             continue

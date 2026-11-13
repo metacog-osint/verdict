@@ -1,0 +1,7 @@
+{
+  "note": "Real rows from ORNL EAGLE-I's outage history (figshare doi:10.6084/m9.figshare.24237376, version 4, CC BY 4.0; Brelsford et al.), read 13 Nov 2026. The CSV holds every row of eaglei_outages_2025.csv (MD5 cd2feb1282a42fb048cb6885398bc1cc, as figshare states) whose county FIPS starts 06 (California) and whose run_start_time is from 2025-01-08 12:00:00 up to 2025-01-09 12:00:00 UTC, the file's header first; rows in the file's own order, nothing else edited (gzipped). It holds the run at 22:30 UTC 8 Jan 2025 that puts Ventura County at 1,077,693 customers out against 317,658 modelled customers. MCC_CA.csv holds the California rows of MCC.csv (modelled customers per county, 2022) with its header. Copied from Blackout's tests/fixtures/eaglei (13 Nov 2026), unchanged.",
+  "files": {
+    "eaglei_outages_2025_CA_2025-01-08T12Z_24h.csv.gz": "https://ndownloader.figshare.com/files/62164877",
+    "MCC_CA.csv": "https://ndownloader.figshare.com/files/42547708"
+  }
+}
