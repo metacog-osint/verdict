@@ -326,19 +326,21 @@ def evaluate_portwatch_rule(fc: dict, rule: str, portwatch_data: dict | None = N
 # (doi:10.6084/m9.figshare.24237376, CC BY 4.0): one row per county and 15-minute run, UTC, zero rows left out. A
 # year's file comes out the next year (2024 on 10 Apr 2025, 2025 on 24 Feb 2026), so a forecast it settles stays
 # due and skipped until figshare lists that year; nothing is resolved from another source in the meantime. The rule
-# is the one Blackout's base rates use (blackout/eaglei.py): a state's total is its counties summed per run; a run
-# where any of its counties shows more than 1.1 times EAGLE-I's modelled customers for it (MCC.csv) is a broken report
-# and left out (7 runs on 8 Jan 2025 have Ventura County at 1,077,426 out of 317,658); runs missing or left out are
-# unknown and neither join nor split; Yes needs 4 or more runs above the line inside the window, with no more than 3
-# known runs under the line between them and no more than 6 hours from one to the next. The file is read from
-# figshare itself and checked against figshare's MD5 (about 1.0-1.4 GB a year, streamed once for every due forecast
-# in that year). A No with unknown runs adding up to an hour or more in a row in the window is held for review.
+# is the one Blackout's base rates use (blackout/eaglei.py): a state's total is its counties summed per run; runs
+# missing from the file neither join nor split; Yes needs runs above the line inside the window, with no more than 3
+# known runs under the line between them and no more than 6 hours from one to the next, 4 or more of them not
+# suspect. A run is suspect for a state when one of its counties shows more than 100,000 customers out beyond 1.1
+# times EAGLE-I's modelled customers for it (MCC.csv): 7 runs on 8 Jan 2025 have Ventura County at 1,077,426 out of
+# 317,658 (a broken report), but Fiona (Sept 2022) and Uri (Feb 2021) trip the same test with real outages EAGLE-I put
+# on one county, so suspect runs are kept and a person decides: a No is held for review when a suspect run is over
+# the line, or when missing runs add up to an hour or more in a row in the window. The file is read from figshare
+# itself and checked against figshare's MD5 (about 1.0-1.4 GB a year, streamed once for every due forecast in that
+# year).
 
 EAGLEI_RE = re.compile(
     r"EAGLE-I's outage history \(ORNL, figshare doi:10\.6084/m9\.figshare\.24237376\) shows (?P<name>[A-Za-z .]+?) "
-    r"\((?P<st>[A-Z]{2})\) with more than (?P<line>[\d,]+) customers out \(its counties summed in each 15-minute "
-    r"run; a run where a county shows more than 1\.1 times EAGLE-I's modelled customers for it left out\) in 4 or "
-    r"more runs, with no more than 3 runs under the line between them, between "
+    r"\((?P<st>[A-Z]{2})\) with more than (?P<line>[\d,]+) customers out, its counties summed in each 15-minute "
+    r"run, in 4 or more runs with no more than 3 runs under the line between them, between "
     r"(?P<a>\d{4}-\d{2}-\d{2} \d{2}:\d{2}) and (?P<b>\d{4}-\d{2}-\d{2} \d{2}:\d{2}) UTC\."
 )
 EAGLEI_API = "https://api.figshare.com/v2/articles/24237376"
@@ -355,6 +357,7 @@ RUN_S = 900          # EAGLE-I's 15-minute collection run
 JOIN_BELOW = 3       # at most 3 known runs under the line (an hour) between runs above it
 JOIN_MAX_RUNS = 24   # and no more than 6 hours from one run above it to the next
 MIN_READINGS = 4     # an hour of 15-minute runs above the line
+SUSPECT_EXCESS = 100_000  # a county this far over 1.1 x its modelled customers makes the run suspect
 
 
 def _run(t: datetime) -> int:
@@ -387,13 +390,13 @@ def eaglei_caps(text: str) -> dict[str, int]:
 
 def read_eaglei_year(lines, states: set[str], caps: dict[str, int] | None = None) -> dict:
     """One EAGLE-I year CSV (text lines) -> {"totals": {state: {run: customers out}}, "runs": set of runs with rows,
-    "dropped": {state: set of runs left out as broken reports}}.
+    "suspect": {state: set of suspect runs}}.
 
     Columns by position (fips_code, county, state, count, run_start_time): the 2023 file calls the count "sum", the
     2024 file adds a column and sorts by county, the 2020 file has empty counts (no customers out)."""
     caps = caps or {}
     totals: dict[str, dict[int, int]] = {s: {} for s in states}
-    dropped: dict[str, set[int]] = {s: set() for s in states}
+    suspect: dict[str, set[int]] = {s: set() for s in states}
     runs: set[int] = set()
     cache: dict[str, int | None] = {}
     reader = csv.reader(lines)
@@ -421,14 +424,11 @@ def read_eaglei_year(lines, states: set[str], caps: dict[str, int] | None = None
             n = int(float(r[3]))
         except ValueError:
             continue
-        if n > caps.get(fips, n):
-            dropped[st].add(i)
+        if fips in caps and n - caps[fips] > SUSPECT_EXCESS:
+            suspect[st].add(i)
         if n > 0:
             totals[st][i] = totals[st].get(i, 0) + n
-    for st, gone in dropped.items():
-        for i in gone:
-            totals[st].pop(i, None)
-    return {"totals": totals, "runs": runs, "dropped": dropped}
+    return {"totals": totals, "runs": runs, "suspect": suspect}
 
 
 def fetch_eaglei(needs: dict[int, set[str]]) -> dict:
@@ -488,7 +488,7 @@ def evaluate_eaglei_rule(fc: dict, rule: str, eaglei_data: dict | None = None) -
     a, b = _run(spec["start"]), _run(spec["end"])
     series: dict[int, int] = {}
     runs: set[int] = set()
-    gone: set[int] = set()
+    sus: set[int] = set()
     review = []
     for y in spec["years"]:
         d = eaglei_data[y]
@@ -496,8 +496,8 @@ def evaluate_eaglei_rule(fc: dict, rule: str, eaglei_data: dict | None = None) -
             review.append(f"{d.get('file', y)} did not match figshare's MD5")
         series.update({i: n for i, n in d["totals"].get(spec["state"], {}).items() if a <= i < b})
         runs |= {i for i in d["runs"] if a <= i < b}
-        gone |= {i for i in d.get("dropped", {}).get(spec["state"], ()) if a <= i < b}
-    unknown = (set(range(a, b)) - runs) | gone
+        sus |= {i for i in d.get("suspect", {}).get(spec["state"], ()) if a <= i < b}
+    unknown = set(range(a, b)) - runs
     above = sorted(i for i, n in series.items() if n > spec["line"])
     spans, cur = [], None
     for i in above:
@@ -507,16 +507,19 @@ def evaluate_eaglei_rule(fc: dict, rule: str, eaglei_data: dict | None = None) -
         else:
             cur = [i, i, 1]
             spans.append(cur)
-    hits = [s for s in spans if s[2] >= MIN_READINGS]
+    clean = lambda s: sum(1 for i in range(s[0], s[1] + 1) if i in series and series[i] > spec["line"]  # noqa: E731
+                          and i not in sus)
+    hits = [s for s in spans if clean(s) >= MIN_READINGS]
     when = lambda i: datetime.fromtimestamp(i * RUN_S, timezone.utc).strftime("%Y-%m-%d %H:%M")  # noqa: E731
     files = ", ".join(eaglei_data[y].get("file", str(y)) for y in spec["years"])
     if hits:
         s = max(hits, key=lambda h: h[1] - h[0])
-        vals = [series[i] for i in range(s[0], s[1] + 1) if i in series]
+        vals = [series[i] for i in range(s[0], s[1] + 1) if i in series and i not in sus]
         held = max(min(vals[k:k + MIN_READINGS]) for k in range(len(vals) - MIN_READINGS + 1))
         outcome = 1
         note = (f"EAGLE-I ({files}): {spec['state']} above {spec['line']:,} customers out from {when(s[0])} to "
-                f"{when(s[1] + 1)} UTC ({s[2]} runs above), {held:,} or more held over 4 runs; {len(hits)} such "
+                f"{when(s[1] + 1)} UTC ({s[2]} runs above, {s[2] - clean(s)} of them suspect), {held:,} or more held "
+                f"over 4 clean runs; {len(hits)} such "
                 f"stretch(es) in the window.")
     else:
         outcome = 0
@@ -530,9 +533,14 @@ def evaluate_eaglei_rule(fc: dict, rule: str, eaglei_data: dict | None = None) -
             run_len = run_len + 1 if prev is not None and i == prev + 1 else 1
             longest, prev = max(longest, run_len), i
         if longest >= MIN_READINGS:
-            review.append(f"EAGLE-I has no usable run for {len(missing)} of the window's {b - a} runs (missing, or a "
-                          f"broken report left out; longest gap {longest * RUN_S / 3600:.2f} h); a No may hide an "
-                          f"outage in a gap")
+            review.append(f"EAGLE-I has no run for {len(missing)} of the window's {b - a} runs (longest gap "
+                          f"{longest * RUN_S / 3600:.2f} h); a No may hide an outage in a gap")
+        over = sorted(i for i in sus if series.get(i, 0) > spec["line"])
+        if over:
+            review.append(f"{len(over)} suspect run(s) over the line, from {when(over[0])} UTC: a county reads more "
+                          f"than 100,000 customers above its modelled size. That is a broken report (8 Jan 2025, "
+                          f"Southern California Edison) or a real outage EAGLE-I put on one county (Fiona, Uri); "
+                          f"a person decides")
     return {"id": fid, "outcome": outcome, "url": EAGLEI_DOI, "note": note, "rule_type": "blackout_eaglei",
             "needs_review": review}
 

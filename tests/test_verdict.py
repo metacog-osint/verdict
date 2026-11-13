@@ -361,8 +361,7 @@ class AutoResolve(unittest.TestCase):
 
     # The exact text Blackout writes (blackout/eaglei.py verdict_rule; Blackout's test holds the same text).
     EAGLEI_RULE = ("Yes if EAGLE-I's outage history (ORNL, figshare doi:10.6084/m9.figshare.24237376) shows California "
-                   "(CA) with more than {line} customers out (its counties summed in each 15-minute run; a run where a "
-                   "county shows more than 1.1 times EAGLE-I's modelled customers for it left out) in 4 or more runs, "
+                   "(CA) with more than {line} customers out, its counties summed in each 15-minute run, in 4 or more runs "
                    "with no more than 3 runs under the line between them, between {a} and {b} UTC. No otherwise.")
 
     def _eaglei_data(self):
@@ -410,13 +409,16 @@ class AutoResolve(unittest.TestCase):
         by_id = {r["id"]: r for r in res["proposed"]}
         yes = by_id["blackout:us-power:ca:2025-01-08:500k"]
         self.assertEqual((yes["outcome"], yes["needs_review"], yes["rule_type"]), (1, [], "blackout_eaglei"))
-        self.assertIn("from 2025-01-08 23:15 to 2025-01-09 02:00 UTC", yes["note"])
-        self.assertIn("510,705 or more held over 4 runs", yes["note"])
+        # The broken report's runs join the stretch but can't carry it: 12 of the 21 runs above the line are clean.
+        self.assertIn("from 2025-01-08 21:00 to 2025-01-09 03:45 UTC (21 runs above, 9 of them suspect)", yes["note"])
+        self.assertIn("510,705 or more held over 4 clean runs", yes["note"])
         # Southern California Edison's broken report (Ventura County at 3.4 times its customers, 21:00-22:30 UTC)
-        # would read over a million; it is left out, so the No is held for a person to check, never applied.
+        # reads over a million (7 runs, and 2 more at 02:45-03:00 UTC). Suspect runs can't make a Yes, so the No is
+        # held for a person to check.
         no = by_id["blackout:us-power:ca:2025-01-08:1m"]
         self.assertEqual(no["outcome"], 0)
-        self.assertIn("broken report left out", no["needs_review"][0])
+        self.assertEqual(len(no["needs_review"]), 1)
+        self.assertIn("9 suspect run(s) over the line, from 2025-01-08 21:00 UTC", no["needs_review"][0])
         self.assertEqual(res["applied"], ["blackout:us-power:ca:2025-01-08:500k"])
         self.assertEqual(res["held_for_review"], ["blackout:us-power:ca:2025-01-08:1m"])
         # A year figshare has not published yet stays due and unresolved.
