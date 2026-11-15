@@ -18,6 +18,7 @@ the timestamp lock.
 """
 import argparse
 import json
+import re
 import subprocess
 import sys
 from datetime import datetime, timezone
@@ -34,6 +35,13 @@ BINS = 10
 EVENT_KINDS = {"data_release", "rule_date", "bulletin_expiry", "mandate_deadline", "election", "summit", "deadline",
                "advisory_change"}
 CORDON_EVENTS = "https://cordon.theintelligence.company/data/events.json"
+HEADWIND_EVENTS = "https://headwind.theintelligence.company/data/events.json"
+# Programs whose dated events the daily sync pulls, by the name `calendar --sync <name>` takes.
+SYNC_SOURCES = {"cordon": CORDON_EVENTS, "headwind": HEADWIND_EVENTS}
+# Refs that name one document, so a forecast whose resolution rule names it can be linked: an EASA bulletin
+# (CZIB-2026-04, from Cordon) or a Federal Register document number (2026-22793, from Headwind). Refs such as
+# FOMC, ECB or FFPI name a series of events and link nothing.
+LINKABLE_REF = re.compile(r"^(CZIB-\S+|\d{4}-\d{5})$")
 
 
 def now_utc() -> str:
@@ -187,8 +195,9 @@ def sync_calendar(root: Path, incoming: dict, today: str | None = None) -> dict:
     """Merge another program's dated events (Cordon's data/events.json) into calendar/events.json.
 
     Events from that origin dated today or later are replaced by the incoming set (a renewed bulletin moves to its new
-    expiry); past ones stay as history. Hand-entered events are never touched. An event whose ref is a bulletin
-    number (CZIB-...) is linked to every forecast whose resolution rule names it.
+    expiry); past ones stay as history. Hand-entered events are never touched. An event whose ref names one
+    document (an EASA bulletin, CZIB-...; a Federal Register document number) is linked to every forecast whose
+    resolution rule names it.
     """
     today = today or now_utc()[:10]
     origin = incoming.get("source", "unknown")
@@ -207,7 +216,7 @@ def sync_calendar(root: Path, incoming: dict, today: str | None = None) -> dict:
             item["occurred"] = True
         item["added"] = prev.get("added", today)
         ref = e.get("ref") or ""
-        links = [f["id"] for f in fc if ref.startswith("CZIB-") and ref in (f.get("resolution") or {}).get("rule", "")]
+        links = [f["id"] for f in fc if LINKABLE_REF.match(ref) and ref in (f.get("resolution") or {}).get("rule", "")]
         item["forecast_ids"] = sorted(set(links) | set(prev.get("forecast_ids", [])))
         if not item["forecast_ids"]:
             item.pop("forecast_ids")
@@ -401,7 +410,8 @@ def main(argv=None) -> int:
     du.add_argument("--markdown", action="store_true")
     ca = sub.add_parser("calendar")
     ca.add_argument("--feed")
-    ca.add_argument("--sync", nargs="?", const=CORDON_EVENTS, help="merge another program's events (default: Cordon)")
+    ca.add_argument("--sync", nargs="?", const=CORDON_EVENTS,
+                    help=f"merge another program's events: {' or '.join(SYNC_SOURCES)}, a URL or a file (default: Cordon)")
     ig = sub.add_parser("ingest-feed")
     ig.add_argument("source", help="path or URL to a contract-v2 feed.geojson")
     ig.add_argument("--drafts", default="drafts/ingested.json")
@@ -435,6 +445,7 @@ def main(argv=None) -> int:
         return 0
     if a.cmd == "calendar":
         if a.sync:
+            a.sync = SYNC_SOURCES.get(a.sync, a.sync)
             if a.sync.startswith(("http://", "https://")):
                 import urllib.request
                 req = urllib.request.Request(a.sync, headers={"User-Agent": "Verdict (The Intelligence Company)"})

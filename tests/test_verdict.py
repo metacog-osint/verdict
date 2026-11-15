@@ -227,6 +227,34 @@ class Calendar(unittest.TestCase):
         self.assertEqual(verdict.read_calendar(self.tmp)[0]["date"] <= verdict.read_calendar(self.tmp)[-1]["date"], True)
 
 
+    def test_headwind_events_sync_and_link(self):
+        """Headwind's live events.json of 15 Nov 2026 (two events of its eleven), synced beside hand-entered ones."""
+        (self.tmp / "calendar").mkdir(exist_ok=True)
+        (self.tmp / "ledger").mkdir(exist_ok=True)
+        (self.tmp / "calendar" / "events.json").write_text(json.dumps({"events": []}), encoding="utf-8")
+        rule = {"rule": "Yes if BIS publishes a document that supersedes Federal Register document 2026-22793."}
+        with open(self.tmp / verdict.FORECASTS, "a", encoding="utf-8") as fh:
+            fh.write(json.dumps({"id": "verdict:t:affiliates", "resolution": rule}) + "\n")
+        src = {"publisher": "US Federal Register (BIS)", "url": "https://www.federalregister.gov/documents/2026/11/09/"
+               "2026-22793/extension-of-the-suspension-of-expansion-of-end-user-controls-for-affiliates-of-certain-listed"}
+        events = {"source": "headwind", "events": [
+            {"id": "2027-01-10-fr-2026-22793", "date": "2027-01-10", "kind": "rule_date", "countries": [],
+             "ref": "2026-22793", "source": src,
+             "title": "BIS: Extension of the Suspension of Expansion of End-User Controls for Affiliates of Certain "
+                      "Listed Entities (date named in the rule)"},
+            {"id": "2026-12-09-fomc-decision", "date": "2026-12-09", "kind": "rule_date", "countries": ["US"],
+             "ref": "FOMC", "title": "Federal Reserve FOMC rate decision",
+             "source": {"publisher": "Board of Governors of the Federal Reserve System",
+                        "url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"}}]}
+        res = verdict.sync_calendar(self.tmp, events, today="2026-11-15")
+        self.assertEqual(res["origin"], "headwind")
+        ev = {e["id"]: e for e in verdict.read_calendar(self.tmp)}
+        self.assertEqual(ev["2027-01-10-fr-2026-22793"]["forecast_ids"], ["verdict:t:affiliates"])
+        self.assertNotIn("forecast_ids", ev["2026-12-09-fomc-decision"], "a series ref such as FOMC links nothing")
+        self.assertEqual(ev["2027-01-10-fr-2026-22793"]["origin"], "headwind")
+        self.assertEqual(verdict.SYNC_SOURCES["headwind"], verdict.HEADWIND_EVENTS)
+
+
 class Site(unittest.TestCase):
     def test_build_is_deterministic_and_complete(self):
         sys.path.insert(0, str(ROOT / "tools"))
