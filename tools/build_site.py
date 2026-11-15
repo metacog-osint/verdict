@@ -19,6 +19,23 @@ from tic_doctrine import likelihood  # noqa: E402  (verdict put the kit on sys.p
 SRC, OUT = ROOT / "site_src", ROOT / "site"
 
 
+def event_dates(fc: list[dict], cal: list[dict]) -> dict[str, str]:
+    """The calendar date each forecast is about: its latest linked event dated on or before its known_at.
+
+    An event dated after a forecast's known_at never dates it. A renewed bulletin's next expiry is a new event, not
+    the one that forecast was made about, whatever the calendar links.
+    """
+    known = {f["id"]: ((f.get("resolution") or {}).get("known_at") or "")[:10] for f in fc}
+    out = {}
+    for e in cal:
+        for fid in e.get("forecast_ids", []):
+            if known.get(fid) and e["date"] > known[fid]:
+                continue
+            if e["date"] > out.get(fid, ""):
+                out[fid] = e["date"]
+    return out
+
+
 def build() -> dict[str, str]:
     """Every file under site/ as {relative path: text}."""
     fc = verdict.read_lines(ROOT / verdict.FORECASTS)
@@ -30,7 +47,7 @@ def build() -> dict[str, str]:
 
     superseded = {f.get("supersedes") for f in fc if f.get("supersedes")}
     # the calendar date a forecast is about (a plain date, shown without time-zone conversion)
-    event_date = {fid: e["date"] for e in cal for fid in e.get("forecast_ids", [])}
+    event_date = event_dates(fc, cal)
     rows = []
     for f in fc:
         r = res.get(f["id"])

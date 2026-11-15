@@ -2,6 +2,7 @@
  "generated_at": "2026-11-12T23:46:14Z",
  "registered": 8,
  "resolved": 2,
+ "skill_min_n": 30,
  "by_program": {
   "all": {
    "n": 2,
@@ -10,8 +11,9 @@
    "reliability": 0.0125,
    "resolution": 0.25,
    "uncertainty": 0.25,
-   "skill_vs_base_rate": 0.95,
-   "note": "decomposition is approximate within bins; skill_vs_base_rate uses the sample's own base rate"
+   "skill_vs_base_rate": null,
+   "skill_withheld": "Skill against the base rate is held until every program counted has 30 resolved forecasts. With fewer, the base rate comes from the same few outcomes, so the figure would mostly show which questions were picked.",
+   "note": "decomposition is approximate within bins; skill_vs_base_rate uses the sample's own base rate and is given only from 30 resolved forecasts"
   },
   "verdict": {
    "n": 2,
@@ -20,8 +22,9 @@
    "reliability": 0.0125,
    "resolution": 0.25,
    "uncertainty": 0.25,
-   "skill_vs_base_rate": 0.95,
-   "note": "decomposition is approximate within bins; skill_vs_base_rate uses the sample's own base rate"
+   "skill_vs_base_rate": null,
+   "skill_withheld": "Skill against the base rate is held until every program counted has 30 resolved forecasts. With fewer, the base rate comes from the same few outcomes, so the figure would mostly show which questions were picked.",
+   "note": "decomposition is approximate within bins; skill_vs_base_rate uses the sample's own base rate and is given only from 30 resolved forecasts"
   }
  }
 }

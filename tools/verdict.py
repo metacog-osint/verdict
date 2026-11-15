@@ -1,9 +1,12 @@
 """Verdict: register, check, resolve and score forecasts. Standard library only.
 
-    python tools/verdict.py check [--base <git ref>]     ledger valid, linted, append-only since <ref>
+    python tools/verdict.py check [--base <git ref>]     ledger valid, linted; since <ref>: append-only, and each new
+                                                         line published within an hour of the commit that adds it
     python tools/verdict.py register drafts/<file>.json  move approved drafts into the ledger, timestamped now
     python tools/verdict.py resolve <id> <0|1> --url <evidence> [--note "..."] [--by "..."]
-    python tools/verdict.py score [--out scores.json]    Brier score, Murphy decomposition, skill, by program
+                                                         refused before the rule's check time (resolution.check_after)
+    python tools/verdict.py score [--out scores.json]    Brier score, Murphy decomposition, by program; skill against
+                                                         the base rate from MIN_SKILL_N resolved forecasts
     python tools/verdict.py due [--days 14] [--markdown]  forecasts to resolve now, and those coming up
     python tools/verdict.py calendar [--feed out.geojson] check the event calendar; export it as a contract v2 feed
     python tools/verdict.py ingest-feed <path-or-url> [--drafts drafts/ingested.json] [--approve "<name>"]
@@ -18,6 +21,7 @@ the timestamp lock.
 """
 import argparse
 import json
+import re
 import subprocess
 import sys
 from datetime import datetime, timezone
@@ -31,9 +35,23 @@ FORECASTS = Path("ledger") / "forecasts.jsonl"
 RESOLUTIONS = Path("ledger") / "resolutions.jsonl"
 CALENDAR = Path("calendar") / "events.json"
 BINS = 10
+# Resolved forecasts a program needs before its skill against the base rate is given. Below this the base rate comes
+# from the same few outcomes, so the figure mostly shows which questions were picked: one easy No and one easy Yes
+# score 0.95.
+MIN_SKILL_N = 30
+SKILL_HELD = (f"Skill against the base rate is held until every program counted has {MIN_SKILL_N} resolved forecasts. "
+              "With fewer, the base rate comes from the same few outcomes, so the figure would mostly show which "
+              "questions were picked.")
+SKILL_UNDEFINED = ("Skill against the base rate is held while every resolved forecast has the same outcome: there is "
+                   "no spread in the base rate to score against.")
+PUBLISH_WINDOW_S = 3600  # a new line's published_at must be within this many seconds of the commit that adds it
 EVENT_KINDS = {"data_release", "rule_date", "bulletin_expiry", "mandate_deadline", "election", "summit", "deadline",
                "advisory_change"}
 CORDON_EVENTS = "https://cordon.theintelligence.company/data/events.json"
+# The earliest check a rule allows, in the rule's own words: "on a check after 00:00 UTC on 17 Nov 2026".
+CHECK_AFTER_RE = re.compile(r"check after (\d{2}):(\d{2}) UTC on (\d{1,2}) ([A-Za-z]{3,9}) (\d{4})")
+MONTHS = ("jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec")
+UTC_TIME_RE = re.compile(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z")
 
 
 def now_utc() -> str:
@@ -42,6 +60,41 @@ def now_utc() -> str:
 
 def _t(s: str) -> datetime:
     return datetime.fromisoformat(s.replace("Z", "+00:00"))
+
+
+def _is_time(s) -> bool:
+    """A UTC time written the ledger's way: 2026-11-17T00:00:00Z."""
+    if not isinstance(s, str) or not UTC_TIME_RE.fullmatch(s):
+        return False
+    try:
+        _t(s)
+    except ValueError:
+        return False
+    return True
+
+
+def _rule_check_after(rule: str) -> str | None:
+    """The check time a rule states in words, as a UTC time. None if it states none; "" if what it states is not a
+    real time."""
+    m = CHECK_AFTER_RE.search(rule or "")
+    if not m:
+        return None
+    hh, mm, day, month, year = m.groups()
+    if month[:3].lower() not in MONTHS:
+        return ""
+    stamp = f"{year}-{MONTHS.index(month[:3].lower()) + 1:02d}-{int(day):02d}T{hh}:{mm}:00Z"
+    return stamp if _is_time(stamp) else ""
+
+
+def check_after(item: dict) -> str | None:
+    """The earliest time a forecast's rule allows a check, as a UTC time, or None when it sets none.
+
+    resolution.check_after where the line carries it; otherwise the time the rule states in its own words, so a line
+    registered before the field existed is held to its rule without being edited.
+    """
+    res = item.get("resolution") or {}
+    explicit = res.get("check_after")
+    return explicit if _is_time(explicit) else (_rule_check_after(res.get("rule") or "") or None)
 
 
 def read_lines(path: Path) -> list[dict]:
@@ -80,10 +133,24 @@ def forecast_problems(item: dict, regs: dict) -> list[str]:
         errs.append("verdict: resolution.known_at missing (when the outcome first becomes knowable)")
     elif item.get("published_at") and _t(item["published_at"]) >= _t(known):
         errs.append("verdict: registered at or after the outcome became knowable (not a pre-registration)")
+    stated, explicit = _rule_check_after(res.get("rule") or ""), res.get("check_after")
+    if stated == "":
+        errs.append("verdict: the rule's check time is not a real time (write 'check after HH:MM UTC on D Mon YYYY')")
+    if explicit is not None and not _is_time(explicit):
+        errs.append("verdict: resolution.check_after must be a UTC time like 2026-11-17T00:00:00Z")
+    elif explicit and stated and explicit != stated:
+        errs.append(f"verdict: resolution.check_after {explicit} is not the check time the rule gives ({stated})")
+    ca = check_after(item)
+    try:
+        too_late = bool(ca and res.get("resolve_by")) and _t(ca) > _t(res["resolve_by"])
+    except (TypeError, ValueError):
+        too_late = False  # a resolve_by that is not a time is the contract's error to report
+    if too_late:
+        errs.append(f"verdict: check_after {ca} is later than resolve_by, so the rule could never be checked in time")
     return errs
 
 
-def check(root: Path = ROOT, base: str | None = None) -> list[str]:
+def check(root: Path = ROOT, base: str | None = None, now: str | None = None) -> list[str]:
     regs = registers.ids(root / "doctrine")
     errs = []
     forecasts = read_lines(root / FORECASTS)
@@ -112,14 +179,24 @@ def check(root: Path = ROOT, base: str | None = None) -> list[str]:
             errs.append(f"resolutions line {i}: evidence.url missing")
         if r.get("resolved_at") and _t(r["resolved_at"]) < _t(by_id[rid]["published_at"]):
             errs.append(f"resolutions line {i}: resolved before the forecast was registered")
+        ca = check_after(by_id[rid])
+        read = [t for t in (r.get("resolved_at"), (r.get("evidence") or {}).get("accessed_at")) if t]
+        if ca and any(_t(t) < _t(ca) for t in read):
+            errs.append(f"resolutions line {i}: {rid} was resolved, or its evidence read, before the rule allows a "
+                        f"check ({ca})")
     errs += calendar_problems(root, regs)
     if base:
         errs += append_only(root, base)
+        errs += published_when_committed(root, base, now)
     return errs
 
 
 def due(root: Path = ROOT, now: str | None = None, days: int = 14) -> dict:
-    """Unresolved forecasts whose outcome is knowable now ('due'), and those knowable within `days` ('soon')."""
+    """Unresolved forecasts ready to resolve now ('due'), and those that will be within `days` ('soon').
+
+    Ready (due_at) is when the outcome is knowable (known_at) or, where the rule sets an earliest check time
+    (check_after) later than that, the check time: a forecast is not due while its rule forbids the check.
+    """
     t_now = _t(now or now_utc())
     resolved = {r.get("id") for r in read_lines(root / RESOLUTIONS)}
     fc = read_lines(root / FORECASTS)
@@ -129,15 +206,18 @@ def due(root: Path = ROOT, now: str | None = None, days: int = 14) -> dict:
         if f["id"] in resolved or f["id"] in superseded or f.get("msg_type") == "cancel":
             continue
         res = f.get("resolution") or {}
-        known = _t(res["known_at"])
+        ca = check_after(f)
+        due_at = ca if ca and _t(ca) > _t(res["known_at"]) else res["known_at"]
+        ready = _t(due_at)
         row = {"id": f["id"], "title": f["title"], "probability": f["probability"], "known_at": res["known_at"],
-               "resolve_by": res.get("resolve_by"), "rule": res.get("rule"), "source": res.get("source")}
-        if known <= t_now:
+               "check_after": ca, "due_at": due_at, "resolve_by": res.get("resolve_by"), "rule": res.get("rule"),
+               "source": res.get("source")}
+        if ready <= t_now:
             out["due"].append(row)
-        elif (known - t_now).total_seconds() <= days * 86400:
+        elif (ready - t_now).total_seconds() <= days * 86400:
             out["soon"].append(row)
     for k in ("due", "soon"):
-        out[k].sort(key=lambda r: r["known_at"])
+        out[k].sort(key=lambda r: _t(r["due_at"]))
     return out
 
 
@@ -152,7 +232,11 @@ def due_markdown(d: dict) -> str:
     else:
         lines += ["Nothing is due."]
     if d["soon"]:
-        lines += ["", "## Coming up", ""] + [f"- {r['known_at'][:10]}: {r['title']} (`{r['id']}`)" for r in d["soon"]]
+        lines += ["", "## Coming up", ""]
+        for r in d["soon"]:
+            held = (f", knowable from {r['known_at'][:10]} but the rule allows a check only after {r['check_after']}"
+                    if r["due_at"] != r["known_at"] else "")
+            lines.append(f"- {r['due_at'][:10]}: {r['title']} (`{r['id']}`){held}")
     return "\n".join(lines) + "\n"
 
 
@@ -186,9 +270,15 @@ def calendar_item(ev: dict, generated: str) -> dict:
 def sync_calendar(root: Path, incoming: dict, today: str | None = None) -> dict:
     """Merge another program's dated events (Cordon's data/events.json) into calendar/events.json.
 
-    Events from that origin dated today or later are replaced by the incoming set (a renewed bulletin moves to its new
-    expiry); past ones stay as history. Hand-entered events are never touched. An event whose ref is a bulletin
-    number (CZIB-...) is linked to every forecast whose resolution rule names it.
+    Events from that origin dated today or later are replaced by the incoming set; past ones stay as history.
+    Hand-entered events are never touched. An event whose ref is a bulletin number (CZIB-...) is linked to every
+    forecast whose resolution rule names it.
+
+    A renewed bulletin arrives as a new event at its next expiry (the origin keys events by date) and the old event
+    stops being sent. That must not move a forecast, so two rules hold for this origin's events:
+    - an event carries a forecast only when it is dated on or before that forecast's known_at, so the next expiry is
+      never linked to a forecast about this one, and a link that breaks the rule is removed;
+    - an event a forecast is linked to is never dropped, whatever its date: it is the date that forecast is about.
     """
     today = today or now_utc()[:10]
     origin = incoming.get("source", "unknown")
@@ -196,6 +286,13 @@ def sync_calendar(root: Path, incoming: dict, today: str | None = None) -> dict:
     cal = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {"events": []}
     before = {e["id"]: e for e in cal["events"]}
     fc = read_lines(root / FORECASTS)
+    known = {f.get("id"): ((f.get("resolution") or {}).get("known_at") or "")[:10] for f in fc}
+
+    def about(ids, date: str) -> list[str]:
+        """Of these forecasts, the ones an event of this date may carry. An id the ledger does not hold is kept, for
+        `check` to report."""
+        return [i for i in ids if not known.get(i) or date <= known[i]]
+
     fresh = []
     for e in incoming.get("events", []):
         if e["date"] < today and e["id"] not in before and not e.get("occurred"):
@@ -208,19 +305,32 @@ def sync_calendar(root: Path, incoming: dict, today: str | None = None) -> dict:
         item["added"] = prev.get("added", today)
         ref = e.get("ref") or ""
         links = [f["id"] for f in fc if ref.startswith("CZIB-") and ref in (f.get("resolution") or {}).get("rule", "")]
-        item["forecast_ids"] = sorted(set(links) | set(prev.get("forecast_ids", [])))
+        item["forecast_ids"] = about(sorted(set(links) | set(prev.get("forecast_ids", []))), e["date"])
         if not item["forecast_ids"]:
             item.pop("forecast_ids")
         fresh.append(item)
     fresh_ids = {e["id"] for e in fresh}
-    kept = [e for e in cal["events"] if e["id"] not in fresh_ids
-            and not (e.get("origin") == origin and e["date"] >= today)]
+    kept, kept_linked = [], []
+    for e in cal["events"]:
+        if e["id"] in fresh_ids:
+            continue
+        if e.get("origin") == origin:
+            ids = about(e.get("forecast_ids", []), e["date"])
+            if ids != e.get("forecast_ids", []):
+                e = {k: v for k, v in e.items() if k != "forecast_ids"}
+                if ids:
+                    e["forecast_ids"] = ids
+            if e["date"] >= today:  # no longer sent by the origin
+                if not ids:
+                    continue
+                kept_linked.append(e["id"])
+        kept.append(e)
     cal["events"] = sorted(kept + fresh, key=lambda e: (e["date"], e["id"]))
     path.parent.mkdir(exist_ok=True)
     path.write_text(json.dumps(cal, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
     dropped = [i for i in before if i not in {e["id"] for e in cal["events"]}]
     return {"origin": origin, "incoming": len(fresh), "added": sorted(fresh_ids - set(before)),
-            "dropped": dropped, "total": len(cal["events"])}
+            "dropped": dropped, "kept_linked": kept_linked, "total": len(cal["events"])}
 
 
 def calendar_problems(root: Path, regs: dict) -> list[str]:
@@ -269,6 +379,67 @@ def append_only(root: Path, base: str) -> list[str]:
         after = [ln for ln in now_path.read_text(encoding="utf-8").splitlines() if ln.strip()] if now_path.exists() else []
         if after[:len(before)] != before:
             errs.append(f"{rel}: a registered line was edited, removed or reordered since {base} (append only)")
+    return errs
+
+
+def published_when_committed(root: Path, base: str, now: str | None = None) -> list[str]:
+    """Every forecast line added since <base> was published when it says it was.
+
+    The commit that adds a line is what makes it public, so the line's published_at must be within an hour of that
+    commit, and the commit must be earlier than the line's known_at. A line dated earlier than its commit is
+    back-dated. A line not committed yet is held to the current time. The commit time is the committer date, which
+    the committer sets; GitHub's own record of the push and of this check's run is the outside timestamp.
+    """
+    rel = FORECASTS.as_posix()
+
+    def git(*args) -> str | None:
+        r = subprocess.run(["git", *args], cwd=root, capture_output=True, text=True, encoding="utf-8")
+        return r.stdout if r.returncode == 0 else None
+
+    def lines(text: str | None) -> list[str]:
+        return [ln for ln in (text or "").splitlines() if ln.strip()]
+
+    if git("rev-parse", "--verify", "--quiet", f"{base}^{{commit}}") is None:
+        return [f"--base {base}: not a commit in this repository, so new lines cannot be checked against their commits"]
+    path = root / FORECASTS
+    before = lines(git("show", f"{base}:{rel}"))
+    new = lines(path.read_text(encoding="utf-8") if path.exists() else "")[len(before):]
+    if not new:
+        return []
+    # The commits since base that touch the ledger, oldest first, then HEAD itself to catch anything else committed.
+    commits = lines(git("log", "--reverse", "--topo-order", "--format=%h %cI", f"{base}..HEAD", "--", rel))
+    commits += lines(git("log", "-1", "--format=%h %cI", "HEAD"))
+    added = {}  # line -> (commit, its time): the first commit that holds the line
+    for entry in commits:
+        sha, when = entry.split(" ", 1)
+        held = set(lines(git("show", f"{sha}:{rel}")))
+        for ln in new:
+            if ln in held:
+                added.setdefault(ln, (sha, when))
+    t_now, errs = _t(now or now_utc()), []
+    for n, ln in enumerate(new, len(before) + 1):
+        item = json.loads(ln)
+        tag = f"forecasts line {n} ({item.get('id')})"
+        sha, when = added.get(ln, (None, None))
+        t_commit = _t(when) if when else t_now
+        stamp = t_commit.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+        where = f"commit {sha} of {stamp}" if sha else f"now, {stamp} (not committed yet)"
+        try:
+            gap = (t_commit - _t(item["published_at"])).total_seconds()
+        except (KeyError, TypeError, ValueError):
+            continue  # a published_at that is not a time is the contract's error to report
+        if abs(gap) > PUBLISH_WINDOW_S:
+            errs.append(f"{tag}: published_at {item['published_at']} is {abs(gap) / 3600:.1f} h "
+                        f"{'before' if gap > 0 else 'after'} {where}; it must be within an hour of the commit that "
+                        f"adds the line")
+        known = (item.get("resolution") or {}).get("known_at")
+        try:
+            late = bool(known) and t_commit >= _t(known)
+        except (TypeError, ValueError):
+            late = False
+        if late:
+            errs.append(f"{tag}: {where} is not earlier than known_at {known}; the line was not public before its "
+                        f"outcome became knowable")
     return errs
 
 
@@ -339,18 +510,27 @@ def register(draft_path: Path, root: Path = ROOT, when: str | None = None) -> li
 
 def resolve(fid: str, outcome: int, url: str, note: str = "", by: str = "", root: Path = ROOT,
             when: str | None = None) -> dict:
-    if fid not in {f.get("id") for f in read_lines(root / FORECASTS)}:
+    fc = {f.get("id"): f for f in read_lines(root / FORECASTS)}
+    if fid not in fc:
         raise SystemExit(f"{fid}: not in the ledger")
     if fid in {r.get("id") for r in read_lines(root / RESOLUTIONS)}:
         raise SystemExit(f"{fid}: already resolved")
-    rec = {"id": fid, "outcome": int(outcome), "resolved_at": when or now_utc(),
-           "evidence": {"url": url, "accessed_at": when or now_utc()}, "note": note, "resolved_by": by}
+    when = when or now_utc()
+    ca = check_after(fc[fid])
+    if ca and _t(when) < _t(ca):
+        raise SystemExit(f"{fid}: not resolved. Its rule allows a check only after {ca}; it is {when}.")
+    rec = {"id": fid, "outcome": int(outcome), "resolved_at": when,
+           "evidence": {"url": url, "accessed_at": when}, "note": note, "resolved_by": by}
     append_lines(root / RESOLUTIONS, [rec])
     return rec
 
 
 def _brier(pairs):
-    """Brier score with Murphy's decomposition (reliability - resolution + uncertainty) over BINS bins."""
+    """Brier score with Murphy's decomposition (reliability - resolution + uncertainty) over BINS bins.
+
+    Skill against the sample's own base rate is given only from MIN_SKILL_N resolved forecasts; below that the
+    figure is None and skill_withheld says why. Brier and n are always given.
+    """
     n = len(pairs)
     bs = sum((p - o) ** 2 for p, o in pairs) / n
     base = sum(o for _, o in pairs) / n
@@ -360,10 +540,12 @@ def _brier(pairs):
     rel = sum(len(v) * (sum(p for p, _ in v) / len(v) - sum(o for _, o in v) / len(v)) ** 2 for v in bins.values()) / n
     res = sum(len(v) * (sum(o for _, o in v) / len(v) - base) ** 2 for v in bins.values()) / n
     unc = base * (1 - base)
+    withheld = SKILL_HELD if n < MIN_SKILL_N else None if unc > 0 else SKILL_UNDEFINED
     return {"n": n, "brier": round(bs, 4), "base_rate": round(base, 4), "reliability": round(rel, 4),
             "resolution": round(res, 4), "uncertainty": round(unc, 4),
-            "skill_vs_base_rate": round(1 - bs / unc, 4) if unc > 0 else None,
-            "note": "decomposition is approximate within bins; skill_vs_base_rate uses the sample's own base rate"}
+            "skill_vs_base_rate": None if withheld else round(1 - bs / unc, 4), "skill_withheld": withheld,
+            "note": "decomposition is approximate within bins; skill_vs_base_rate uses the sample's own base rate "
+                    f"and is given only from {MIN_SKILL_N} resolved forecasts"}
 
 
 def score(root: Path = ROOT) -> dict:
@@ -377,8 +559,12 @@ def score(root: Path = ROOT) -> dict:
             continue
         pairs.setdefault(f["program"], []).append((float(f["probability"]), int(r["outcome"])))
         pairs.setdefault("all", []).append((float(f["probability"]), int(r["outcome"])))
+    by = {k: _brier(v) for k, v in sorted(pairs.items())}
+    # All programs together: only once each one has enough, so a large program cannot carry the pooled figure.
+    if any(v["n"] < MIN_SKILL_N for k, v in by.items() if k != "all"):
+        by["all"].update({"skill_vs_base_rate": None, "skill_withheld": SKILL_HELD})
     return {"generated_at": now_utc(), "registered": len(fc), "resolved": len(pairs.get("all", [])),
-            "by_program": {k: _brier(v) for k, v in sorted(pairs.items())}}
+            "skill_min_n": MIN_SKILL_N, "by_program": by}
 
 
 def main(argv=None) -> int:

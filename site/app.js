@@ -133,14 +133,22 @@
     var progs = Object.keys(scores.by_program || {});
     if (!progs.length) { sc.replaceChildren(); return; }
     var tb = h("tbody");
+    /* Skill is not given from a small sample (tools/verdict.py, MIN_SKILL_N): the cell reads "held" and each
+     * reason the data gives (skill_withheld) is printed once under the table. */
+    var why = [];
     progs.forEach(function (p) {
       var x = scores.by_program[p];
+      var held = x.skill_vs_base_rate == null && x.skill_withheld;
+      var skill = held ? "held" : x.skill_vs_base_rate == null ? "—" : x.skill_vs_base_rate.toFixed(2);
+      if (held && why.indexOf(held) < 0) why.push(held);
       tb.append(h("tr", null, [h("td", null, [p]), h("td", null, [x.n]), h("td", null, [x.brier.toFixed(3)]),
-        h("td", null, [x.skill_vs_base_rate == null ? "—" : x.skill_vs_base_rate.toFixed(2)])]));
+        h("td", null, [skill])]));
     });
-    sc.replaceChildren(h("table", { "class": "scores-table" }, [
+    sc.replaceChildren.apply(sc, [h("table", { "class": "scores-table" }, [
       h("thead", null, [h("tr", null, [h("th", null, ["Program"]), h("th", null, ["Resolved"]), h("th", null, ["Brier"]),
-        h("th", null, ["Skill vs base rate"])])]), tb]));
+        h("th", null, ["Skill vs base rate"])])]), tb])].concat(why.map(function (t) {
+      return h("p", { "class": "scores-note" }, [t]);
+    })));
   }
 
   function timeline(cal) {

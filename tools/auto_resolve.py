@@ -50,7 +50,6 @@ VIS_JOINT_RE = re.compile(
 
 DMY = r"\d{1,2} [A-Za-z]{3,9} \d{4}"
 CZIB_RE = re.compile(rf"shows (?P<ref>CZIB-\d{{4}}-\d{{2}}) active.*valid beyond (?P<day>{DMY})")
-CHECK_AFTER_RE = re.compile(rf"check after (?P<hm>\d{{2}}:\d{{2}}) UTC on (?P<day>{DMY})")
 REVISED_BY_RE = re.compile(rf"revised on or before (?P<day>{DMY})")
 REPEAT_BY_RE = re.compile(r"repeated by (?P<day>\d{1,2} [A-Za-z]{3,9}(?: \d{4})?)")
 
@@ -147,8 +146,7 @@ def evaluate_czib_rule(fc: dict, rule: str, easa: dict | None) -> dict | None:
     fid = fc["id"]
     ref = m.group("ref")
     cutoff = _parse_dmy(m.group("day"))
-    ca = CHECK_AFTER_RE.search(rule)
-    check_after = f"{_parse_dmy(ca.group('day'))}T{ca.group('hm')}:00Z" if ca else None
+    check_after = verdict.check_after(fc)  # resolution.check_after, or the time the rule states in its own words
     rb = REVISED_BY_RE.search(rule)
     revised_by = _parse_dmy(rb.group("day")) if rb else None
     rp = REPEAT_BY_RE.search(rule)
