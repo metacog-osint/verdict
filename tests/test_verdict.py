@@ -1,6 +1,7 @@
 """Offline tests for tools/verdict.py. Run as a plain script or with unittest."""
 import copy
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -152,6 +153,164 @@ class Ledger(unittest.TestCase):
         self.assertEqual(r2["ingested"], [])
         self.assertEqual(r2["registered"], [])
 
+    def _czib(self, fid="verdict:test:czib", **resolution):
+        """A draft shaped like the ledger's EASA lines: knowable from 16 Nov, checked only after 00:00 UTC 17 Nov."""
+        it = copy.deepcopy(ITEM)
+        it.update({"id": fid, "valid_until": "2026-11-17T00:00:00Z"})
+        it["resolution"] = {"rule": AutoResolve.EASA_RULE, "source": "EASA", "known_at": "2026-11-16T00:00:00Z",
+                            "resolve_by": "2026-11-30T23:59:00Z", **resolution}
+        return it
+
+    def test_check_after_holds_due_resolve_and_check(self):
+        # One line states its check time only in the rule's words (the six EASA lines); one carries the field.
+        explicit = self._czib("verdict:test:explicit", rule="Yes if it happens", check_after="2026-11-17T00:00:00Z")
+        self.write_drafts(self._czib(), explicit)
+        verdict.register(self.drafts, self.tmp, when="2026-11-01T12:00:00Z")
+        lines = verdict.read_lines(self.tmp / verdict.FORECASTS)
+        self.assertEqual([verdict.check_after(f) for f in lines], ["2026-11-17T00:00:00Z"] * 2)
+        self.assertIsNone(verdict.check_after(ITEM), "a rule that names no check time sets none")
+        ids = ["verdict:test:czib", "verdict:test:explicit"]
+
+        # 16 Nov 19:00 UTC, about when the reminder runs: knowable, but the rule does not allow a check yet.
+        d = verdict.due(self.tmp, now="2026-11-16T19:00:00Z")
+        self.assertEqual((d["due"], [r["id"] for r in d["soon"]]), ([], ids))
+        md = verdict.due_markdown(d)
+        self.assertIn("Nothing is due.", md)
+        self.assertIn("- 2026-11-17: Test event happens", md)
+        self.assertNotIn("- 2026-11-16:", md)
+        self.assertEqual([r["id"] for r in verdict.due(self.tmp, now="2026-11-17T00:00:00Z")["due"]], ids)
+
+        for fid in ids:
+            with self.assertRaises(SystemExit) as cm:
+                verdict.resolve(fid, 1, "https://example.org", root=self.tmp, when="2026-11-16T19:00:00Z")
+            self.assertIn("only after 2026-11-17T00:00:00Z", str(cm.exception))
+        self.assertEqual(verdict.read_lines(self.tmp / verdict.RESOLUTIONS), [])
+
+        # A resolution written by hand is held to the same time, on its own date and on the date of its evidence.
+        early = {"id": ids[0], "outcome": 1, "resolved_at": "2026-11-16T19:00:00Z", "note": "", "resolved_by": "T",
+                 "evidence": {"url": "https://example.org", "accessed_at": "2026-11-16T19:00:00Z"}}
+        for name, line in {"resolved early": early,
+                           "evidence read early": {**early, "resolved_at": "2026-11-17T06:00:00Z"}}.items():
+            with self.subTest(name):
+                (self.tmp / verdict.RESOLUTIONS).write_text(json.dumps(line) + "\n", encoding="utf-8")
+                self.assertIn("before the rule allows a check", " ".join(verdict.check(self.tmp)))
+        (self.tmp / verdict.RESOLUTIONS).unlink()
+        verdict.resolve(ids[0], 1, "https://example.org", root=self.tmp, when="2026-11-17T00:00:00Z")
+        self.assertEqual(verdict.check(self.tmp), [])
+
+    def test_a_bad_check_after_is_refused_at_registration(self):
+        cases = {
+            "not a UTC time": dict(check_after="17 Nov 2026"),
+            "later than resolve_by": dict(rule="Yes if it happens", check_after="2026-12-01T00:00:00Z"),
+            "not the time the rule itself gives": dict(check_after="2026-11-18T00:00:00Z"),
+        }
+        for name, change in cases.items():
+            with self.subTest(name):
+                self.write_drafts(self._czib(**change))
+                with self.assertRaises(SystemExit) as cm:
+                    verdict.register(self.drafts, self.tmp, when="2026-11-01T12:00:00Z")
+                self.assertIn("check_after", str(cm.exception))
+        self.assertEqual(verdict.read_lines(self.tmp / verdict.FORECASTS), [])
+
+    def test_the_registered_easa_questions_are_held_to_their_rule_unedited(self):
+        # The real ledger: the six lines are not changed (they carry no check_after field), and each is still held
+        # to the check time its own rule names.
+        easa = [f for f in verdict.read_lines(ROOT / verdict.FORECASTS)
+                if f["id"].startswith("verdict:2026-11-16:easa-")]
+        self.assertEqual(len(easa), 6)
+        for f in easa:
+            self.assertNotIn("check_after", f["resolution"])
+            self.assertEqual(f["resolution"]["known_at"], "2026-11-16T00:00:00Z")
+            self.assertEqual(verdict.check_after(f), "2026-11-17T00:00:00Z")
+
+    def _minimal_ledger(self, counts):
+        """Ledger lines with only what score() reads: {program: [(probability, outcome), ...]}."""
+        fc, res = [], []
+        for prog, pairs in counts.items():
+            for i, (p, o) in enumerate(pairs):
+                fc.append({"id": f"{prog}:t:{i}", "program": prog, "probability": p})
+                res.append({"id": f"{prog}:t:{i}", "outcome": o})
+        for rel, rows in ((verdict.FORECASTS, fc), (verdict.RESOLUTIONS, res)):
+            (self.tmp / rel).parent.mkdir(exist_ok=True)
+            (self.tmp / rel).write_text("".join(json.dumps(r) + "\n" for r in rows), encoding="utf-8")
+
+    def test_skill_is_held_until_a_program_has_enough_resolved_forecasts(self):
+        need = verdict.MIN_SKILL_N
+        # The record's first two resolutions, one easy No and one easy Yes: the page printed "skill 0.95" from these.
+        two = verdict._brier([(0.05, 0), (0.85, 1)])
+        self.assertEqual((two["n"], two["brier"]), (2, 0.0125), "Brier and n stay")
+        self.assertIsNone(two["skill_vs_base_rate"])
+        self.assertIn(f"{need} resolved forecasts", two["skill_withheld"])
+        enough = ([(0.8, 1), (0.2, 0)] * need)[:need]
+        self.assertIsNone(verdict._brier(enough[:-1])["skill_vs_base_rate"], "one short of the minimum")
+        full = verdict._brier(enough)
+        self.assertIsNone(full["skill_withheld"])
+        self.assertAlmostEqual(full["skill_vs_base_rate"], 1 - full["brier"] / full["uncertainty"], places=3)
+        same = verdict._brier([(0.9, 1)] * need)
+        self.assertIsNone(same["skill_vs_base_rate"])
+        self.assertIn("same outcome", same["skill_withheld"])
+
+        # By program: a program is shown on its own count; all programs together only once each has enough.
+        self._minimal_ledger({"vis": enough, "verdict": [(0.05, 0), (0.85, 1)]})
+        s = verdict.score(self.tmp)
+        self.assertEqual(s["skill_min_n"], need)
+        by = s["by_program"]
+        self.assertIsNotNone(by["vis"]["skill_vs_base_rate"])
+        self.assertIsNone(by["verdict"]["skill_vs_base_rate"])
+        self.assertEqual((by["all"]["n"], by["all"]["skill_vs_base_rate"]), (need + 2, None))
+        self.assertTrue(by["all"]["skill_withheld"])
+        self._minimal_ledger({"vis": enough, "verdict": enough})
+        self.assertIsNotNone(verdict.score(self.tmp)["by_program"]["all"]["skill_vs_base_rate"])
+
+    def test_new_lines_must_be_published_when_they_are_committed(self):
+        if not shutil.which("git"):
+            self.skipTest("git not available")
+
+        def git(*a, at=None):
+            env = dict(os.environ)
+            if at:  # git's own date form: seconds since 1970 and the UTC offset
+                env["GIT_AUTHOR_DATE"] = env["GIT_COMMITTER_DATE"] = f"{int(verdict._t(at).timestamp())} +0000"
+            return subprocess.run(["git", *a], cwd=self.tmp, check=True, capture_output=True, text=True,
+                                  env=env).stdout.strip()
+
+        def append(fid, published_at, committed_at=None):
+            """A ledger line written by hand, as a back-dater would, then committed at the given time."""
+            it = copy.deepcopy(ITEM)
+            it.update({"id": fid, "status": "actual", "approved_by": "T", "published_at": published_at})
+            verdict.append_lines(self.tmp / verdict.FORECASTS, [it])
+            if committed_at:
+                git("add", "-A")
+                git("commit", "-q", "-m", fid, at=committed_at)
+
+        git("init", "-q", "-b", "main")
+        git("config", "user.email", "t@example.org")
+        git("config", "user.name", "t")
+        self.write_drafts(ITEM)
+        verdict.register(self.drafts, self.tmp, when="2026-11-01T12:00:00Z")
+        git("add", "-A")
+        git("commit", "-q", "-m", "register", at="2026-11-01T12:05:00Z")
+        base = git("rev-parse", "HEAD")
+
+        append("verdict:test:honest", "2026-11-02T09:00:00Z", committed_at="2026-11-02T09:20:00Z")
+        self.assertEqual(verdict.check(self.tmp, base), [])
+
+        # Written on 5 Nov and dated 31 Oct; and one dated half an hour before known_at (6 Nov 10:00) but committed
+        # after it. Both claim an earlier time than the commit that made them public.
+        append("verdict:test:backdated", "2026-10-31T18:00:00Z", committed_at="2026-11-05T15:00:00Z")
+        append("verdict:test:late", "2026-11-06T09:30:00Z", committed_at="2026-11-06T10:20:00Z")
+        errs = verdict.check(self.tmp, base)
+        self.assertEqual(len(errs), 2, errs)
+        self.assertIn("verdict:test:backdated", errs[0])
+        self.assertIn("within an hour", errs[0])
+        self.assertIn("verdict:test:late", errs[1])
+        self.assertIn("known_at", errs[1])
+        self.assertEqual(verdict.check(self.tmp), [], "without --base nothing ties a line to its commit: CI passes it")
+
+        # A registered line not committed yet is held to the clock, so the hour does not pass unnoticed.
+        append("verdict:test:pending", "2026-11-03T08:00:00Z")
+        self.assertEqual(verdict.check(self.tmp, "HEAD", now="2026-11-03T08:30:00Z"), [])
+        self.assertIn("not committed yet", " ".join(verdict.check(self.tmp, "HEAD", now="2026-11-03T12:00:00Z")))
+
 
 class Calendar(unittest.TestCase):
     def setUp(self):
@@ -197,7 +356,8 @@ class Calendar(unittest.TestCase):
         (self.tmp / "ledger").mkdir()
         fc = copy.deepcopy(ITEM)
         fc.update({"id": "verdict:t:iran", "status": "actual", "approved_by": "T"})
-        fc["resolution"] = {**ITEM["resolution"], "rule": "Yes if EASA shows CZIB-2026-04 active after 16 Nov"}
+        fc["resolution"] = {**ITEM["resolution"], "rule": "Yes if EASA shows CZIB-2026-04 active after 16 Nov",
+                            "known_at": "2026-11-16T00:00:00Z", "resolve_by": "2026-11-30T23:59:00Z"}
         (self.tmp / "ledger" / "forecasts.jsonl").write_text(json.dumps(fc) + "\n", encoding="utf-8")
         manual = {**self.EV, "id": "m1", "date": "2026-12-15"}
         past = {**self.EV, "id": "2026-10-01-easa-czib-2026-01", "date": "2026-10-01", "origin": "cordon"}
@@ -225,6 +385,59 @@ class Calendar(unittest.TestCase):
         again = verdict.sync_calendar(self.tmp, incoming, today="2026-11-01")
         self.assertEqual((again["added"], again["dropped"]), ([], []))
         self.assertEqual(verdict.read_calendar(self.tmp)[0]["date"] <= verdict.read_calendar(self.tmp)[-1]["date"], True)
+
+    SRC = {"publisher": "EASA", "url": "https://example.org"}
+    # Cordon's event for a bulletin is keyed by its expiry date, so a renewal arrives as a different event and the
+    # old one stops being sent.
+    WAS = {"id": "2026-11-16-easa-czib-2026-04", "date": "2026-11-16", "title": "Iran bulletin R2 expires",
+           "kind": "bulletin_expiry", "countries": ["IR"], "source": SRC, "ref": "CZIB-2026-04"}
+    RENEWED = {**WAS, "id": "2027-01-31-easa-czib-2026-04", "date": "2027-01-31", "title": "Iran bulletin R3 expires"}
+
+    def _iran(self):
+        """A registered forecast shaped like the ledger's EASA lines: about the 16 Nov expiry, naming the bulletin."""
+        (self.tmp / "ledger").mkdir(exist_ok=True)
+        fc = copy.deepcopy(ITEM)
+        fc.update({"id": "verdict:t:iran", "status": "actual", "approved_by": "T",
+                   "valid_until": "2026-11-17T00:00:00Z"})
+        fc["resolution"] = {"rule": AutoResolve.EASA_RULE, "source": "EASA", "known_at": "2026-11-16T00:00:00Z",
+                            "resolve_by": "2026-11-30T23:59:00Z"}
+        (self.tmp / "ledger" / "forecasts.jsonl").write_text(json.dumps(fc) + "\n", encoding="utf-8")
+        return fc
+
+    def test_a_renewed_bulletin_does_not_redate_its_forecast(self):
+        import build_site
+        from tic_doctrine import registers
+        fc = self._iran()
+        for today in ("2026-11-15", "2026-11-16", "2026-11-17"):  # the renewal is first synced before, on or after
+            with self.subTest(synced=today):
+                self.write()
+                verdict.sync_calendar(self.tmp, {"source": "cordon", "events": [self.WAS]}, today="2026-10-31")
+                r = verdict.sync_calendar(self.tmp, {"source": "cordon", "events": [self.RENEWED]}, today=today)
+                ev = {e["id"]: e for e in verdict.read_calendar(self.tmp)}
+                self.assertIn(self.WAS["id"], ev, "the event a forecast is about is never dropped")
+                self.assertEqual(ev[self.WAS["id"]]["forecast_ids"], ["verdict:t:iran"])
+                self.assertNotIn("forecast_ids", ev[self.RENEWED["id"]], "the next expiry is not this forecast's event")
+                self.assertEqual((r["added"], r["dropped"]), ([self.RENEWED["id"]], []))
+                self.assertEqual(build_site.event_dates([fc], verdict.read_calendar(self.tmp)),
+                                 {"verdict:t:iran": "2026-11-16"})
+                self.assertEqual(verdict.calendar_problems(self.tmp, registers.ids(self.tmp / "doctrine")), [])
+                again = verdict.sync_calendar(self.tmp, {"source": "cordon", "events": [self.RENEWED]}, today=today)
+                self.assertEqual((again["added"], again["dropped"]), ([], []))
+
+    def test_a_wrong_link_already_in_the_calendar_is_removed_and_never_dates_the_forecast(self):
+        import build_site
+        fc = self._iran()
+        # What a sync before this rule left behind: the next expiry linked to the forecast, the 16 Nov event gone.
+        wrong = {**self.RENEWED, "origin": "cordon", "added": "2026-11-16", "forecast_ids": ["verdict:t:iran"]}
+        self.write(wrong)
+        self.assertEqual(build_site.event_dates([fc], [wrong]), {}, "a later event never dates a forecast")
+        verdict.sync_calendar(self.tmp, {"source": "cordon", "events": [self.RENEWED]}, today="2026-11-17")
+        self.assertNotIn("forecast_ids", verdict.read_calendar(self.tmp)[0])
+        # Renewed again: with no forecast about it, the superseded future expiry is dropped as before.
+        self.write(wrong)
+        again = {**self.RENEWED, "id": "2027-04-30-easa-czib-2026-04", "date": "2027-04-30"}
+        r = verdict.sync_calendar(self.tmp, {"source": "cordon", "events": [again]}, today="2026-11-20")
+        self.assertEqual(r["dropped"], [wrong["id"]])
 
 
     def test_headwind_events_sync_and_link(self):
@@ -266,6 +479,31 @@ class Site(unittest.TestCase):
             self.assertIn(rel, a)
         rows = json.loads(a["data/forecasts.json"])["forecasts"]
         self.assertTrue(all(r["event_date"] and len(r["event_date"]) == 10 for r in rows))
+        self.assertTrue(all(r["event_date"] <= r["known_at"][:10] for r in rows),
+                        "a forecast is never dated after its outcome becomes knowable")
+
+    def test_the_page_gives_no_skill_figure_from_a_small_sample_and_says_why(self):
+        import build_site
+        built = build_site.build()
+        scores = json.loads(built["data/scores.json"])
+        self.assertEqual(scores["skill_min_n"], verdict.MIN_SKILL_N)
+        for prog, row in scores["by_program"].items():
+            with self.subTest(prog):
+                self.assertIn("brier", row)
+                if row["n"] < scores["skill_min_n"]:
+                    self.assertIsNone(row["skill_vs_base_rate"])
+                    self.assertIn(f"{scores['skill_min_n']} resolved forecasts", row["skill_withheld"])
+        # the page prints each row's reason under the table (site_src/app.js)
+        self.assertIn("skill_withheld", built["app.js"])
+
+    def test_the_claim_is_limited_to_forecasts_registered_here(self):
+        # No program's own forecasts are taken into the ledger yet, so nothing may say every forecast is logged.
+        for rel in ("site_src/index.html", "README.md", "doctrine/method.md"):
+            with self.subTest(rel):
+                text = " ".join((ROOT / rel).read_text(encoding="utf-8").split()).lower()
+                self.assertIn("every forecast registered here", text)
+                for old in ("every forecast the suite makes", "every forecast, logged", "every forecast logged"):
+                    self.assertNotIn(old, text)
 
 
 class AutoResolve(unittest.TestCase):
@@ -337,6 +575,16 @@ class AutoResolve(unittest.TestCase):
         self.assertEqual(res["proposed"], [])
         self.assertIn("only after 2026-11-17T00:00:00Z", res["skipped"][0]["reason"])
         self.assertEqual(verdict.read_lines(self.tmp / verdict.RESOLUTIONS), [])
+
+    def test_easa_read_is_held_by_the_check_after_field_as_well_as_by_the_rules_words(self):
+        fc = self._czib_fc()
+        fc["resolution"].update({
+            "check_after": "2026-11-17T00:00:00Z",
+            "rule": "Yes if EASA's CZIB table shows CZIB-2026-04 active and valid beyond 16 Nov 2026."})
+        self._register(fc)
+        res = self._run(self._easa("2026-11-16T00:30:00Z"), now="2026-11-18T00:00:00Z", apply=True, by="Tom Brummer")
+        self.assertEqual((res["proposed"], res["applied"]), ([], []))
+        self.assertIn("only after 2026-11-17T00:00:00Z", res["skipped"][0]["reason"])
 
     def test_easa_no_outcomes_are_held_for_review(self):
         self._register(self._czib_fc())
