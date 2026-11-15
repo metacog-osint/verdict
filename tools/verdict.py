@@ -5,8 +5,12 @@
     python tools/verdict.py register drafts/<file>.json  move approved drafts into the ledger, timestamped now
     python tools/verdict.py resolve <id> <0|1> --url <evidence> [--note "..."] [--by "..."]
                                                          refused before the rule's check time (resolution.check_after)
-    python tools/verdict.py score [--out scores.json]    Brier score, Murphy decomposition, by program; skill against
-                                                         the base rate from MIN_SKILL_N resolved forecasts
+    python tools/verdict.py score [--out scores.json]    Brier score, Murphy decomposition, by program, a declared
+                                                         cluster counted once; skill against the base rate and against
+                                                         each forecast's own reference from MIN_SKILL_N resolved
+    python tools/verdict.py cluster <id> --members <id> <id> ... --reason "..."
+                                                         declare linked forecasts, before any can be known, to be
+                                                         scored as one (ledger/clusters.jsonl)
     python tools/verdict.py due [--days 14] [--markdown]  forecasts to resolve now, and those coming up
     python tools/verdict.py calendar [--feed out.geojson] check the event calendar; export it as a contract v2 feed
     python tools/verdict.py ingest-feed <path-or-url> [--drafts drafts/ingested.json] [--approve "<name>"]
@@ -17,7 +21,7 @@
 The ledger is two append-only JSON-lines files in git: ledger/forecasts.jsonl (feed contract tic-feed/2 forecast
 items, each with its resolution rule written at issue time) and ledger/resolutions.jsonl. A registered line is never
 edited or removed; a correction is a new line (msg_type update or cancel, with supersedes). Git commit history is
-the timestamp lock.
+the timestamp lock. ledger/clusters.jsonl, append-only too, names forecasts that one decision settles together.
 """
 import argparse
 import json
@@ -33,17 +37,24 @@ from tic_doctrine import contract, registers  # noqa: E402
 
 FORECASTS = Path("ledger") / "forecasts.jsonl"
 RESOLUTIONS = Path("ledger") / "resolutions.jsonl"
+CLUSTERS = Path("ledger") / "clusters.jsonl"
 CALENDAR = Path("calendar") / "events.json"
 BINS = 10
-# Resolved forecasts a program needs before its skill against the base rate is given. Below this the base rate comes
-# from the same few outcomes, so the figure mostly shows which questions were picked: one easy No and one easy Yes
-# score 0.95.
+# Resolved forecasts a program needs before its skill is given, a declared cluster counting once. Below this the base
+# rate comes from the same few outcomes, so the figure mostly shows which questions were picked: one easy No and one
+# easy Yes score 0.95.
 MIN_SKILL_N = 30
-SKILL_HELD = (f"Skill against the base rate is held until every program counted has {MIN_SKILL_N} resolved forecasts. "
-              "With fewer, the base rate comes from the same few outcomes, so the figure would mostly show which "
-              "questions were picked.")
+SKILL_HELD = (f"Skill against the base rate is held until every program counted has {MIN_SKILL_N} resolved forecasts, "
+              "a cluster of linked questions counting once. With fewer, the base rate comes from the same few "
+              "outcomes, so the figure would mostly show which questions were picked.")
 SKILL_UNDEFINED = ("Skill against the base rate is held while every resolved forecast has the same outcome: there is "
                    "no spread in the base rate to score against.")
+REFERENCE_HELD = (f"Skill against each question's own reference is held until every program counted has "
+                  f"{MIN_SKILL_N} resolved forecasts that carry one, a cluster counting once. A reference is the "
+                  "probability a plain rule (a base rate, a market, no change) gave the question when it was "
+                  "registered; forecasts registered before 15 Nov 2026 carry none.")
+REFERENCE_UNDEFINED = ("Skill against each question's own reference is held while the references scored perfectly: "
+                       "there is nothing to improve on.")
 PUBLISH_WINDOW_S = 3600  # a new line's published_at must be within this many seconds of the commit that adds it
 EVENT_KINDS = {"data_release", "rule_date", "bulletin_expiry", "mandate_deadline", "election", "summit", "deadline",
                "advisory_change"}
@@ -154,7 +165,85 @@ def forecast_problems(item: dict, regs: dict) -> list[str]:
         too_late = False  # a resolve_by that is not a time is the contract's error to report
     if too_late:
         errs.append(f"verdict: check_after {ca} is later than resolve_by, so the rule could never be checked in time")
+    if "reference" in item:
+        ref = item["reference"]
+        p = ref.get("probability") if isinstance(ref, dict) else None
+        if not isinstance(p, (int, float)) or isinstance(p, bool) or not 0 <= p <= 1:
+            errs.append("verdict: reference.probability must be a number from 0 to 1 (what a plain rule gives)")
+        if not isinstance(ref, dict) or not str(ref.get("basis") or "").strip():
+            errs.append("verdict: reference.basis missing (the plain rule the reference comes from, and its source)")
     return errs
+
+
+def reference_probability(item: dict) -> float | None:
+    """The probability a plain rule gave the question at registration (item.reference), or None when it has none."""
+    ref = item.get("reference")
+    p = ref.get("probability") if isinstance(ref, dict) else None
+    return float(p) if isinstance(p, (int, float)) and not isinstance(p, bool) else None
+
+
+def cluster_problems(root: Path, forecasts: list[dict]) -> list[str]:
+    """Each cluster names two or more registered forecasts, none in another cluster, declared before any member's
+    outcome could be known: a cluster chosen after the fact could pick which results count once."""
+    by_id = {f.get("id"): f for f in forecasts}
+    errs, seen, member_of = [], set(), {}
+    for i, c in enumerate(read_lines(root / CLUSTERS), 1):
+        cid = c.get("id")
+        tag = f"clusters line {i} ({cid})"
+        if not cid:
+            errs.append(f"clusters line {i}: id missing")
+            continue
+        if cid in seen:
+            errs.append(f"{tag}: duplicate id")
+        seen.add(cid)
+        members = c.get("members")
+        if not isinstance(members, list) or len(set(members)) < 2 or len(set(members)) != len(members):
+            errs.append(f"{tag}: members must list two or more distinct forecast ids")
+            continue
+        if not str(c.get("reason") or "").strip():
+            errs.append(f"{tag}: reason missing (why one decision settles these together)")
+        for m in members:
+            if m not in by_id:
+                errs.append(f"{tag}: unknown forecast {m!r}")
+            elif m in member_of:
+                errs.append(f"{tag}: {m} is already in cluster {member_of[m]}")
+            else:
+                member_of[m] = cid
+        if not _is_time(c.get("declared_at")):
+            errs.append(f"{tag}: declared_at must be a UTC time like 2026-11-15T18:00:00Z")
+            continue
+        known = [(by_id[m].get("resolution") or {}).get("known_at") for m in members if m in by_id]
+        known = [k for k in known if _is_time(k)]
+        if known and _t(c["declared_at"]) >= min(_t(k) for k in known):
+            errs.append(f"{tag}: declared at {c['declared_at']}, not before its first member became knowable "
+                        f"({min(known, key=_t)})")
+    return errs
+
+
+def cluster_weights(root: Path = ROOT) -> dict[str, tuple[str, float]]:
+    """{forecast id: (cluster id, weight)}: each member of a k-forecast cluster weighs 1/k in the scores."""
+    out = {}
+    for c in read_lines(root / CLUSTERS):
+        members = c.get("members") or []
+        for m in members:
+            out.setdefault(m, (c.get("id"), 1 / len(members)))
+    return out
+
+
+def declare_cluster(cid: str, members: list[str], reason: str, root: Path = ROOT, when: str | None = None) -> dict:
+    """Append one cluster line, declared now, if it passes cluster_problems."""
+    rec = {"id": cid, "members": members, "declared_at": when or now_utc(), "reason": reason}
+    path = root / CLUSTERS
+    old = path.read_text(encoding="utf-8") if path.exists() else None
+    append_lines(path, [rec])
+    errs = cluster_problems(root, read_lines(root / FORECASTS))
+    if errs:
+        if old is None:
+            path.unlink()
+        else:
+            path.write_text(old, encoding="utf-8", newline="\n")
+        raise SystemExit("not declared:\n  " + "\n  ".join(errs))
+    return rec
 
 
 def check(root: Path = ROOT, base: str | None = None, now: str | None = None) -> list[str]:
@@ -191,6 +280,7 @@ def check(root: Path = ROOT, base: str | None = None, now: str | None = None) ->
         if ca and any(_t(t) < _t(ca) for t in read):
             errs.append(f"resolutions line {i}: {rid} was resolved, or its evidence read, before the rule allows a "
                         f"check ({ca})")
+    errs += cluster_problems(root, forecasts)
     errs += calendar_problems(root, regs)
     if base:
         errs += append_only(root, base)
@@ -377,7 +467,7 @@ def calendar_feed(root: Path = ROOT, generated: str | None = None) -> dict:
 def append_only(root: Path, base: str) -> list[str]:
     """Every ledger line present at <base> must still be there, unchanged and in order."""
     errs = []
-    for rel in (FORECASTS, RESOLUTIONS):
+    for rel in (FORECASTS, RESOLUTIONS, CLUSTERS):
         old = subprocess.run(["git", "show", f"{base}:{rel.as_posix()}"], cwd=root, capture_output=True, text=True,
                              encoding="utf-8")
         if old.returncode != 0:
@@ -391,15 +481,14 @@ def append_only(root: Path, base: str) -> list[str]:
 
 
 def published_when_committed(root: Path, base: str, now: str | None = None) -> list[str]:
-    """Every forecast line added since <base> was published when it says it was.
+    """Every forecast and cluster line added since <base> was made public when it says it was.
 
-    The commit that adds a line is what makes it public, so the line's published_at must be within an hour of that
-    commit, and the commit must be earlier than the line's known_at. A line dated earlier than its commit is
-    back-dated. A line not committed yet is held to the current time. The commit time is the committer date, which
-    the committer sets; GitHub's own record of the push and of this check's run is the outside timestamp.
+    The commit that adds a line is what makes it public, so the line's own time (a forecast's published_at, a
+    cluster's declared_at) must be within an hour of that commit, and the commit must be earlier than the time the
+    outcome becomes knowable (a forecast's known_at; for a cluster, its first member's). A line dated earlier than its
+    commit is back-dated. A line not committed yet is held to the current time. The commit time is the committer date,
+    which the committer sets; GitHub's own record of the push and of this check's run is the outside timestamp.
     """
-    rel = FORECASTS.as_posix()
-
     def git(*args) -> str | None:
         r = subprocess.run(["git", *args], cwd=root, capture_output=True, text=True, encoding="utf-8")
         return r.stdout if r.returncode == 0 else None
@@ -409,45 +498,58 @@ def published_when_committed(root: Path, base: str, now: str | None = None) -> l
 
     if git("rev-parse", "--verify", "--quiet", f"{base}^{{commit}}") is None:
         return [f"--base {base}: not a commit in this repository, so new lines cannot be checked against their commits"]
-    path = root / FORECASTS
-    before = lines(git("show", f"{base}:{rel}"))
-    new = lines(path.read_text(encoding="utf-8") if path.exists() else "")[len(before):]
-    if not new:
-        return []
-    # The commits since base that touch the ledger, oldest first, then HEAD itself to catch anything else committed.
-    commits = lines(git("log", "--reverse", "--topo-order", "--format=%h %cI", f"{base}..HEAD", "--", rel))
-    commits += lines(git("log", "-1", "--format=%h %cI", "HEAD"))
-    added = {}  # line -> (commit, its time): the first commit that holds the line
-    for entry in commits:
-        sha, when = entry.split(" ", 1)
-        held = set(lines(git("show", f"{sha}:{rel}")))
-        for ln in new:
-            if ln in held:
-                added.setdefault(ln, (sha, when))
+    known_of = {f.get("id"): (f.get("resolution") or {}).get("known_at") for f in read_lines(root / FORECASTS)}
+
+    def cluster_known(c: dict) -> str | None:
+        ks = [known_of.get(m) for m in c.get("members") or []]
+        ks = [k for k in ks if _is_time(k)]
+        return min(ks, key=_t) if ks else None
+
+    targets = ((FORECASTS, "forecasts", "published_at", lambda it: (it.get("resolution") or {}).get("known_at"),
+                "known_at", "its outcome became knowable"),
+               (CLUSTERS, "clusters", "declared_at", cluster_known, "its first member's known_at",
+                "its first member's outcome became knowable"))
     t_now, errs = _t(now or now_utc()), []
-    for n, ln in enumerate(new, len(before) + 1):
-        item = json.loads(ln)
-        tag = f"forecasts line {n} ({item.get('id')})"
-        sha, when = added.get(ln, (None, None))
-        t_commit = _t(when) if when else t_now
-        stamp = t_commit.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-        where = f"commit {sha} of {stamp}" if sha else f"now, {stamp} (not committed yet)"
-        try:
-            gap = (t_commit - _t(item["published_at"])).total_seconds()
-        except (KeyError, TypeError, ValueError):
-            continue  # a published_at that is not a time is the contract's error to report
-        if abs(gap) > PUBLISH_WINDOW_S:
-            errs.append(f"{tag}: published_at {item['published_at']} is {abs(gap) / 3600:.1f} h "
-                        f"{'before' if gap > 0 else 'after'} {where}; it must be within an hour of the commit that "
-                        f"adds the line")
-        known = (item.get("resolution") or {}).get("known_at")
-        try:
-            late = bool(known) and t_commit >= _t(known)
-        except (TypeError, ValueError):
-            late = False
-        if late:
-            errs.append(f"{tag}: {where} is not earlier than known_at {known}; the line was not public before its "
-                        f"outcome became knowable")
+    for path_rel, label, stamp_key, deadline_of, deadline_name, deadline_text in targets:
+        rel = path_rel.as_posix()
+        path = root / path_rel
+        before = lines(git("show", f"{base}:{rel}"))
+        new = lines(path.read_text(encoding="utf-8") if path.exists() else "")[len(before):]
+        if not new:
+            continue
+        # The commits since base that touch the file, oldest first, then HEAD itself to catch anything else.
+        commits = lines(git("log", "--reverse", "--topo-order", "--format=%h %cI", f"{base}..HEAD", "--", rel))
+        commits += lines(git("log", "-1", "--format=%h %cI", "HEAD"))
+        added = {}  # line -> (commit, its time): the first commit that holds the line
+        for entry in commits:
+            sha, when = entry.split(" ", 1)
+            held = set(lines(git("show", f"{sha}:{rel}")))
+            for ln in new:
+                if ln in held:
+                    added.setdefault(ln, (sha, when))
+        for n, ln in enumerate(new, len(before) + 1):
+            item = json.loads(ln)
+            tag = f"{label} line {n} ({item.get('id')})"
+            sha, when = added.get(ln, (None, None))
+            t_commit = _t(when) if when else t_now
+            stamp = t_commit.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+            where = f"commit {sha} of {stamp}" if sha else f"now, {stamp} (not committed yet)"
+            try:
+                gap = (t_commit - _t(item[stamp_key])).total_seconds()
+            except (KeyError, TypeError, ValueError):
+                continue  # a time that is not a time is the contract's (or cluster check's) error to report
+            if abs(gap) > PUBLISH_WINDOW_S:
+                errs.append(f"{tag}: {stamp_key} {item[stamp_key]} is {abs(gap) / 3600:.1f} h "
+                            f"{'before' if gap > 0 else 'after'} {where}; it must be within an hour of the commit "
+                            f"that adds the line")
+            known = deadline_of(item)
+            try:
+                late = bool(known) and t_commit >= _t(known)
+            except (TypeError, ValueError):
+                late = False
+            if late:
+                errs.append(f"{tag}: {where} is not earlier than {deadline_name} {known}; the line was not public "
+                            f"before {deadline_text}")
     return errs
 
 
@@ -533,46 +635,76 @@ def resolve(fid: str, outcome: int, url: str, note: str = "", by: str = "", root
     return rec
 
 
-def _brier(pairs):
+def _brier(rows):
     """Brier score with Murphy's decomposition (reliability - resolution + uncertainty) over BINS bins.
 
-    Skill against the sample's own base rate is given only from MIN_SKILL_N resolved forecasts; below that the
-    figure is None and skill_withheld says why. Brier and n are always given.
+    Each row is (probability, outcome) or (probability, outcome, weight, reference). A member of a declared k-forecast
+    cluster weighs 1/k, so one decision that settles six questions counts once; n_independent is the total weight.
+    brier_per_forecast weighs every forecast as one.
+
+    Skill is given only from MIN_SKILL_N independent resolved forecasts; below that the figure is None and the
+    *_withheld field says why. Against the base rate it uses the sample's own outcomes. Against the reference it uses
+    each question's own reference probability (item.reference, written at registration), over the forecasts that
+    carry one. Brier and n are always given.
     """
-    n = len(pairs)
-    bs = sum((p - o) ** 2 for p, o in pairs) / n
-    base = sum(o for _, o in pairs) / n
+    rows = [(float(r[0]), int(r[1]), float(r[2]) if len(r) > 2 else 1.0, r[3] if len(r) > 3 else None) for r in rows]
+    n, w_all = len(rows), sum(w for _, _, w, _ in rows)
+    bs = sum(w * (p - o) ** 2 for p, o, w, _ in rows) / w_all
+    base = sum(w * o for _, o, w, _ in rows) / w_all
     bins = {}
-    for p, o in pairs:
-        bins.setdefault(min(int(p * BINS), BINS - 1), []).append((p, o))
-    rel = sum(len(v) * (sum(p for p, _ in v) / len(v) - sum(o for _, o in v) / len(v)) ** 2 for v in bins.values()) / n
-    res = sum(len(v) * (sum(o for _, o in v) / len(v) - base) ** 2 for v in bins.values()) / n
+    for p, o, w, _ in rows:
+        bins.setdefault(min(int(p * BINS), BINS - 1), []).append((p, o, w))
+
+    def mean(v, i):
+        return sum(x[i] * x[2] for x in v) / sum(x[2] for x in v)
+
+    rel = sum(sum(x[2] for x in v) * (mean(v, 0) - mean(v, 1)) ** 2 for v in bins.values()) / w_all
+    res = sum(sum(x[2] for x in v) * (mean(v, 1) - base) ** 2 for v in bins.values()) / w_all
     unc = base * (1 - base)
-    withheld = SKILL_HELD if n < MIN_SKILL_N else None if unc > 0 else SKILL_UNDEFINED
-    return {"n": n, "brier": round(bs, 4), "base_rate": round(base, 4), "reliability": round(rel, 4),
+    withheld = SKILL_HELD if w_all < MIN_SKILL_N - 1e-9 else None if unc > 0 else SKILL_UNDEFINED
+
+    with_ref = [(p, o, w, q) for p, o, w, q in rows if q is not None]
+    w_ref = sum(w for _, _, w, _ in with_ref)
+    bs_f = sum(w * (p - o) ** 2 for p, o, w, _ in with_ref) / w_ref if w_ref else None
+    bs_ref = sum(w * (q - o) ** 2 for _, o, w, q in with_ref) / w_ref if w_ref else None
+    ref_withheld = (REFERENCE_HELD if w_ref < MIN_SKILL_N - 1e-9 else None if bs_ref > 0 else REFERENCE_UNDEFINED)
+    return {"n": n, "n_independent": round(w_all, 2), "brier": round(bs, 4),
+            "brier_per_forecast": round(sum((p - o) ** 2 for p, o, _, _ in rows) / n, 4),
+            "base_rate": round(base, 4), "reliability": round(rel, 4),
             "resolution": round(res, 4), "uncertainty": round(unc, 4),
             "skill_vs_base_rate": None if withheld else round(1 - bs / unc, 4), "skill_withheld": withheld,
-            "note": "decomposition is approximate within bins; skill_vs_base_rate uses the sample's own base rate "
-                    f"and is given only from {MIN_SKILL_N} resolved forecasts"}
+            "n_with_reference": len(with_ref), "brier_reference": None if bs_ref is None else round(bs_ref, 4),
+            "skill_vs_reference": None if ref_withheld else round(1 - bs_f / bs_ref, 4),
+            "reference_withheld": ref_withheld,
+            "note": "a declared cluster counts once (each member weighs 1/k); decomposition is approximate within "
+                    "bins; skill_vs_base_rate uses the sample's own base rate and skill_vs_reference each question's "
+                    f"own reference, each given only from {MIN_SKILL_N} independent resolved forecasts"}
 
 
 def score(root: Path = ROOT) -> dict:
     fc = {f["id"]: f for f in read_lines(root / FORECASTS)}
     live = {fid for fid, f in fc.items() if f.get("msg_type") != "cancel"}
     superseded = {f.get("supersedes") for f in fc.values() if f.get("supersedes")}
+    weights = cluster_weights(root)
     pairs = {}
     for r in read_lines(root / RESOLUTIONS):
         f = fc.get(r["id"])
         if not f or r["id"] not in live or r["id"] in superseded:
             continue
-        pairs.setdefault(f["program"], []).append((float(f["probability"]), int(r["outcome"])))
-        pairs.setdefault("all", []).append((float(f["probability"]), int(r["outcome"])))
+        row = (float(f["probability"]), int(r["outcome"]), weights.get(r["id"], (None, 1.0))[1],
+               reference_probability(f))
+        pairs.setdefault(f["program"], []).append(row)
+        pairs.setdefault("all", []).append(row)
     by = {k: _brier(v) for k, v in sorted(pairs.items())}
     # All programs together: only once each one has enough, so a large program cannot carry the pooled figure.
-    if any(v["n"] < MIN_SKILL_N for k, v in by.items() if k != "all"):
+    others = [v for k, v in by.items() if k != "all"]
+    if any(v["n_independent"] < MIN_SKILL_N - 1e-9 for v in others):
         by["all"].update({"skill_vs_base_rate": None, "skill_withheld": SKILL_HELD})
+    if any(v["reference_withheld"] == REFERENCE_HELD for v in others):
+        by["all"].update({"skill_vs_reference": None, "reference_withheld": REFERENCE_HELD})
+    clusters = read_lines(root / CLUSTERS)
     return {"generated_at": now_utc(), "registered": len(fc), "resolved": len(pairs.get("all", [])),
-            "skill_min_n": MIN_SKILL_N, "by_program": by}
+            "skill_min_n": MIN_SKILL_N, "clusters": len(clusters), "by_program": by}
 
 
 def main(argv=None) -> int:
@@ -590,6 +722,10 @@ def main(argv=None) -> int:
     s.add_argument("--by", default="")
     sc = sub.add_parser("score")
     sc.add_argument("--out")
+    cl = sub.add_parser("cluster")
+    cl.add_argument("id", help="e.g. verdict:cluster:easa-czib-2026-11-16")
+    cl.add_argument("--members", nargs="+", required=True)
+    cl.add_argument("--reason", required=True)
     du = sub.add_parser("due")
     du.add_argument("--days", type=int, default=14)
     du.add_argument("--markdown", action="store_true")
@@ -661,6 +797,9 @@ def main(argv=None) -> int:
         return 0
     if a.cmd == "resolve":
         print(json.dumps(resolve(a.id, a.outcome, a.url, a.note, a.by)))
+        return 0
+    if a.cmd == "cluster":
+        print(json.dumps(declare_cluster(a.id, a.members, a.reason)))
         return 0
     out = score()
     text = json.dumps(out, indent=2) + "\n"

@@ -311,6 +311,115 @@ class Ledger(unittest.TestCase):
         self.assertEqual(verdict.check(self.tmp, "HEAD", now="2026-11-03T08:30:00Z"), [])
         self.assertIn("not committed yet", " ".join(verdict.check(self.tmp, "HEAD", now="2026-11-03T12:00:00Z")))
 
+    def _three(self, **extra):
+        """Three registered forecasts, knowable 6 Nov 10:00 UTC, with any extra fields on each."""
+        items = []
+        for fid, p, term in (("verdict:test:a", 0.9, "very_likely"), ("verdict:test:b", 0.8, "likely"),
+                             ("verdict:test:c", 0.3, "unlikely")):
+            it = copy.deepcopy(ITEM)
+            it.update({"id": fid, "probability": p, "likelihood_term": term})
+            it.update(copy.deepcopy(extra.get(fid, {})))
+            items.append(it)
+        self.write_drafts(*items)
+        verdict.register(self.drafts, self.tmp, when="2026-11-01T12:00:00Z")
+
+    def test_a_declared_cluster_counts_once_in_the_scores(self):
+        self._three()
+        rec = verdict.declare_cluster("verdict:cluster:ab", ["verdict:test:a", "verdict:test:b"], "one decision",
+                                      root=self.tmp, when="2026-11-02T09:00:00Z")
+        self.assertEqual(rec["declared_at"], "2026-11-02T09:00:00Z")
+        self.assertEqual(verdict.check(self.tmp), [])
+        for fid, o in (("verdict:test:a", 1), ("verdict:test:b", 1), ("verdict:test:c", 0)):
+            verdict.resolve(fid, o, "https://example.org/r", root=self.tmp, when="2026-11-06T12:00:00Z")
+        s = verdict.score(self.tmp)
+        row = s["by_program"]["all"]
+        self.assertEqual((row["n"], row["n_independent"], s["clusters"]), (3, 2.0, 1))
+        # a and b weigh a half each; c weighs one
+        want = (0.5 * 0.1 ** 2 + 0.5 * 0.2 ** 2 + 0.3 ** 2) / 2
+        self.assertAlmostEqual(row["brier"], want, places=4)
+        self.assertAlmostEqual(row["brier_per_forecast"], (0.1 ** 2 + 0.2 ** 2 + 0.3 ** 2) / 3, places=4)
+        self.assertAlmostEqual(row["base_rate"], 0.5, places=4, msg="one Yes decision and one No")
+
+    def test_a_cluster_must_be_declared_before_any_member_can_be_known(self):
+        self._three()
+        with self.assertRaises(SystemExit) as cm:
+            verdict.declare_cluster("verdict:cluster:late", ["verdict:test:a", "verdict:test:b"], "picked after",
+                                    root=self.tmp, when="2026-11-06T10:00:00Z")
+        self.assertIn("not before its first member became knowable", str(cm.exception))
+        self.assertFalse((self.tmp / verdict.CLUSTERS).exists(), "a refused cluster leaves no line")
+        verdict.declare_cluster("verdict:cluster:ab", ["verdict:test:a", "verdict:test:b"], "one decision",
+                                root=self.tmp, when="2026-11-02T09:00:00Z")
+        for members, msg in ((["verdict:test:b", "verdict:test:c"], "already in cluster"),
+                             (["verdict:test:c", "verdict:test:nope"], "unknown forecast"),
+                             (["verdict:test:c"], "two or more")):
+            with self.subTest(msg), self.assertRaises(SystemExit) as cm:
+                verdict.declare_cluster("verdict:cluster:x", members, "r", root=self.tmp, when="2026-11-02T10:00:00Z")
+            self.assertIn(msg, str(cm.exception))
+        self.assertEqual(len(verdict.read_lines(self.tmp / verdict.CLUSTERS)), 1)
+        self.assertEqual(verdict.check(self.tmp), [])
+
+    def test_a_cluster_line_is_held_to_its_commit_and_is_append_only(self):
+        if not shutil.which("git"):
+            self.skipTest("git not available")
+
+        def git(*a, at=None):
+            env = dict(os.environ)
+            if at:
+                env["GIT_AUTHOR_DATE"] = env["GIT_COMMITTER_DATE"] = f"{int(verdict._t(at).timestamp())} +0000"
+            return subprocess.run(["git", *a], cwd=self.tmp, check=True, capture_output=True, text=True,
+                                  env=env).stdout.strip()
+
+        git("init", "-q", "-b", "main")
+        git("config", "user.email", "t@example.org")
+        git("config", "user.name", "t")
+        self._three()
+        git("add", "-A")
+        git("commit", "-q", "-m", "register", at="2026-11-01T12:05:00Z")
+        base = git("rev-parse", "HEAD")
+        # Written on 6 Nov after the outcomes were knowable, but dated 2 Nov: the commit gives it away.
+        verdict.append_lines(self.tmp / verdict.CLUSTERS, [{"id": "verdict:cluster:ab", "reason": "r",
+                                                            "members": ["verdict:test:a", "verdict:test:b"],
+                                                            "declared_at": "2026-11-02T09:00:00Z"}])
+        git("add", "-A")
+        git("commit", "-q", "-m", "cluster", at="2026-11-06T11:00:00Z")
+        errs = verdict.check(self.tmp, base)
+        self.assertEqual(len(errs), 2, errs)
+        self.assertIn("declared_at", errs[0])
+        self.assertIn("first member's known_at", errs[1])
+        self.assertEqual(verdict.check(self.tmp, "HEAD"), [])
+        (self.tmp / verdict.CLUSTERS).write_text("", encoding="utf-8")
+        self.assertIn("append only", " ".join(verdict.check(self.tmp, "HEAD")))
+
+    def test_skill_against_a_reference_written_at_registration(self):
+        bad = copy.deepcopy(ITEM)
+        bad["reference"] = {"probability": 1.5}
+        self.write_drafts(bad)
+        with self.assertRaises(SystemExit) as cm:
+            verdict.register(self.drafts, self.tmp, when="2026-11-01T12:00:00Z")
+        self.assertIn("reference.probability", str(cm.exception))
+        self.assertIn("reference.basis", str(cm.exception))
+
+        need = verdict.MIN_SKILL_N
+        # References of 0.5 against outcomes the forecasts called at 0.8 / 0.2.
+        rows = ([(0.8, 1, 1.0, 0.5), (0.2, 0, 1.0, 0.5)] * need)[:need]
+        full = verdict._brier(rows)
+        self.assertEqual(full["n_with_reference"], need)
+        self.assertAlmostEqual(full["brier_reference"], 0.25, places=4)
+        self.assertAlmostEqual(full["skill_vs_reference"], 1 - 0.04 / 0.25, places=4)
+        self.assertIsNone(full["reference_withheld"])
+        short = verdict._brier(rows[:-1] + [(0.8, 1)])
+        self.assertIsNone(short["skill_vs_reference"], "one forecast without a reference leaves it one short")
+        self.assertIn(f"{need} resolved forecasts that carry one", short["reference_withheld"])
+        two = verdict._brier([(0.05, 0), (0.85, 1)])
+        self.assertEqual((two["n_with_reference"], two["skill_vs_reference"]), (0, None))
+
+        # Through the ledger: a registered reference reaches the score.
+        self._three(**{"verdict:test:c": {"reference": {"probability": 0.5, "basis": "base rate: test"}}})
+        verdict.resolve("verdict:test:c", 0, "https://example.org/r", root=self.tmp, when="2026-11-06T12:00:00Z")
+        row = verdict.score(self.tmp)["by_program"]["all"]
+        self.assertEqual((row["n_with_reference"], row["brier_reference"]), (1, 0.25))
+        self.assertEqual(verdict.check(self.tmp), [])
+
 
 class Calendar(unittest.TestCase):
     def setUp(self):
@@ -495,6 +604,18 @@ class Site(unittest.TestCase):
                     self.assertIn(f"{scores['skill_min_n']} resolved forecasts", row["skill_withheld"])
         # the page prints each row's reason under the table (site_src/app.js)
         self.assertIn("skill_withheld", built["app.js"])
+        self.assertIn("reference_withheld", built["app.js"])
+
+    def test_the_page_states_each_rules_check_time(self):
+        import build_site
+        built = build_site.build()
+        rows = {r["id"]: r for r in json.loads(built["data/forecasts.json"])["forecasts"]}
+        easa = [r for fid, r in rows.items() if "-czib-renewed" in fid]
+        self.assertEqual(len(easa), 6)
+        self.assertEqual({r["check_after"] for r in easa}, {"2026-11-17T00:00:00Z"})
+        self.assertIsNone(rows["verdict:2026-11-06:fao-ffpi-october-up"]["check_after"], "no rule time, none shown")
+        self.assertIn("Earliest check", built["app.js"])
+        self.assertIn("r.check_after", built["app.js"])
 
     def test_the_claim_is_limited_to_forecasts_registered_here(self):
         # No program's own forecasts are taken into the ledger yet, so nothing may say every forecast is logged.

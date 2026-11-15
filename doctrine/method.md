@@ -18,6 +18,16 @@ Event forecasts are drafted with sourced reasoning and alternatives; Tom sets th
 
 ## Scores
 The Brier score with Murphy's decomposition (reliability, resolution, uncertainty) and counts, broken out by program.
-Skill against the base rate is given once a program has 30 resolved forecasts; with fewer, the base rate comes from
-the same few outcomes and the figure would mostly show which questions were picked. Reliability diagrams,
-POD/FAR/CSI/Peirce for threshold warnings and SEDI for rare events follow as the record grows. Misses stay in.
+
+Questions that one decision settles together are declared a cluster in `ledger/clusters.jsonl` before any of them
+can be known, and each member of a k-question cluster weighs 1/k, so the record is not inflated by counting one call
+six times. A cluster declared after a member became knowable is refused, because choosing clusters after the fact
+would choose which results count once. The per-forecast Brier is shown beside the weighted one.
+
+Skill is given once a program has 30 resolved forecasts, a cluster counting once; with fewer, the base rate comes
+from the same few outcomes and the figure would mostly show which questions were picked. Skill against the base rate
+uses the sample's own outcomes. Skill against the reference uses each question's own `reference` probability, written
+at registration from a plain rule (a base rate, a market, no change) with its source, so a forecast is scored against
+what could have been said without judgment. Forecasts registered before 15 Nov 2026 carry no reference.
+Reliability diagrams, POD/FAR/CSI/Peirce for threshold warnings and SEDI for rare events follow as the record grows.
+Misses stay in.
