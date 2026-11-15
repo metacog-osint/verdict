@@ -1,30 +1,43 @@
 {
- "generated_at": "2026-11-12T23:46:14Z",
+ "generated_at": "2026-11-15T18:31:41Z",
  "registered": 8,
  "resolved": 2,
  "skill_min_n": 30,
+ "clusters": 1,
  "by_program": {
   "all": {
    "n": 2,
+   "n_independent": 2.0,
    "brier": 0.0125,
+   "brier_per_forecast": 0.0125,
    "base_rate": 0.5,
    "reliability": 0.0125,
    "resolution": 0.25,
    "uncertainty": 0.25,
    "skill_vs_base_rate": null,
-   "skill_withheld": "Skill against the base rate is held until every program counted has 30 resolved forecasts. With fewer, the base rate comes from the same few outcomes, so the figure would mostly show which questions were picked.",
-   "note": "decomposition is approximate within bins; skill_vs_base_rate uses the sample's own base rate and is given only from 30 resolved forecasts"
+   "skill_withheld": "Skill against the base rate is held until every program counted has 30 resolved forecasts, a cluster of linked questions counting once. With fewer, the base rate comes from the same few outcomes, so the figure would mostly show which questions were picked.",
+   "n_with_reference": 0,
+   "brier_reference": null,
+   "skill_vs_reference": null,
+   "reference_withheld": "Skill against each question's own reference is held until every program counted has 30 resolved forecasts that carry one, a cluster counting once. A reference is the probability a plain rule (a base rate, a market, no change) gave the question when it was registered; forecasts registered before 15 Nov 2026 carry none.",
+   "note": "a declared cluster counts once (each member weighs 1/k); decomposition is approximate within bins; skill_vs_base_rate uses the sample's own base rate and skill_vs_reference each question's own reference, each given only from 30 independent resolved forecasts"
   },
   "verdict": {
    "n": 2,
+   "n_independent": 2.0,
    "brier": 0.0125,
+   "brier_per_forecast": 0.0125,
    "base_rate": 0.5,
    "reliability": 0.0125,
    "resolution": 0.25,
    "uncertainty": 0.25,
    "skill_vs_base_rate": null,
-   "skill_withheld": "Skill against the base rate is held until every program counted has 30 resolved forecasts. With fewer, the base rate comes from the same few outcomes, so the figure would mostly show which questions were picked.",
-   "note": "decomposition is approximate within bins; skill_vs_base_rate uses the sample's own base rate and is given only from 30 resolved forecasts"
+   "skill_withheld": "Skill against the base rate is held until every program counted has 30 resolved forecasts, a cluster of linked questions counting once. With fewer, the base rate comes from the same few outcomes, so the figure would mostly show which questions were picked.",
+   "n_with_reference": 0,
+   "brier_reference": null,
+   "skill_vs_reference": null,
+   "reference_withheld": "Skill against each question's own reference is held until every program counted has 30 resolved forecasts that carry one, a cluster counting once. A reference is the probability a plain rule (a base rate, a market, no change) gave the question when it was registered; forecasts registered before 15 Nov 2026 carry none.",
+   "note": "a declared cluster counts once (each member weighs 1/k); decomposition is approximate within bins; skill_vs_base_rate uses the sample's own base rate and skill_vs_reference each question's own reference, each given only from 30 independent resolved forecasts"
   }
  }
 }

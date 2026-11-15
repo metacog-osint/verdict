@@ -87,7 +87,9 @@
         h("div", null, [pct(r.probability) + ": " + r.likelihood]),
         h("div", { "class": "muted" }, ["Confidence: " + (r.confidence || "—")]),
         h("div", null, ["Settles on: " + (r.rule || "—")]),
-        h("div", { "class": "muted" }, ["Registered " + when(r.published_at)])];
+        r.check_after ? h("div", null, ["Checked only after " + when(r.check_after)]) : null,
+        r.cluster ? h("div", { "class": "muted" }, ["Scored as one with " + (r.cluster.size - 1) + " linked questions"]) : null,
+        h("div", { "class": "muted" }, ["Registered " + when(r.published_at)])].filter(Boolean);
       row.addEventListener("mousemove", function (ev) { showTip(ev, lines); });
       row.addEventListener("mouseleave", hideTip);
       row.addEventListener("focus", function () { var b = row.getBoundingClientRect(); showTip({ clientX: b.left + 20, clientY: b.bottom }, lines); });
@@ -136,17 +138,22 @@
     /* Skill is not given from a small sample (tools/verdict.py, MIN_SKILL_N): the cell reads "held" and each
      * reason the data gives (skill_withheld) is printed once under the table. */
     var why = [];
+    function skillCell(v, held) {
+      if (held && why.indexOf(held) < 0) why.push(held);
+      return held ? "held" : v == null ? "—" : v.toFixed(2);
+    }
     progs.forEach(function (p) {
       var x = scores.by_program[p];
-      var held = x.skill_vs_base_rate == null && x.skill_withheld;
-      var skill = held ? "held" : x.skill_vs_base_rate == null ? "—" : x.skill_vs_base_rate.toFixed(2);
-      if (held && why.indexOf(held) < 0) why.push(held);
-      tb.append(h("tr", null, [h("td", null, [p]), h("td", null, [x.n]), h("td", null, [x.brier.toFixed(3)]),
-        h("td", null, [skill])]));
+      /* A declared cluster of linked questions counts once (skill_vs_base_rate, skill_vs_reference and Brier all
+       * weigh each member 1/k), so the independent count is shown where it differs. */
+      var n = x.n_independent != null && x.n_independent !== x.n ? x.n + " (" + x.n_independent + " independent)" : x.n;
+      tb.append(h("tr", null, [h("td", null, [p]), h("td", null, [n]), h("td", null, [x.brier.toFixed(3)]),
+        h("td", null, [skillCell(x.skill_vs_base_rate, x.skill_vs_base_rate == null && x.skill_withheld)]),
+        h("td", null, [skillCell(x.skill_vs_reference, x.skill_vs_reference == null && x.reference_withheld)])]));
     });
     sc.replaceChildren.apply(sc, [h("table", { "class": "scores-table" }, [
       h("thead", null, [h("tr", null, [h("th", null, ["Program"]), h("th", null, ["Resolved"]), h("th", null, ["Brier"]),
-        h("th", null, ["Skill vs base rate"])])]), tb])].concat(why.map(function (t) {
+        h("th", null, ["Skill vs base rate"]), h("th", null, ["Skill vs reference"])])]), tb])].concat(why.map(function (t) {
       return h("p", { "class": "scores-note" }, [t]);
     })));
   }
@@ -178,6 +185,13 @@
       var dl = h("dl", null, [
         h("dt", null, ["Bottom line"]), h("dd", null, [r.summary || "—"]),
         h("dt", null, ["Settles on"]), h("dd", null, [r.rule || "—"]),
+        r.check_after ? h("dt", null, ["Earliest check"]) : null,
+        r.check_after ? h("dd", null, [when(r.check_after) + ". The rule allows no check before this, so the question is not due and cannot be resolved until then."]) : null,
+        r.cluster ? h("dt", null, ["Scored with"]) : null,
+        r.cluster ? h("dd", null, ["One of " + r.cluster.size + " linked questions scored as one, each counting 1/" + r.cluster.size +
+          " (declared " + when(r.cluster.declared_at) + ", before any could be known): " + (r.cluster.reason || "")]) : null,
+        r.reference ? h("dt", null, ["Reference"]) : null,
+        r.reference ? h("dd", null, [pct(r.reference.probability) + ", from " + (r.reference.basis || "—")]) : null,
         h("dt", null, ["Settling source"]), h("dd", null, [r.resolution_source || "—"]),
         h("dt", null, ["Void if"]), h("dd", null, [r.void_if || "—"]),
         h("dt", null, ["Alternatives considered"]), h("dd", null, [h("ul", null, r.alternatives.map(function (a) {

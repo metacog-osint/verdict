@@ -41,8 +41,10 @@ def build() -> dict[str, str]:
     fc = verdict.read_lines(ROOT / verdict.FORECASTS)
     res = {r["id"]: r for r in verdict.read_lines(ROOT / verdict.RESOLUTIONS)}
     cal = verdict.read_calendar(ROOT)
+    clusters = verdict.read_lines(ROOT / verdict.CLUSTERS)
+    cluster_of = {m: c for c in clusters for m in c.get("members", [])}
     stamps = [f["published_at"] for f in fc] + [r["resolved_at"] for r in res.values()] + \
-             [f"{e['added']}T00:00:00Z" for e in cal]
+             [f"{e['added']}T00:00:00Z" for e in cal] + [c["declared_at"] for c in clusters]
     as_of = max(stamps) if stamps else "1970-01-01T00:00:00Z"
 
     superseded = {f.get("supersedes") for f in fc if f.get("supersedes")}
@@ -54,13 +56,19 @@ def build() -> dict[str, str]:
         resolution = f.get("resolution") or {}
         status = ("cancelled" if f.get("msg_type") == "cancel" else "superseded" if f["id"] in superseded
                   else "resolved" if r else "open")
+        c = cluster_of.get(f["id"])
+        ref = f.get("reference") if isinstance(f.get("reference"), dict) else None
         rows.append({
             "id": f["id"], "title": f["title"], "summary": f.get("summary"),
             "probability": f["probability"], "likelihood": likelihood.label(f["probability"]),
             "confidence": f.get("confidence"), "raise_by": (f.get("confidence_basis") or {}).get("raise_by", []),
             "published_at": f["published_at"], "approved_by": f.get("approved_by"),
             "event_date": event_date.get(f["id"], (resolution.get("known_at") or "")[:10] or None),
-            "known_at": resolution.get("known_at"), "resolve_by": resolution.get("resolve_by"),
+            "known_at": resolution.get("known_at"), "check_after": verdict.check_after(f),
+            "resolve_by": resolution.get("resolve_by"),
+            "cluster": {"id": c["id"], "size": len(c["members"]), "reason": c.get("reason"),
+                        "declared_at": c["declared_at"]} if c else None,
+            "reference": {"probability": verdict.reference_probability(f), "basis": ref.get("basis")} if ref else None,
             "rule": resolution.get("rule"), "resolution_source": resolution.get("source"),
             "void_if": resolution.get("void_if"), "alternatives": f.get("alternatives", []),
             "countries": f.get("countries", []),

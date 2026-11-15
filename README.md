@@ -11,8 +11,9 @@ public before its outcome could be known, and nothing registered is ever edited 
 
 | File | What it holds |
 |---|---|
-| `ledger/forecasts.jsonl` | One forecast per line, in feed contract v2 (`tic-feed/2`): the question, the probability and its ICD 203 term, confidence kept separate, the alternatives, the resolution rule and source, when the outcome becomes knowable (`resolution.known_at`), the earliest time the rule allows a check where it sets one (`resolution.check_after`), and who set the number (`approved_by`). |
+| `ledger/forecasts.jsonl` | One forecast per line, in feed contract v2 (`tic-feed/2`): the question, the probability and its ICD 203 term, confidence kept separate, the alternatives, the resolution rule and source, when the outcome becomes knowable (`resolution.known_at`), the earliest time the rule allows a check where it sets one (`resolution.check_after`), and who set the number (`approved_by`). From 15 Nov 2026 a forecast may also carry a `reference`: the probability a plain rule (a base rate, a market, no change) gave the question at registration, and where it came from. |
 | `ledger/resolutions.jsonl` | One line per resolved forecast: the outcome (1 or 0), when, and the evidence link. |
+| `ledger/clusters.jsonl` | Forecasts that one decision settles together (EASA renewing its Middle East bulletins at once, say), declared before any of them could be known. A cluster counts once in the scores. Append-only, held to its commit like a forecast line. |
 | `drafts/` | Forecasts being prepared. A draft enters the ledger only once its probability is approved. |
 | `calendar/events.json` | The event calendar: dated, resolvable events worth forecasting, each with the source of its date (`verified: false` where the date comes from secondary reporting). EASA bulletin expiries and State advisory changes arrive daily from [Cordon](https://cordon.theintelligence.company/) (`origin: cordon`), and Federal Register rule dates, FOMC and ECB decisions and FAO release dates from [Headwind](https://headwind.theintelligence.company/) (`origin: headwind`); an event that names one document (a bulletin or a Federal Register document number) is linked to the forecasts whose rules name it (`calendar-sync.yml`). An event is linked only when it is dated on or before the forecast's `known_at`, and a linked event is never dropped: a renewed bulletin's next expiry is a new event and does not move the forecast. |
 | `site/` | The public scorecard page and its data, generated from the above by `tools/build_site.py` (edit `site_src/`, never `site/`). `site/data/feed.geojson` and `site/data/calendar.geojson` are feed contract v2 feeds for COP. |
@@ -28,6 +29,7 @@ python tools/verdict.py check                       # every line valid and linte
 python tools/verdict.py register drafts/2026-11.json  # approved drafts into the ledger, timestamped now (UTC)
 python tools/verdict.py resolve <id> 1 --url <evidence>   # refused before the rule's check time
 python tools/verdict.py score                       # Brier score, Murphy decomposition, by program
+python tools/verdict.py cluster <id> --members <id> <id> --reason "..."  # before any member can be known
 python tools/verdict.py due --markdown              # what to resolve now, and what is coming up
 python tools/verdict.py calendar                    # check the event calendar
 python tools/build_site.py                          # rebuild site/ after any ledger or calendar change
@@ -42,10 +44,13 @@ and cannot be resolved, before that time.
 
 ## Scoring
 
-The Brier score with its decomposition (reliability, resolution, uncertainty) and counts, by program. Skill against
-the base rate is given once a program has 30 resolved forecasts; with fewer, the base rate comes from the same few
-outcomes and the figure would mostly show which questions were picked. As the record grows: reliability diagrams,
-POD, FAR, CSI and Peirce for threshold warnings, and SEDI for rare events.
+The Brier score with its decomposition (reliability, resolution, uncertainty) and counts, by program. Each member of
+a declared cluster of k linked questions weighs 1/k, so one decision counts once; the plain per-forecast Brier is
+given beside it (`brier_per_forecast`). Skill is given once a program has 30 resolved forecasts, a cluster counting
+once; with fewer, the base rate comes from the same few outcomes and the figure would mostly show which questions were
+picked. Two skill figures: against the sample's own base rate, and against each question's own `reference`, over the
+forecasts that carry one. As the record grows: reliability diagrams, POD, FAR, CSI and Peirce for threshold warnings,
+and SEDI for rare events.
 
 Forecasts follow ICD 203's likelihood terms and keep confidence separate from likelihood (aligned with the directive's
 standards; it binds US intelligence agencies, not us). The method is in `doctrine/method.md`.
