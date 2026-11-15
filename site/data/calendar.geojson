@@ -12,6 +12,168 @@
    "geometry": null,
    "properties": {
     "contract": "tic-feed/2",
+    "id": "verdict:calendar:2026-10-26-canada-jp-update",
+    "program": "verdict",
+    "title": "On 2026-10-26: Japan: Canada's travel advice, Regional advisory removed: Risk levels section – removed advisory to avoid non-essential travel to the Ryukyu Islands",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-15T00:00:00Z",
+    "published_at": "2026-11-15T18:31:41Z",
+    "valid_until": "2026-10-26T00:00:00Z",
+    "countries": [
+     "JP"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://travel.gc.ca/destinations/japan"
+    },
+    "sources": [
+     {
+      "id": "2026-10-26-canada-jp-update",
+      "publisher": "Global Affairs Canada (Government of Canada)",
+      "url": "https://travel.gc.ca/destinations/japan",
+      "licence": "public",
+      "descriptor": "Canada's own update note of 2026-10-26T14:39:17Z (read by Cordon)",
+      "accessed_at": "2026-11-15T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "advisory_change",
+     "date": "2026-10-26",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": true,
+     "origin": "cordon",
+     "ref": "JP"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2026-11-03-canada-cn-update",
+    "program": "verdict",
+    "title": "On 2026-11-03: China: Canada's travel advice, Regional advisory modified: Risk level section – avoid non-essential travel to parts of Gyirong County",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-15T00:00:00Z",
+    "published_at": "2026-11-15T18:31:41Z",
+    "valid_until": "2026-11-03T00:00:00Z",
+    "countries": [
+     "CN"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://travel.gc.ca/destinations/china"
+    },
+    "sources": [
+     {
+      "id": "2026-11-03-canada-cn-update",
+      "publisher": "Global Affairs Canada (Government of Canada)",
+      "url": "https://travel.gc.ca/destinations/china",
+      "licence": "public",
+      "descriptor": "Canada's own update note of 2026-11-03T17:27:06Z (read by Cordon)",
+      "accessed_at": "2026-11-15T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "advisory_change",
+     "date": "2026-11-03",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": true,
+     "origin": "cordon",
+     "ref": "CN"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2026-11-03-canada-np-update",
+    "program": "verdict",
+    "title": "On 2026-11-03: Nepal: Canada's travel advice, Regional advisory modified: Risk levels section – avoid non-essential travel to parts of the Trishuli River corridor",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-15T00:00:00Z",
+    "published_at": "2026-11-15T18:31:41Z",
+    "valid_until": "2026-11-03T00:00:00Z",
+    "countries": [
+     "NP"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://travel.gc.ca/destinations/nepal"
+    },
+    "sources": [
+     {
+      "id": "2026-11-03-canada-np-update",
+      "publisher": "Global Affairs Canada (Government of Canada)",
+      "url": "https://travel.gc.ca/destinations/nepal",
+      "licence": "public",
+      "descriptor": "Canada's own update note of 2026-11-03T16:56:03Z (read by Cordon)",
+      "accessed_at": "2026-11-15T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "advisory_change",
+     "date": "2026-11-03",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": true,
+     "origin": "cordon",
+     "ref": "NP"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
     "id": "verdict:calendar:2026-11-06-fao-ffpi",
     "program": "verdict",
     "title": "Scheduled 2026-11-06: FAO Food Price Index for October 2026 released",
@@ -115,6 +277,60 @@
      "occurred": false,
      "origin": "verdict",
      "ref": null
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2026-11-12-canada-mx-update",
+    "program": "verdict",
+    "title": "On 2026-11-12: Mexico: Canada's travel advice: Risk levels section – removed advisory to avoid non-essential travel to the west-central coast",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-15T00:00:00Z",
+    "published_at": "2026-11-15T18:31:41Z",
+    "valid_until": "2026-11-12T00:00:00Z",
+    "countries": [
+     "MX"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://travel.gc.ca/destinations/mexico"
+    },
+    "sources": [
+     {
+      "id": "2026-11-12-canada-mx-update",
+      "publisher": "Global Affairs Canada (Government of Canada)",
+      "url": "https://travel.gc.ca/destinations/mexico",
+      "licence": "public",
+      "descriptor": "Canada's own update note of 2026-11-12T12:31:31Z (read by Cordon)",
+      "accessed_at": "2026-11-15T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "advisory_change",
+     "date": "2026-11-12",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": true,
+     "origin": "cordon",
+     "ref": "MX"
     }
    }
   },
@@ -571,6 +787,164 @@
    "geometry": null,
    "properties": {
     "contract": "tic-feed/2",
+    "id": "verdict:calendar:2026-12-03-fr-2026-19537",
+    "program": "verdict",
+    "title": "Scheduled 2026-12-03: BIS: Measures To Restrict Stockpiling of Polysilicon and Polysilicon Derivatives Under Proclamation 11052 (date named in the rule)",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-15T00:00:00Z",
+    "published_at": "2026-11-15T18:31:41Z",
+    "valid_until": "2026-12-03T00:00:00Z",
+    "countries": [],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.federalregister.gov/documents/2026/09/24/2026-19537/measures-to-restrict-stockpiling-of-polysilicon-and-polysilicon-derivatives-under-proclamation-11052"
+    },
+    "sources": [
+     {
+      "id": "2026-12-03-fr-2026-19537",
+      "publisher": "US Federal Register (BIS)",
+      "url": "https://www.federalregister.gov/documents/2026/09/24/2026-19537/measures-to-restrict-stockpiling-of-polysilicon-and-polysilicon-derivatives-under-proclamation-11052",
+      "licence": "public",
+      "descriptor": "BIS: Measures To Restrict Stockpiling of Polysilicon and Polysilicon Derivatives Under Proclamation 11052 (date named in the rule)",
+      "accessed_at": "2026-11-15T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "rule_date",
+     "date": "2026-12-03",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": false,
+     "origin": "headwind",
+     "ref": "2026-19537"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2026-12-04-fao-ffpi-release",
+    "program": "verdict",
+    "title": "Scheduled 2026-12-04: FAO Food Price Index monthly release (2026-11 data)",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-15T00:00:00Z",
+    "published_at": "2026-11-15T18:31:41Z",
+    "valid_until": "2026-12-04T00:00:00Z",
+    "countries": [],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.fao.org/worldfoodsituation/foodpricesindex/en/"
+    },
+    "sources": [
+     {
+      "id": "2026-12-04-fao-ffpi-release",
+      "publisher": "FAO",
+      "url": "https://www.fao.org/worldfoodsituation/foodpricesindex/en/",
+      "licence": "public",
+      "descriptor": "FAO Food Price Index monthly release (2026-11 data)",
+      "accessed_at": "2026-11-15T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "data_release",
+     "date": "2026-12-04",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": false,
+     "origin": "headwind",
+     "ref": "FFPI"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2026-12-09-fomc-decision",
+    "program": "verdict",
+    "title": "Scheduled 2026-12-09: Federal Reserve FOMC rate decision",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-15T00:00:00Z",
+    "published_at": "2026-11-15T18:31:41Z",
+    "valid_until": "2026-12-09T00:00:00Z",
+    "countries": [
+     "US"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"
+    },
+    "sources": [
+     {
+      "id": "2026-12-09-fomc-decision",
+      "publisher": "Board of Governors of the Federal Reserve System",
+      "url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm",
+      "licence": "public",
+      "descriptor": "Federal Reserve FOMC rate decision",
+      "accessed_at": "2026-11-15T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "rule_date",
+     "date": "2026-12-09",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": false,
+     "origin": "headwind",
+     "ref": "FOMC"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
     "id": "verdict:calendar:2026-12-15-libya-panel-interim-report",
     "program": "verdict",
     "title": "Scheduled 2026-12-15: UN Libya sanctions panel of experts interim report due",
@@ -617,6 +991,58 @@
      "occurred": false,
      "origin": "verdict",
      "ref": null
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2026-12-17-ecb-decision",
+    "program": "verdict",
+    "title": "Scheduled 2026-12-17: ECB Governing Council monetary policy decision",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-15T00:00:00Z",
+    "published_at": "2026-11-15T18:31:41Z",
+    "valid_until": "2026-12-17T00:00:00Z",
+    "countries": [],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.ecb.europa.eu/press/calendars/mgcgc/html/index.en.html"
+    },
+    "sources": [
+     {
+      "id": "2026-12-17-ecb-decision",
+      "publisher": "European Central Bank",
+      "url": "https://www.ecb.europa.eu/press/calendars/mgcgc/html/index.en.html",
+      "licence": "public",
+      "descriptor": "ECB Governing Council monetary policy decision",
+      "accessed_at": "2026-11-15T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "rule_date",
+     "date": "2026-12-17",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": false,
+     "origin": "headwind",
+     "ref": "ECB"
     }
    }
   },
@@ -680,6 +1106,58 @@
    "geometry": null,
    "properties": {
     "contract": "tic-feed/2",
+    "id": "verdict:calendar:2027-01-10-fr-2026-22793",
+    "program": "verdict",
+    "title": "Scheduled 2027-01-10: BIS: Extension of the Suspension of Expansion of End-User Controls for Affiliates of Certain Listed Entities (date named in the rule)",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-15T00:00:00Z",
+    "published_at": "2026-11-15T18:31:41Z",
+    "valid_until": "2027-01-10T00:00:00Z",
+    "countries": [],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.federalregister.gov/documents/2026/11/09/2026-22793/extension-of-the-suspension-of-expansion-of-end-user-controls-for-affiliates-of-certain-listed"
+    },
+    "sources": [
+     {
+      "id": "2027-01-10-fr-2026-22793",
+      "publisher": "US Federal Register (BIS)",
+      "url": "https://www.federalregister.gov/documents/2026/11/09/2026-22793/extension-of-the-suspension-of-expansion-of-end-user-controls-for-affiliates-of-certain-listed",
+      "licence": "public",
+      "descriptor": "BIS: Extension of the Suspension of Expansion of End-User Controls for Affiliates of Certain Listed Entities (date named in the rule)",
+      "accessed_at": "2026-11-15T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "rule_date",
+     "date": "2027-01-10",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": false,
+     "origin": "headwind",
+     "ref": "2026-22793"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
     "id": "verdict:calendar:2027-01-10-us-china-truce",
     "program": "verdict",
     "title": "Scheduled 2027-01-10: US-China trade truce, as extended in September 2026, ends",
@@ -727,6 +1205,60 @@
      "occurred": false,
      "origin": "verdict",
      "ref": null
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2027-01-27-fomc-decision",
+    "program": "verdict",
+    "title": "Scheduled 2027-01-27: Federal Reserve FOMC rate decision",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-15T00:00:00Z",
+    "published_at": "2026-11-15T18:31:41Z",
+    "valid_until": "2027-01-27T00:00:00Z",
+    "countries": [
+     "US"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"
+    },
+    "sources": [
+     {
+      "id": "2027-01-27-fomc-decision",
+      "publisher": "Board of Governors of the Federal Reserve System",
+      "url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm",
+      "licence": "public",
+      "descriptor": "Federal Reserve FOMC rate decision",
+      "accessed_at": "2026-11-15T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "rule_date",
+     "date": "2027-01-27",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": false,
+     "origin": "headwind",
+     "ref": "FOMC"
     }
    }
   },
@@ -1051,6 +1583,270 @@
      "occurred": false,
      "origin": "cordon",
      "ref": "CZIB-2025-01"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2027-02-04-ecb-decision",
+    "program": "verdict",
+    "title": "Scheduled 2027-02-04: ECB Governing Council monetary policy decision",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-15T00:00:00Z",
+    "published_at": "2026-11-15T18:31:41Z",
+    "valid_until": "2027-02-04T00:00:00Z",
+    "countries": [],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.ecb.europa.eu/press/calendars/mgcgc/html/index.en.html"
+    },
+    "sources": [
+     {
+      "id": "2027-02-04-ecb-decision",
+      "publisher": "European Central Bank",
+      "url": "https://www.ecb.europa.eu/press/calendars/mgcgc/html/index.en.html",
+      "licence": "public",
+      "descriptor": "ECB Governing Council monetary policy decision",
+      "accessed_at": "2026-11-15T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "rule_date",
+     "date": "2027-02-04",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": false,
+     "origin": "headwind",
+     "ref": "ECB"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2027-03-17-fomc-decision",
+    "program": "verdict",
+    "title": "Scheduled 2027-03-17: Federal Reserve FOMC rate decision",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-15T00:00:00Z",
+    "published_at": "2026-11-15T18:31:41Z",
+    "valid_until": "2027-03-17T00:00:00Z",
+    "countries": [
+     "US"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"
+    },
+    "sources": [
+     {
+      "id": "2027-03-17-fomc-decision",
+      "publisher": "Board of Governors of the Federal Reserve System",
+      "url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm",
+      "licence": "public",
+      "descriptor": "Federal Reserve FOMC rate decision",
+      "accessed_at": "2026-11-15T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "rule_date",
+     "date": "2027-03-17",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": false,
+     "origin": "headwind",
+     "ref": "FOMC"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2027-03-18-ecb-decision",
+    "program": "verdict",
+    "title": "Scheduled 2027-03-18: ECB Governing Council monetary policy decision",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-15T00:00:00Z",
+    "published_at": "2026-11-15T18:31:41Z",
+    "valid_until": "2027-03-18T00:00:00Z",
+    "countries": [],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.ecb.europa.eu/press/calendars/mgcgc/html/index.en.html"
+    },
+    "sources": [
+     {
+      "id": "2027-03-18-ecb-decision",
+      "publisher": "European Central Bank",
+      "url": "https://www.ecb.europa.eu/press/calendars/mgcgc/html/index.en.html",
+      "licence": "public",
+      "descriptor": "ECB Governing Council monetary policy decision",
+      "accessed_at": "2026-11-15T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "rule_date",
+     "date": "2027-03-18",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": false,
+     "origin": "headwind",
+     "ref": "ECB"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2027-04-28-fomc-decision",
+    "program": "verdict",
+    "title": "Scheduled 2027-04-28: Federal Reserve FOMC rate decision",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-15T00:00:00Z",
+    "published_at": "2026-11-15T18:31:41Z",
+    "valid_until": "2027-04-28T00:00:00Z",
+    "countries": [
+     "US"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"
+    },
+    "sources": [
+     {
+      "id": "2027-04-28-fomc-decision",
+      "publisher": "Board of Governors of the Federal Reserve System",
+      "url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm",
+      "licence": "public",
+      "descriptor": "Federal Reserve FOMC rate decision",
+      "accessed_at": "2026-11-15T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "rule_date",
+     "date": "2027-04-28",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": false,
+     "origin": "headwind",
+     "ref": "FOMC"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2027-04-29-ecb-decision",
+    "program": "verdict",
+    "title": "Scheduled 2027-04-29: ECB Governing Council monetary policy decision",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-15T00:00:00Z",
+    "published_at": "2026-11-15T18:31:41Z",
+    "valid_until": "2027-04-29T00:00:00Z",
+    "countries": [],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.ecb.europa.eu/press/calendars/mgcgc/html/index.en.html"
+    },
+    "sources": [
+     {
+      "id": "2027-04-29-ecb-decision",
+      "publisher": "European Central Bank",
+      "url": "https://www.ecb.europa.eu/press/calendars/mgcgc/html/index.en.html",
+      "licence": "public",
+      "descriptor": "ECB Governing Council monetary policy decision",
+      "accessed_at": "2026-11-15T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "rule_date",
+     "date": "2027-04-29",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": false,
+     "origin": "headwind",
+     "ref": "ECB"
     }
    }
   },

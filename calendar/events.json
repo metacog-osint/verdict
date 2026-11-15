@@ -2,6 +2,60 @@
   "about": "Verdict's event calendar: dated, resolvable events worth forecasting. Each event cites where its date comes from; 'verified': false marks a date taken from secondary reporting. Exported as a feed contract v2 feed with: python tools/verdict.py calendar --feed site/data/calendar.geojson Bulletin expiries and State advisory changes are synced daily from Cordon (origin 'cordon'); hand-entered events have no origin.",
   "events": [
     {
+      "id": "2026-10-26-canada-jp-update",
+      "date": "2026-10-26",
+      "title": "Japan: Canada's travel advice, Regional advisory removed: Risk levels section – removed advisory to avoid non-essential travel to the Ryukyu Islands",
+      "kind": "advisory_change",
+      "countries": [
+        "JP"
+      ],
+      "source": {
+        "publisher": "Global Affairs Canada (Government of Canada)",
+        "url": "https://travel.gc.ca/destinations/japan",
+        "descriptor": "Canada's own update note of 2026-10-26T14:39:17Z (read by Cordon)"
+      },
+      "ref": "JP",
+      "origin": "cordon",
+      "occurred": true,
+      "added": "2026-11-15"
+    },
+    {
+      "id": "2026-11-03-canada-cn-update",
+      "date": "2026-11-03",
+      "title": "China: Canada's travel advice, Regional advisory modified: Risk level section – avoid non-essential travel to parts of Gyirong County",
+      "kind": "advisory_change",
+      "countries": [
+        "CN"
+      ],
+      "source": {
+        "publisher": "Global Affairs Canada (Government of Canada)",
+        "url": "https://travel.gc.ca/destinations/china",
+        "descriptor": "Canada's own update note of 2026-11-03T17:27:06Z (read by Cordon)"
+      },
+      "ref": "CN",
+      "origin": "cordon",
+      "occurred": true,
+      "added": "2026-11-15"
+    },
+    {
+      "id": "2026-11-03-canada-np-update",
+      "date": "2026-11-03",
+      "title": "Nepal: Canada's travel advice, Regional advisory modified: Risk levels section – avoid non-essential travel to parts of the Trishuli River corridor",
+      "kind": "advisory_change",
+      "countries": [
+        "NP"
+      ],
+      "source": {
+        "publisher": "Global Affairs Canada (Government of Canada)",
+        "url": "https://travel.gc.ca/destinations/nepal",
+        "descriptor": "Canada's own update note of 2026-11-03T16:56:03Z (read by Cordon)"
+      },
+      "ref": "NP",
+      "origin": "cordon",
+      "occurred": true,
+      "added": "2026-11-15"
+    },
+    {
       "id": "2026-11-06-fao-ffpi",
       "date": "2026-11-06",
       "title": "FAO Food Price Index for October 2026 released",
@@ -35,6 +89,24 @@
         "verdict:2026-11-10:bis-affiliates-rule-stay-extended"
       ],
       "added": "2026-10-31"
+    },
+    {
+      "id": "2026-11-12-canada-mx-update",
+      "date": "2026-11-12",
+      "title": "Mexico: Canada's travel advice: Risk levels section – removed advisory to avoid non-essential travel to the west-central coast",
+      "kind": "advisory_change",
+      "countries": [
+        "MX"
+      ],
+      "source": {
+        "publisher": "Global Affairs Canada (Government of Canada)",
+        "url": "https://travel.gc.ca/destinations/mexico",
+        "descriptor": "Canada's own update note of 2026-11-12T12:31:31Z (read by Cordon)"
+      },
+      "ref": "MX",
+      "origin": "cordon",
+      "occurred": true,
+      "added": "2026-11-15"
     },
     {
       "id": "2026-11-16-easa-czib-2026-04",
@@ -194,6 +266,50 @@
       "added": "2026-10-31"
     },
     {
+      "id": "2026-12-03-fr-2026-19537",
+      "date": "2026-12-03",
+      "title": "BIS: Measures To Restrict Stockpiling of Polysilicon and Polysilicon Derivatives Under Proclamation 11052 (date named in the rule)",
+      "kind": "rule_date",
+      "countries": [],
+      "source": {
+        "publisher": "US Federal Register (BIS)",
+        "url": "https://www.federalregister.gov/documents/2026/09/24/2026-19537/measures-to-restrict-stockpiling-of-polysilicon-and-polysilicon-derivatives-under-proclamation-11052"
+      },
+      "ref": "2026-19537",
+      "origin": "headwind",
+      "added": "2026-11-15"
+    },
+    {
+      "id": "2026-12-04-fao-ffpi-release",
+      "date": "2026-12-04",
+      "title": "FAO Food Price Index monthly release (2026-11 data)",
+      "kind": "data_release",
+      "countries": [],
+      "source": {
+        "publisher": "FAO",
+        "url": "https://www.fao.org/worldfoodsituation/foodpricesindex/en/"
+      },
+      "ref": "FFPI",
+      "origin": "headwind",
+      "added": "2026-11-15"
+    },
+    {
+      "id": "2026-12-09-fomc-decision",
+      "date": "2026-12-09",
+      "title": "Federal Reserve FOMC rate decision",
+      "kind": "rule_date",
+      "countries": [
+        "US"
+      ],
+      "source": {
+        "publisher": "Board of Governors of the Federal Reserve System",
+        "url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"
+      },
+      "ref": "FOMC",
+      "origin": "headwind",
+      "added": "2026-11-15"
+    },
+    {
       "id": "2026-12-15-libya-panel-interim-report",
       "date": "2026-12-15",
       "title": "UN Libya sanctions panel of experts interim report due",
@@ -209,6 +325,20 @@
       "verified": false,
       "note": "Read UNSCR 2819 before registering a forecast on it.",
       "added": "2026-10-31"
+    },
+    {
+      "id": "2026-12-17-ecb-decision",
+      "date": "2026-12-17",
+      "title": "ECB Governing Council monetary policy decision",
+      "kind": "rule_date",
+      "countries": [],
+      "source": {
+        "publisher": "European Central Bank",
+        "url": "https://www.ecb.europa.eu/press/calendars/mgcgc/html/index.en.html"
+      },
+      "ref": "ECB",
+      "origin": "headwind",
+      "added": "2026-11-15"
     },
     {
       "id": "2027-01-09-ustr-port-fees",
@@ -229,6 +359,20 @@
       "added": "2026-10-31"
     },
     {
+      "id": "2027-01-10-fr-2026-22793",
+      "date": "2027-01-10",
+      "title": "BIS: Extension of the Suspension of Expansion of End-User Controls for Affiliates of Certain Listed Entities (date named in the rule)",
+      "kind": "rule_date",
+      "countries": [],
+      "source": {
+        "publisher": "US Federal Register (BIS)",
+        "url": "https://www.federalregister.gov/documents/2026/11/09/2026-22793/extension-of-the-suspension-of-expansion-of-end-user-controls-for-affiliates-of-certain-listed"
+      },
+      "ref": "2026-22793",
+      "origin": "headwind",
+      "added": "2026-11-15"
+    },
+    {
       "id": "2027-01-10-us-china-truce",
       "date": "2027-01-10",
       "title": "US-China trade truce, as extended in September 2026, ends",
@@ -245,6 +389,22 @@
       "verified": false,
       "note": "Announced by Treasury and China's commerce ministry; no single legal instrument sets the date.",
       "added": "2026-10-31"
+    },
+    {
+      "id": "2027-01-27-fomc-decision",
+      "date": "2027-01-27",
+      "title": "Federal Reserve FOMC rate decision",
+      "kind": "rule_date",
+      "countries": [
+        "US"
+      ],
+      "source": {
+        "publisher": "Board of Governors of the Federal Reserve System",
+        "url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"
+      },
+      "ref": "FOMC",
+      "origin": "headwind",
+      "added": "2026-11-15"
     },
     {
       "id": "2027-01-31-easa-czib-2017-02",
@@ -347,6 +507,80 @@
       "ref": "CZIB-2025-01",
       "origin": "cordon",
       "added": "2026-10-31"
+    },
+    {
+      "id": "2027-02-04-ecb-decision",
+      "date": "2027-02-04",
+      "title": "ECB Governing Council monetary policy decision",
+      "kind": "rule_date",
+      "countries": [],
+      "source": {
+        "publisher": "European Central Bank",
+        "url": "https://www.ecb.europa.eu/press/calendars/mgcgc/html/index.en.html"
+      },
+      "ref": "ECB",
+      "origin": "headwind",
+      "added": "2026-11-15"
+    },
+    {
+      "id": "2027-03-17-fomc-decision",
+      "date": "2027-03-17",
+      "title": "Federal Reserve FOMC rate decision",
+      "kind": "rule_date",
+      "countries": [
+        "US"
+      ],
+      "source": {
+        "publisher": "Board of Governors of the Federal Reserve System",
+        "url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"
+      },
+      "ref": "FOMC",
+      "origin": "headwind",
+      "added": "2026-11-15"
+    },
+    {
+      "id": "2027-03-18-ecb-decision",
+      "date": "2027-03-18",
+      "title": "ECB Governing Council monetary policy decision",
+      "kind": "rule_date",
+      "countries": [],
+      "source": {
+        "publisher": "European Central Bank",
+        "url": "https://www.ecb.europa.eu/press/calendars/mgcgc/html/index.en.html"
+      },
+      "ref": "ECB",
+      "origin": "headwind",
+      "added": "2026-11-15"
+    },
+    {
+      "id": "2027-04-28-fomc-decision",
+      "date": "2027-04-28",
+      "title": "Federal Reserve FOMC rate decision",
+      "kind": "rule_date",
+      "countries": [
+        "US"
+      ],
+      "source": {
+        "publisher": "Board of Governors of the Federal Reserve System",
+        "url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"
+      },
+      "ref": "FOMC",
+      "origin": "headwind",
+      "added": "2026-11-15"
+    },
+    {
+      "id": "2027-04-29-ecb-decision",
+      "date": "2027-04-29",
+      "title": "ECB Governing Council monetary policy decision",
+      "kind": "rule_date",
+      "countries": [],
+      "source": {
+        "publisher": "European Central Bank",
+        "url": "https://www.ecb.europa.eu/press/calendars/mgcgc/html/index.en.html"
+      },
+      "ref": "ECB",
+      "origin": "headwind",
+      "added": "2026-11-15"
     },
     {
       "id": "2027-04-30-easa-czib-2017-01",
