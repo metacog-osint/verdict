@@ -249,23 +249,6 @@
       "added": "2026-10-31"
     },
     {
-      "id": "2026-11-30-easa-czib-2017-03",
-      "date": "2026-11-30",
-      "title": "EASA conflict-zone bulletin CZIB-2017-03R20 (airspace of Syria) expires unless renewed",
-      "kind": "bulletin_expiry",
-      "countries": [
-        "SY"
-      ],
-      "source": {
-        "publisher": "EASA",
-        "url": "https://www.easa.europa.eu/en/domains/air-operations/czibs",
-        "descriptor": "CZIB-2017-03R20, valid until 2026-11-30 (read by Cordon)"
-      },
-      "ref": "CZIB-2017-03",
-      "origin": "cordon",
-      "added": "2026-10-31"
-    },
-    {
       "id": "2026-12-03-fr-2026-19537",
       "date": "2026-12-03",
       "title": "BIS: Measures To Restrict Stockpiling of Polysilicon and Polysilicon Derivatives Under Proclamation 11052 (date named in the rule)",
@@ -341,6 +324,38 @@
       "added": "2026-11-15"
     },
     {
+      "id": "2027-01-09-fr-2026-22867",
+      "date": "2027-01-09",
+      "title": "USTR: Notice of Modification of Section 301 Action: China's Targeting of the Maritime, Logistics, and Shipbuilding Sectors for Dominance (date named in the rule)",
+      "kind": "rule_date",
+      "countries": [
+        "CN"
+      ],
+      "source": {
+        "publisher": "US Federal Register (USTR)",
+        "url": "https://www.federalregister.gov/documents/2026/11/10/2026-22867/notice-of-modification-of-section-301-action-chinas-targeting-of-the-maritime-logistics-and"
+      },
+      "ref": "2026-22867",
+      "origin": "headwind",
+      "added": "2026-11-16"
+    },
+    {
+      "id": "2027-01-09-fr-2026-22925",
+      "date": "2027-01-09",
+      "title": "USTR: Notice of Product Exclusion Extensions: China's Acts, Policies, and Practices Related to Technology Transfer, Intellectual Property, and Innovation (date named in the rule)",
+      "kind": "rule_date",
+      "countries": [
+        "CN"
+      ],
+      "source": {
+        "publisher": "US Federal Register (USTR)",
+        "url": "https://www.federalregister.gov/documents/2026/11/10/2026-22925/notice-of-product-exclusion-extensions-chinas-acts-policies-and-practices-related-to-technology"
+      },
+      "ref": "2026-22925",
+      "origin": "headwind",
+      "added": "2026-11-16"
+    },
+    {
       "id": "2027-01-09-ustr-port-fees",
       "date": "2027-01-09",
       "title": "Proposed end of USTR's suspended Section 301 port fees on Chinese-linked vessels",
@@ -389,6 +404,22 @@
       "verified": false,
       "note": "Announced by Treasury and China's commerce ministry; no single legal instrument sets the date.",
       "added": "2026-10-31"
+    },
+    {
+      "id": "2027-01-12-fr-2026-20341",
+      "date": "2027-01-12",
+      "title": "USTR: Request for Public Comments and Notice of Public Hearing Relating to the Operation of the Agreement Between the United States of America, the United Mexican States, and Canada (date named in the rule)",
+      "kind": "rule_date",
+      "countries": [
+        "CA"
+      ],
+      "source": {
+        "publisher": "US Federal Register (USTR)",
+        "url": "https://www.federalregister.gov/documents/2026/10/05/2026-20341/request-for-public-comments-and-notice-of-public-hearing-relating-to-the-operation-of-the-agreement"
+      },
+      "ref": "2026-20341",
+      "origin": "headwind",
+      "added": "2026-11-16"
     },
     {
       "id": "2027-01-27-fomc-decision",
@@ -509,6 +540,112 @@
       "added": "2026-10-31"
     },
     {
+      "id": "2027-01-31-easa-czib-2026-04",
+      "date": "2027-01-31",
+      "title": "EASA conflict-zone bulletin CZIB-2026-04-R3 (airspace of Iran) expires unless renewed",
+      "kind": "bulletin_expiry",
+      "countries": [
+        "IR"
+      ],
+      "source": {
+        "publisher": "EASA",
+        "url": "https://www.easa.europa.eu/en/domains/air-operations/czibs",
+        "descriptor": "CZIB-2026-04-R3, valid until 2027-01-31 (read by Cordon)"
+      },
+      "ref": "CZIB-2026-04",
+      "origin": "cordon",
+      "added": "2026-11-16"
+    },
+    {
+      "id": "2027-01-31-easa-czib-2026-05",
+      "date": "2027-01-31",
+      "title": "EASA conflict-zone bulletin CZIB-2026-05-R3 (airspace of Iraq) expires unless renewed",
+      "kind": "bulletin_expiry",
+      "countries": [
+        "IQ"
+      ],
+      "source": {
+        "publisher": "EASA",
+        "url": "https://www.easa.europa.eu/en/domains/air-operations/czibs",
+        "descriptor": "CZIB-2026-05-R3, valid until 2027-01-31 (read by Cordon)"
+      },
+      "ref": "CZIB-2026-05",
+      "origin": "cordon",
+      "added": "2026-11-16"
+    },
+    {
+      "id": "2027-01-31-easa-czib-2026-06",
+      "date": "2027-01-31",
+      "title": "EASA conflict-zone bulletin CZIB-2026-06-R3 (airspace of Lebanon) expires unless renewed",
+      "kind": "bulletin_expiry",
+      "countries": [
+        "LB"
+      ],
+      "source": {
+        "publisher": "EASA",
+        "url": "https://www.easa.europa.eu/en/domains/air-operations/czibs",
+        "descriptor": "CZIB-2026-06-R3, valid until 2027-01-31 (read by Cordon)"
+      },
+      "ref": "CZIB-2026-06",
+      "origin": "cordon",
+      "added": "2026-11-16"
+    },
+    {
+      "id": "2027-01-31-easa-czib-2026-07",
+      "date": "2027-01-31",
+      "title": "EASA conflict-zone bulletin CZIB-2026-07R4 (airspace of the Persian Gulf and Gulf of Oman) expires unless renewed",
+      "kind": "bulletin_expiry",
+      "countries": [
+        "BH",
+        "KW",
+        "QA",
+        "OM",
+        "AE"
+      ],
+      "source": {
+        "publisher": "EASA",
+        "url": "https://www.easa.europa.eu/en/domains/air-operations/czibs",
+        "descriptor": "CZIB-2026-07R4, valid until 2027-01-31 (read by Cordon)"
+      },
+      "ref": "CZIB-2026-07",
+      "origin": "cordon",
+      "added": "2026-11-16"
+    },
+    {
+      "id": "2027-01-31-easa-czib-2026-08",
+      "date": "2027-01-31",
+      "title": "EASA conflict-zone bulletin CZIB-2026-08-R4 (airspace of Jordan) expires unless renewed",
+      "kind": "bulletin_expiry",
+      "countries": [
+        "JO"
+      ],
+      "source": {
+        "publisher": "EASA",
+        "url": "https://www.easa.europa.eu/en/domains/air-operations/czibs",
+        "descriptor": "CZIB-2026-08-R4, valid until 2027-01-31 (read by Cordon)"
+      },
+      "ref": "CZIB-2026-08",
+      "origin": "cordon",
+      "added": "2026-11-16"
+    },
+    {
+      "id": "2027-01-31-easa-czib-2026-09",
+      "date": "2027-01-31",
+      "title": "EASA conflict-zone bulletin CZIB-2026-09-R2 (airspace of Saudi Arabia) expires unless renewed",
+      "kind": "bulletin_expiry",
+      "countries": [
+        "SA"
+      ],
+      "source": {
+        "publisher": "EASA",
+        "url": "https://www.easa.europa.eu/en/domains/air-operations/czibs",
+        "descriptor": "CZIB-2026-09-R2, valid until 2027-01-31 (read by Cordon)"
+      },
+      "ref": "CZIB-2026-09",
+      "origin": "cordon",
+      "added": "2026-11-16"
+    },
+    {
       "id": "2027-02-04-ecb-decision",
       "date": "2027-02-04",
       "title": "ECB Governing Council monetary policy decision",
@@ -551,6 +688,34 @@
       "ref": "ECB",
       "origin": "headwind",
       "added": "2026-11-15"
+    },
+    {
+      "id": "2027-04-20-fr-2026-22049",
+      "date": "2027-04-20",
+      "title": "President: Adjusting Imports of Wind Turbines and Their Parts and Components Into the United States (counted from its signing date)",
+      "kind": "rule_date",
+      "countries": [],
+      "source": {
+        "publisher": "US Federal Register (presidential documents)",
+        "url": "https://www.federalregister.gov/documents/2026/10/28/2026-22049/adjusting-imports-of-wind-turbines-and-their-parts-and-components-into-the-united-states"
+      },
+      "ref": "2026-22049",
+      "origin": "headwind",
+      "added": "2026-11-16"
+    },
+    {
+      "id": "2027-04-26-fr-2026-22385",
+      "date": "2027-04-26",
+      "title": "President: Adjusting Imports of Robotics, Industrial Machinery, and Their Parts and Components Into the United States (counted from its signing date)",
+      "kind": "rule_date",
+      "countries": [],
+      "source": {
+        "publisher": "US Federal Register (presidential documents)",
+        "url": "https://www.federalregister.gov/documents/2026/11/02/2026-22385/adjusting-imports-of-robotics-industrial-machinery-and-their-parts-and-components-into-the-united"
+      },
+      "ref": "2026-22385",
+      "origin": "headwind",
+      "added": "2026-11-16"
     },
     {
       "id": "2027-04-28-fomc-decision",
@@ -598,6 +763,23 @@
       "ref": "CZIB-2017-01",
       "origin": "cordon",
       "added": "2026-10-31"
+    },
+    {
+      "id": "2027-04-30-easa-czib-2017-03",
+      "date": "2027-04-30",
+      "title": "EASA conflict-zone bulletin CZIB-2017-03R21 (airspace of Syria) expires unless renewed",
+      "kind": "bulletin_expiry",
+      "countries": [
+        "SY"
+      ],
+      "source": {
+        "publisher": "EASA",
+        "url": "https://www.easa.europa.eu/en/domains/air-operations/czibs",
+        "descriptor": "CZIB-2017-03R21, valid until 2027-04-30 (read by Cordon)"
+      },
+      "ref": "CZIB-2017-03",
+      "origin": "cordon",
+      "added": "2026-11-16"
     },
     {
       "id": "2027-04-30-easa-czib-2017-05",
