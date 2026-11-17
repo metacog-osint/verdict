@@ -4,6 +4,11 @@ name: calendar-sync
 # them to the forecasts that name them, rebuild site/, commit when anything changed, and redeploy GitHub Pages (a
 # commit made here does not trigger pages.yml). Headwind failing to answer is a warning, not a failed sync, so
 # Cordon's events still land. Free; no secrets.
+#
+# GitHub starts this account's scheduled runs hours late (this one came 18:28 to 23:08 UTC, 8-16 Nov 2026), so the hub's
+# tic-dispatch Worker starts it at 13:20 UTC (hub dispatch/dispatch.js, 17 Nov 2026). The cron below is the fallback:
+# the gate job skips a scheduled run when the sync job succeeded in the last 12 hours. A run whose job the gate skipped
+# still ends as "success", so the gate looks for a run whose sync job itself succeeded.
 on:
   schedule:
     - cron: "40 13 * * *"     # 13:40 UTC, before the 14:15 due check
@@ -16,7 +21,33 @@ concurrency:
   group: pages
   cancel-in-progress: false
 jobs:
+  gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    permissions:
+      actions: read
+    outputs:
+      skip: ${{ steps.check.outputs.skip }}
+    steps:
+      - id: check
+        if: github.event_name == 'schedule'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          last=""
+          for id in $(gh api "repos/$GITHUB_REPOSITORY/actions/workflows/calendar-sync.yml/runs?status=success&per_page=20" --jq '.workflow_runs[].id' || true); do
+            last=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$id/jobs" --jq '[.jobs[] | select(.name == "sync" and .conclusion == "success")][0].completed_at // empty' || true)
+            [ -n "$last" ] && break
+          done
+          if [ -n "$last" ] && [ $(( $(date -u +%s) - $(date -u -d "$last" +%s) )) -lt 43200 ]; then
+            echo "skip=yes" >> "$GITHUB_OUTPUT"
+            echo "A sync finished at $last, under 12 hours ago: skipping this scheduled run."
+          else
+            echo "Last successful sync job: ${last:-none found}. Running."
+          fi
   sync:
+    needs: gate
+    if: needs.gate.outputs.skip != 'yes'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     environment:

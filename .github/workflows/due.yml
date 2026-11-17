@@ -1,6 +1,11 @@
 name: due
 # Daily reminder: when a forecast's outcome becomes knowable, open (or refresh) one GitHub issue listing what to
 # resolve, with each rule, source and the resolve command. Closes the issue when nothing is due. Free; no secrets.
+#
+# GitHub starts this account's scheduled runs hours late (this one came 18:51 to 23:26 UTC, 8-16 Nov 2026), so the hub's
+# tic-dispatch Worker starts it at 14:15 UTC (hub dispatch/dispatch.js, 17 Nov 2026). The cron below is the fallback:
+# the gate job skips a scheduled run when the remind job succeeded in the last 12 hours. A run whose job the gate
+# skipped still ends as "success", so the gate looks for a run whose remind job itself succeeded.
 on:
   schedule:
     - cron: "15 14 * * *"     # 14:15 UTC (8:15 AM CST)
@@ -9,7 +14,33 @@ permissions:
   contents: read
   issues: write
 jobs:
+  gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    permissions:
+      actions: read
+    outputs:
+      skip: ${{ steps.check.outputs.skip }}
+    steps:
+      - id: check
+        if: github.event_name == 'schedule'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          last=""
+          for id in $(gh api "repos/$GITHUB_REPOSITORY/actions/workflows/due.yml/runs?status=success&per_page=20" --jq '.workflow_runs[].id' || true); do
+            last=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$id/jobs" --jq '[.jobs[] | select(.name == "remind" and .conclusion == "success")][0].completed_at // empty' || true)
+            [ -n "$last" ] && break
+          done
+          if [ -n "$last" ] && [ $(( $(date -u +%s) - $(date -u -d "$last" +%s) )) -lt 43200 ]; then
+            echo "skip=yes" >> "$GITHUB_OUTPUT"
+            echo "A reminder finished at $last, under 12 hours ago: skipping this scheduled run."
+          else
+            echo "Last successful remind job: ${last:-none found}. Running."
+          fi
   remind:
+    needs: gate
+    if: needs.gate.outputs.skip != 'yes'
     runs-on: ubuntu-latest
     timeout-minutes: 5
     env:
