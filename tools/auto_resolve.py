@@ -11,6 +11,7 @@ Rules it reads:
    coordinates instead, so every Vis proposal is held for a person to check against the station's reports.
 3. Wake IMF PortWatch chokepoint transits.
 4. Blackout US power outages against ORNL's EAGLE-I outage history (figshare), once figshare lists that year.
+5. COP outage triage's OONI question against OONI's own hourly counts for the country (api.ooni.io).
 
 Every result is a proposal in `drafts/resolutions_proposed.json`. A proposal that lists `needs_review` items is
 never written to the ledger by this module. `--apply` writes only the rest to `ledger/resolutions.jsonl`, and only
@@ -543,6 +544,112 @@ def evaluate_eaglei_rule(fc: dict, rule: str, eaglei_data: dict | None = None) -
             "needs_review": review}
 
 
+# ---- COP outage triage: OONI's own hourly counts -------------------------------------------------------------
+# COP drafts an OONI question on every confirmed outage (cop/tools/triage.py, ooni_rule). Since 18 Nov 2026 it settles
+# on OONI's aggregation API for the country, not on Blackout's BO-IND-3 reading, which exists for six countries only.
+# The lines are Blackout's outage-window lines (blackout/ooni.py): enough measurements, enough confirmed or anomalous,
+# and that share at least some multiple of the share over the hours before the window. An hour OONI does not list had
+# no measurements. OONI gives hourly counts only for ranges of 7 days or less, so the baseline and the window are read
+# in separate requests. OONI data is CC BY-NC-SA 4.0.
+OONI_RE = re.compile(
+    r"Yes if OONI's aggregation API \(api\.ooni\.io, probe_cc=(?P<cc>[A-Z]{2}), all tests, hourly\) counts at least "
+    r"(?P<min_m>\d+) measurements from (?P<start>\d{4}-\d{2}-\d{2}T\d{2}:00:00Z) to "
+    r"(?P<end>\d{4}-\d{2}-\d{2}T\d{2}:00:00Z) UTC, at least (?P<share>\d+(?:\.\d+)?)% of them confirmed or "
+    r"anomalous, and that share at least (?P<rise>\d+(?:\.\d+)?) times the share over the (?P<base_h>\d+) hours "
+    r"before (?P=start) UTC"
+)
+OONI_API = "https://api.ooni.io/api/v1/aggregation"
+OONI_HOURLY_MAX_D = 7
+
+
+def _hour_key(t: datetime) -> str:
+    return t.strftime("%Y-%m-%dT%H")
+
+
+def ooni_spans(start: datetime, end: datetime, base_h: int) -> list[tuple[str, str]]:
+    """(since, until) date pairs, until exclusive, covering the baseline and the window in requests of 7 days or
+    less."""
+    spans, day, last = [], (start - timedelta(hours=base_h)).replace(hour=0), (end - timedelta(seconds=1)).replace(
+        hour=0, minute=0, second=0)
+    while day <= last:
+        stop = min(day + timedelta(days=OONI_HOURLY_MAX_D), last + timedelta(days=1))
+        spans.append((day.strftime("%Y-%m-%d"), stop.strftime("%Y-%m-%d")))
+        day = stop
+    return spans
+
+
+def fetch_ooni_hours(cc: str, start: datetime, end: datetime, base_h: int) -> list[dict]:
+    """OONI's hourly aggregation rows for a country over the baseline and the window."""
+    rows = []
+    for since, until in ooni_spans(start, end, base_h):
+        q = urllib.parse.urlencode({"probe_cc": cc, "since": since, "until": until,
+                                    "axis_x": "measurement_start_day", "time_grain": "hour"})
+        with urllib.request.urlopen(urllib.request.Request(f"{OONI_API}?{q}", headers=UA), timeout=60) as r:
+            payload = json.loads(r.read(16_000_000))
+        res = payload.get("result") if isinstance(payload, dict) else None
+        if not isinstance(res, list):
+            raise ValueError(f"OONI aggregation {since} to {until}: no hourly result list")
+        rows += res
+    return rows
+
+
+def ooni_tally(rows: list[dict], frm: datetime, to: datetime) -> tuple[int, int]:
+    """(measurements, confirmed plus anomalous) over the whole hours from frm to to."""
+    by_hour = {}
+    for r in rows:
+        ts = str(r.get("measurement_start_day") or "")
+        if len(ts) >= 13:
+            by_hour[ts[:13]] = r
+    m = hit = 0
+    h = frm
+    while h < to:
+        r = by_hour.get(_hour_key(h))
+        if r:
+            m += int(r.get("measurement_count") or 0)
+            hit += int(r.get("confirmed_count") or 0) + int(r.get("anomaly_count") or 0)
+        h += timedelta(hours=1)
+    return m, hit
+
+
+def evaluate_ooni_rule(fc: dict, rule: str, ooni_data: dict | None = None, allow_fetch: bool = True) -> dict | None:
+    """A COP outage-triage OONI rule against OONI's own hourly counts for the country."""
+    m = OONI_RE.search(rule)
+    if not m:
+        return None
+    fid, cc = fc["id"], m.group("cc")
+    iso = lambda s: datetime.strptime(s, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)  # noqa: E731
+    start, end = iso(m.group("start")), iso(m.group("end"))
+    base_h, min_m = int(m.group("base_h")), int(m.group("min_m"))
+    share_line, rise = float(m.group("share")) / 100, float(m.group("rise"))
+    rows = (ooni_data or {}).get(fid)
+    if rows is None:
+        if not allow_fetch:
+            return _skip(fid, "no OONI counts supplied")
+        try:
+            rows = fetch_ooni_hours(cc, start, end, base_h)
+        except Exception as exc:  # not read: skipped, never a No
+            return _skip(fid, f"OONI not read: {type(exc).__name__}: {exc}"[:200])
+    wm, wh = ooni_tally(rows, start, end)
+    bm, bh = ooni_tally(rows, start - timedelta(hours=base_h), start)
+    share = wh / wm if wm else None
+    base = bh / bm if bm else 0.0
+    yes = wm >= min_m and share is not None and share >= share_line and share >= rise * base
+    pct = lambda x: "none" if x is None else f"{x:.1%}"  # noqa: E731
+    note = (f"OONI aggregation ({cc}, all tests, hourly): {wm:,} measurements from {m.group('start')} to "
+            f"{m.group('end')} UTC, {wh:,} confirmed or anomalous ({pct(share)}); the {base_h} hours before: "
+            f"{bm:,} measurements, {pct(base if bm else None)}. Lines: at least {min_m} measurements, "
+            f"{share_line:.0%}, and {rise:g} times the share before. OONI data, CC BY-NC-SA 4.0.")
+    review = []
+    if not rows:
+        review.append("OONI listed no hours at all for the baseline or the window; check the API answered for "
+                      f"{cc} before taking this No")
+    url = ("https://explorer.ooni.org/chart/mat?" + urllib.parse.urlencode({
+        "probe_cc": cc, "since": start.strftime("%Y-%m-%d"), "until": (end + timedelta(days=1)).strftime("%Y-%m-%d"),
+        "time_grain": "hour", "axis_x": "measurement_start_day"}))
+    return {"id": fid, "outcome": 1 if yes else 0, "url": url, "note": note, "rule_type": "cop_ooni_window",
+            "needs_review": review}
+
+
 # ---- Driver ----------------------------------------------------------------------------------------------------
 
 def auto_resolve(
@@ -554,6 +661,7 @@ def auto_resolve(
     easa: dict | None = None,
     portwatch_data: dict | None = None,
     eaglei_data: dict | None = None,
+    ooni_data: dict | None = None,
     out_path: Path | None = None,
     fetch: bool = True,
 ) -> dict:
@@ -594,6 +702,8 @@ def auto_resolve(
             res = evaluate_portwatch_rule(fc, rule, portwatch_data=portwatch_data)
         if res is None:
             res = evaluate_eaglei_rule(fc, rule, eaglei_data=eaglei_data)
+        if res is None:
+            res = evaluate_ooni_rule(fc, rule, ooni_data=ooni_data, allow_fetch=fetch)
         if res is None:
             skipped.append({"id": fid, "reason": "no machine-checkable rule; resolve by hand"})
             continue

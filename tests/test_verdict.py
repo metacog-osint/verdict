@@ -823,6 +823,68 @@ class AutoResolve(unittest.TestCase):
         self.assertEqual(skip["blackout:us-power:ca:2026-11-14:50k"],
                          "EAGLE-I has not published 2026 on figshare yet (it lists 2014-2025)")
 
+    def test_cop_ooni_question_resolves_against_oonis_hourly_counts(self):
+        import auto_resolve
+        from datetime import datetime, timedelta, timezone
+
+        # COP's rule, word for word as cop/tools/triage.py ooni_rule writes it (cop tests pin the same text).
+        rule = ("Yes if OONI's aggregation API (api.ooni.io, probe_cc=TN, all tests, hourly) counts at least 50 "
+                "measurements from 2026-11-12T00:00:00Z to 2026-11-15T00:00:00Z UTC, at least 15% of them confirmed "
+                "or anomalous, and that share at least 2 times the share over the 120 hours before "
+                "2026-11-12T00:00:00Z UTC (a baseline with no measurements counts as zero); read on a check after "
+                "00:00 UTC on 16 Nov 2026. No otherwise.")
+        items = []
+        for suffix in ("rising", "silent", "steady"):
+            fc = copy.deepcopy(ITEM)
+            fc.update({"id": f"verdict:test:ooni-{suffix}", "valid_until": "2026-11-16T00:00:00Z",
+                       "resolution": {"rule": rule, "source": "OONI's aggregation API (api.ooni.io)",
+                                      "known_at": "2026-11-16T00:00:00Z", "check_after": "2026-11-16T00:00:00Z",
+                                      "resolve_by": "2026-11-23T00:00:00Z"}})
+            items.append(fc)
+        feed_doc = {"type": "FeatureCollection", "contract": "tic-feed/2", "program": "verdict",
+                    "features": [{"type": "Feature", "geometry": None, "properties": it} for it in items]}
+        ing = verdict.ingest_feed(self.tmp, feed_doc, draft_path=self.drafts, approved="Tom Brummer",
+                                  when="2026-11-12T03:00:00Z")
+        self.assertEqual(len(ing["registered"]), 3)
+
+        start = datetime(2026, 11, 12, tzinfo=timezone.utc)
+
+        def rows(window_hits, window_m=100):
+            out = []
+            for k in range(-120, 72):
+                h = start + timedelta(hours=k)
+                m, hit = (window_m, window_hits) if k >= 0 else (100, 3)
+                if m:
+                    out.append({"measurement_start_day": h.strftime("%Y-%m-%dT%H:00:00Z"), "measurement_count": m,
+                                "confirmed_count": 0, "anomaly_count": hit, "failure_count": 0,
+                                "ok_count": m - hit})
+            return out
+
+        data = {"verdict:test:ooni-rising": rows(20),          # 20% against 3% before: Yes
+                "verdict:test:ooni-silent": rows(0, window_m=0),  # the probes went dark: under 50, No
+                "verdict:test:ooni-steady": rows(3)}            # 3% against 3%: No
+        # Not due before the rule's check time.
+        early = auto_resolve.auto_resolve(root=self.tmp, now="2026-11-15T12:00:00Z", ooni_data=data, fetch=False)
+        self.assertEqual(early["proposed"], [])
+        res = auto_resolve.auto_resolve(root=self.tmp, now="2026-11-16T06:00:00Z", apply=True, by="Tom Brummer",
+                                        ooni_data=data, fetch=False)
+        by_id = {r["id"]: r for r in res["proposed"]}
+        self.assertEqual({k: v["outcome"] for k, v in by_id.items()},
+                         {"verdict:test:ooni-rising": 1, "verdict:test:ooni-silent": 0, "verdict:test:ooni-steady": 0})
+        self.assertEqual({v["rule_type"] for v in by_id.values()}, {"cop_ooni_window"})
+        self.assertIn("7,200 measurements from 2026-11-12T00:00:00Z to 2026-11-15T00:00:00Z UTC, 1,440 confirmed or "
+                      "anomalous (20.0%); the 120 hours before: 12,000 measurements, 3.0%",
+                      by_id["verdict:test:ooni-rising"]["note"])
+        self.assertIn("explorer.ooni.org", by_id["verdict:test:ooni-rising"]["url"])
+        self.assertEqual(len(res["applied"]), 3)
+        # Hourly counts come in requests of 7 days or less that cover the baseline and the window.
+        spans = auto_resolve.ooni_spans(start, start + timedelta(hours=72), 120)
+        self.assertEqual(spans, [("2026-11-07", "2026-11-14"), ("2026-11-14", "2026-11-15")])
+        # A fetch that fails is a skip, never a No.
+        self.assertIsNone(auto_resolve.evaluate_ooni_rule(items[0], "Yes if something else"))
+        skipped = auto_resolve.evaluate_ooni_rule(items[0], rule, ooni_data=None, allow_fetch=False)
+        self.assertIn("skip", skipped)
+
     def test_wake_portwatch_auto_resolve_and_program_calendar_sync(self):
         import auto_resolve
         from tic_doctrine import registers
