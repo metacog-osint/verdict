@@ -12,6 +12,2058 @@
    "geometry": null,
    "properties": {
     "contract": "tic-feed/2",
+    "id": "verdict:calendar:2024-11-03-md-presidential-second",
+    "program": "verdict",
+    "title": "On 2024-11-03: Moldova: presidential election, second round",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-18T00:00:00Z",
+    "published_at": "2026-11-18T00:00:00Z",
+    "valid_until": "2024-11-03T00:00:00Z",
+    "countries": [
+     "MD"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://a.cec.md/ro/upload/672f714bf4079/111943/attached_files"
+    },
+    "sources": [
+     {
+      "id": "2024-11-03-md-presidential-second",
+      "publisher": "Central Electoral Commission of the Republic of Moldova",
+      "url": "https://a.cec.md/ro/upload/672f714bf4079/111943/attached_files",
+      "licence": "public",
+      "descriptor": "President of the Republic of Moldova: date read on this page on 18 Nov 2026",
+      "accessed_at": "2026-11-18T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "election",
+     "date": "2024-11-03",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": true,
+     "origin": "verdict",
+     "ref": "election:MD:presidential:second"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2024-11-05-us-legislative",
+    "program": "verdict",
+    "title": "On 2024-11-05: United States: parliamentary election (House of Representatives)",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-18T00:00:00Z",
+    "published_at": "2026-11-18T00:00:00Z",
+    "valid_until": "2024-11-05T00:00:00Z",
+    "countries": [
+     "US"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.fec.gov/help-candidates-and-committees/dates-and-deadlines/2024-reporting-dates/electioneering-communications-periods-general-election-2024/"
+    },
+    "sources": [
+     {
+      "id": "2024-11-05-us-legislative",
+      "publisher": "Federal Election Commission",
+      "url": "https://www.fec.gov/help-candidates-and-committees/dates-and-deadlines/2024-reporting-dates/electioneering-communications-periods-general-election-2024/",
+      "licence": "public",
+      "descriptor": "House of Representatives (general election): date read on this page on 18 Nov 2026",
+      "accessed_at": "2026-11-18T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "election",
+     "date": "2024-11-05",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": true,
+     "origin": "verdict",
+     "ref": "election:US:legislative:single"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2024-11-05-us-presidential",
+    "program": "verdict",
+    "title": "On 2024-11-05: United States: presidential election",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-18T00:00:00Z",
+    "published_at": "2026-11-18T00:00:00Z",
+    "valid_until": "2024-11-05T00:00:00Z",
+    "countries": [
+     "US"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.fec.gov/help-candidates-and-committees/dates-and-deadlines/2024-reporting-dates/electioneering-communications-periods-general-election-2024/"
+    },
+    "sources": [
+     {
+      "id": "2024-11-05-us-presidential",
+      "publisher": "Federal Election Commission",
+      "url": "https://www.fec.gov/help-candidates-and-committees/dates-and-deadlines/2024-reporting-dates/electioneering-communications-periods-general-election-2024/",
+      "licence": "public",
+      "descriptor": "President (popular vote for presidential electors): date read on this page on 18 Nov 2026",
+      "accessed_at": "2026-11-18T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "election",
+     "date": "2024-11-05",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": true,
+     "origin": "verdict",
+     "ref": "election:US:presidential:single"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2024-11-16-ga-referendum",
+    "program": "verdict",
+    "title": "On 2024-11-16: Gabon: constitutional referendum",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-18T00:00:00Z",
+    "published_at": "2026-11-18T00:00:00Z",
+    "valid_until": "2024-11-16T00:00:00Z",
+    "countries": [
+     "GA"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://presidence.ga/2024/10/17/communique-final-du-conseil-des-ministres-du-17-octobre-2024/"
+    },
+    "sources": [
+     {
+      "id": "2024-11-16-ga-referendum",
+      "publisher": "Presidency of the Gabonese Republic (Council of Ministers communique)",
+      "url": "https://presidence.ga/2024/10/17/communique-final-du-conseil-des-ministres-du-17-octobre-2024/",
+      "licence": "public",
+      "descriptor": "Constitutional referendum (new Constitution): date read on this page on 18 Nov 2026",
+      "accessed_at": "2026-11-18T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "election",
+     "date": "2024-11-16",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": "Read in the Council of Ministers' communiqué on presidence.ga.",
+     "occurred": true,
+     "origin": "verdict",
+     "ref": "election:GA:referendum:single"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2024-11-17-sn-legislative",
+    "program": "verdict",
+    "title": "On 2024-11-17: Senegal: parliamentary election (National Assembly)",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-18T00:00:00Z",
+    "published_at": "2026-11-18T00:00:00Z",
+    "valid_until": "2024-11-17T00:00:00Z",
+    "countries": [
+     "SN"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.vie-publique.sn/documents/8145/decret-2024-1981-convocation-corps-electoral-legislatives-anticipees-senegal-2024"
+    },
+    "sources": [
+     {
+      "id": "2024-11-17-sn-legislative",
+      "publisher": "Presidency of the Republic of Senegal (Decree 2024-1981, hosted on vie-publique.sn)",
+      "url": "https://www.vie-publique.sn/documents/8145/decret-2024-1981-convocation-corps-electoral-legislatives-anticipees-senegal-2024",
+      "licence": "public",
+      "descriptor": "National Assembly (early elections after dissolution): date read on this page on 18 Nov 2026",
+      "accessed_at": "2026-11-18T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "election",
+     "date": "2024-11-17",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": true,
+     "origin": "verdict",
+     "ref": "election:SN:legislative:single"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2024-11-24-ro-presidential-first",
+    "program": "verdict",
+    "title": "On 2024-11-24: Romania: presidential election, first round",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-18T00:00:00Z",
+    "published_at": "2026-11-18T00:00:00Z",
+    "valid_until": "2024-11-24T00:00:00Z",
+    "countries": [
+     "RO"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://hd.prefectura.mai.gov.ro/alegeri-prezidentiale-2024/"
+    },
+    "sources": [
+     {
+      "id": "2024-11-24-ro-presidential-first",
+      "publisher": "Prefectura Hunedoara (Ministry of Internal Affairs)",
+      "url": "https://hd.prefectura.mai.gov.ro/alegeri-prezidentiale-2024/",
+      "licence": "public",
+      "descriptor": "President of Romania: date read on this page on 18 Nov 2026",
+      "accessed_at": "2026-11-18T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "election",
+     "date": "2024-11-24",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": "Held; the Constitutional Court annulled the whole presidential process on 6 Dec 2024 (Decision 32, not read on an official page: ccr.ro and bec.ro answered 503), so the runoff set for 8 Dec 2024 was not held. The rerun was 4 and 18 May 2025.",
+     "occurred": true,
+     "origin": "verdict",
+     "ref": "election:RO:presidential:first"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2024-12-01-ro-legislative",
+    "program": "verdict",
+    "title": "On 2024-12-01: Romania: parliamentary election (Chamber of Deputies and Senate)",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-18T00:00:00Z",
+    "published_at": "2026-11-18T00:00:00Z",
+    "valid_until": "2024-12-01T00:00:00Z",
+    "countries": [
+     "RO"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://il.prefectura.mai.gov.ro/alegeri-senat-si-camera-deputatilor-01-decembrie-2024/"
+    },
+    "sources": [
+     {
+      "id": "2024-12-01-ro-legislative",
+      "publisher": "Prefectura Ilfov (Ministry of Internal Affairs)",
+      "url": "https://il.prefectura.mai.gov.ro/alegeri-senat-si-camera-deputatilor-01-decembrie-2024/",
+      "licence": "public",
+      "descriptor": "Chamber of Deputies (Senate held same day, upper house not in scope): date read on this page on 18 Nov 2026",
+      "accessed_at": "2026-11-18T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "election",
+     "date": "2024-12-01",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": true,
+     "origin": "verdict",
+     "ref": "election:RO:legislative:single"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2024-12-29-td-legislative",
+    "program": "verdict",
+    "title": "On 2024-12-29: Chad: parliamentary election (National Assembly)",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "claimed",
+    "product_category": "current",
+    "data_as_of": "2026-11-18T00:00:00Z",
+    "published_at": "2026-11-18T00:00:00Z",
+    "valid_until": "2024-12-29T00:00:00Z",
+    "countries": [
+     "TD"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.alwihdainfo.com/tchad-le-conseil-constitutionnel-proclame-les-resultats-definitifs-des-elections-legislatives-a138132/"
+    },
+    "sources": [
+     {
+      "id": "2024-12-29-td-legislative",
+      "publisher": "Alwihda Info (news); ANGE and Presidency pages could not be read",
+      "url": "https://www.alwihdainfo.com/tchad-le-conseil-constitutionnel-proclame-les-resultats-definitifs-des-elections-legislatives-a138132/",
+      "licence": "public",
+      "descriptor": "National Assembly (coupled with provincial and communal votes): date read on this page on 18 Nov 2026",
+      "accessed_at": "2026-11-18T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "election",
+     "date": "2024-12-29",
+     "at": null,
+     "verified": false,
+     "forecast_ids": [],
+     "note": "Date from press reports of the Constitutional Council's final results; ange.td and conseilconstitutionnel.td gave no content and presidence.td answered 403.",
+     "occurred": true,
+     "origin": "verdict",
+     "ref": "election:TD:legislative:single"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2025-02-23-de-legislative",
+    "program": "verdict",
+    "title": "On 2025-02-23: Germany: parliamentary election (Bundestag)",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-18T00:00:00Z",
+    "published_at": "2026-11-18T00:00:00Z",
+    "valid_until": "2025-02-23T00:00:00Z",
+    "countries": [
+     "DE"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://bundeswahlleiterin.de/en/bundestagswahlen/2025.html"
+    },
+    "sources": [
+     {
+      "id": "2025-02-23-de-legislative",
+      "publisher": "Die Bundeswahlleiterin (Federal Returning Officer)",
+      "url": "https://bundeswahlleiterin.de/en/bundestagswahlen/2025.html",
+      "licence": "public",
+      "descriptor": "Bundestag (21st): date read on this page on 18 Nov 2026",
+      "accessed_at": "2026-11-18T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "election",
+     "date": "2025-02-23",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": true,
+     "origin": "verdict",
+     "ref": "election:DE:legislative:single"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2025-04-12-ga-presidential",
+    "program": "verdict",
+    "title": "On 2025-04-12: Gabon: presidential election",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-18T00:00:00Z",
+    "published_at": "2026-11-18T00:00:00Z",
+    "valid_until": "2025-04-12T00:00:00Z",
+    "countries": [
+     "GA"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://presidence.ga/2025/01/22/communique-final-du-conseil-des-ministres-du-22-janvier-2025/"
+    },
+    "sources": [
+     {
+      "id": "2025-04-12-ga-presidential",
+      "publisher": "Presidency of the Gabonese Republic (Council of Ministers communique)",
+      "url": "https://presidence.ga/2025/01/22/communique-final-du-conseil-des-ministres-du-22-janvier-2025/",
+      "licence": "public",
+      "descriptor": "President of the Republic: date read on this page on 18 Nov 2026",
+      "accessed_at": "2026-11-18T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "election",
+     "date": "2025-04-12",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": true,
+     "origin": "verdict",
+     "ref": "election:GA:presidential:single"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2025-05-03-au-legislative",
+    "program": "verdict",
+    "title": "On 2025-05-03: Australia: parliamentary election (House of Representatives)",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-18T00:00:00Z",
+    "published_at": "2026-11-18T00:00:00Z",
+    "valid_until": "2025-05-03T00:00:00Z",
+    "countries": [
+     "AU"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://aec.gov.au/media/2025/federal-election.htm"
+    },
+    "sources": [
+     {
+      "id": "2025-05-03-au-legislative",
+      "publisher": "Australian Electoral Commission",
+      "url": "https://aec.gov.au/media/2025/federal-election.htm",
+      "licence": "public",
+      "descriptor": "House of Representatives (federal election): date read on this page on 18 Nov 2026",
+      "accessed_at": "2026-11-18T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "election",
+     "date": "2025-05-03",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": true,
+     "origin": "verdict",
+     "ref": "election:AU:legislative:single"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2025-05-04-ro-presidential-first",
+    "program": "verdict",
+    "title": "On 2025-05-04: Romania: presidential election, first round",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-18T00:00:00Z",
+    "published_at": "2026-11-18T00:00:00Z",
+    "valid_until": "2025-05-04T00:00:00Z",
+    "countries": [
+     "RO"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://hd.prefectura.mai.gov.ro/alegerile-pentru-presedintele-romaniei-din-anul-2025/"
+    },
+    "sources": [
+     {
+      "id": "2025-05-04-ro-presidential-first",
+      "publisher": "Prefectura Hunedoara (Ministry of Internal Affairs)",
+      "url": "https://hd.prefectura.mai.gov.ro/alegerile-pentru-presedintele-romaniei-din-anul-2025/",
+      "licence": "public",
+      "descriptor": "President of Romania (rerun after annulment): date read on this page on 18 Nov 2026",
+      "accessed_at": "2026-11-18T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "election",
+     "date": "2025-05-04",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": true,
+     "origin": "verdict",
+     "ref": "election:RO:presidential:first"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2025-05-18-pl-presidential-first",
+    "program": "verdict",
+    "title": "On 2025-05-18: Poland: presidential election, first round",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-18T00:00:00Z",
+    "published_at": "2026-11-18T00:00:00Z",
+    "valid_until": "2025-05-18T00:00:00Z",
+    "countries": [
+     "PL"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://prezydent2025.pkw.gov.pl/prezydent2025/pl"
+    },
+    "sources": [
+     {
+      "id": "2025-05-18-pl-presidential-first",
+      "publisher": "Państwowa Komisja Wyborcza (National Electoral Commission)",
+      "url": "https://prezydent2025.pkw.gov.pl/prezydent2025/pl",
+      "licence": "public",
+      "descriptor": "President of the Republic of Poland: date read on this page on 18 Nov 2026",
+      "accessed_at": "2026-11-18T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "election",
+     "date": "2025-05-18",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": true,
+     "origin": "verdict",
+     "ref": "election:PL:presidential:first"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2025-05-18-ro-presidential-second",
+    "program": "verdict",
+    "title": "On 2025-05-18: Romania: presidential election, second round",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-18T00:00:00Z",
+    "published_at": "2026-11-18T00:00:00Z",
+    "valid_until": "2025-05-18T00:00:00Z",
+    "countries": [
+     "RO"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://hd.prefectura.mai.gov.ro/alegerile-pentru-presedintele-romaniei-din-anul-2025/"
+    },
+    "sources": [
+     {
+      "id": "2025-05-18-ro-presidential-second",
+      "publisher": "Prefectura Hunedoara (Ministry of Internal Affairs)",
+      "url": "https://hd.prefectura.mai.gov.ro/alegerile-pentru-presedintele-romaniei-din-anul-2025/",
+      "licence": "public",
+      "descriptor": "President of Romania (runoff): date read on this page on 18 Nov 2026",
+      "accessed_at": "2026-11-18T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "election",
+     "date": "2025-05-18",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": true,
+     "origin": "verdict",
+     "ref": "election:RO:presidential:second"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2025-06-01-pl-presidential-second",
+    "program": "verdict",
+    "title": "On 2025-06-01: Poland: presidential election, second round",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-18T00:00:00Z",
+    "published_at": "2026-11-18T00:00:00Z",
+    "valid_until": "2025-06-01T00:00:00Z",
+    "countries": [
+     "PL"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.gov.pl/web/rumunia/ponowne-glosowanie-w-wyborach-prezydenta-rp-w-2025-r"
+    },
+    "sources": [
+     {
+      "id": "2025-06-01-pl-presidential-second",
+      "publisher": "Government of Poland (gov.pl, Embassy of Poland in Romania, republishing PKW information)",
+      "url": "https://www.gov.pl/web/rumunia/ponowne-glosowanie-w-wyborach-prezydenta-rp-w-2025-r",
+      "licence": "public",
+      "descriptor": "President of the Republic of Poland: date read on this page on 18 Nov 2026",
+      "accessed_at": "2026-11-18T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "election",
+     "date": "2025-06-01",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": "Read on a gov.pl page; the PKW page read did not show the runoff date.",
+     "occurred": true,
+     "origin": "verdict",
+     "ref": "election:PL:presidential:second"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2025-06-08-it-referendum",
+    "program": "verdict",
+    "title": "On 2025-06-08: Italy: five abrogative referendums (voting 8 and 9 June)",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-18T00:00:00Z",
+    "published_at": "2026-11-18T00:00:00Z",
+    "valid_until": "2025-06-08T00:00:00Z",
+    "countries": [
+     "IT"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.interno.gov.it/it/speciali/elezioni-2025"
+    },
+    "sources": [
+     {
+      "id": "2025-06-08-it-referendum",
+      "publisher": "Ministero dell'Interno (Italy)",
+      "url": "https://www.interno.gov.it/it/speciali/elezioni-2025",
+      "licence": "public",
+      "descriptor": "Five abrogative referendums (art. 75), voting 8-9 June 2025: date read on this page on 18 Nov 2026",
+      "accessed_at": "2026-11-18T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "election",
+     "date": "2025-06-08",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": true,
+     "origin": "verdict",
+     "ref": "election:IT:referendum:single"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2025-08-23-tw-referendum",
+    "program": "verdict",
+    "title": "On 2025-08-23: Taiwan: national referendum, case 21",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-18T00:00:00Z",
+    "published_at": "2026-11-18T00:00:00Z",
+    "valid_until": "2025-08-23T00:00:00Z",
+    "countries": [
+     "TW"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://web.cec.gov.tw/central/article/60482"
+    },
+    "sources": [
+     {
+      "id": "2025-08-23-tw-referendum",
+      "publisher": "Central Election Commission (Taiwan)",
+      "url": "https://web.cec.gov.tw/central/article/60482",
+      "licence": "public",
+      "descriptor": "National referendum case 21 (Maanshan nuclear plant restart): date read on this page on 18 Nov 2026",
+      "accessed_at": "2026-11-18T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "election",
+     "date": "2025-08-23",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": true,
+     "origin": "verdict",
+     "ref": "election:TW:referendum:single"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2025-09-27-ga-legislative-first",
+    "program": "verdict",
+    "title": "On 2025-09-27: Gabon: parliamentary election (National Assembly), first round",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-18T00:00:00Z",
+    "published_at": "2026-11-18T00:00:00Z",
+    "valid_until": "2025-09-27T00:00:00Z",
+    "countries": [
+     "GA"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://presidence.ga/2025/06/04/communique-final-du-conseil-des-ministres-du-04-juin-2025/"
+    },
+    "sources": [
+     {
+      "id": "2025-09-27-ga-legislative-first",
+      "publisher": "Presidency of the Gabonese Republic (Council of Ministers communique)",
+      "url": "https://presidence.ga/2025/06/04/communique-final-du-conseil-des-ministres-du-04-juin-2025/",
+      "licence": "public",
+      "descriptor": "National Assembly: date read on this page on 18 Nov 2026",
+      "accessed_at": "2026-11-18T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "election",
+     "date": "2025-09-27",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": "With local elections.",
+     "occurred": true,
+     "origin": "verdict",
+     "ref": "election:GA:legislative:first"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2025-09-28-md-legislative",
+    "program": "verdict",
+    "title": "On 2025-09-28: Moldova: parliamentary election (Parliament)",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-18T00:00:00Z",
+    "published_at": "2026-11-18T00:00:00Z",
+    "valid_until": "2025-09-28T00:00:00Z",
+    "countries": [
+     "MD"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://particip.gov.md/ro/document/stages/hotararecu-privire-la-aprobarea-programului-calendaristic-pentru-realizarea-actiunilor-de-organizar/14634"
+    },
+    "sources": [
+     {
+      "id": "2025-09-28-md-legislative",
+      "publisher": "Government of Moldova e-participation portal (CEC decision approving the calendar for the elections)",
+      "url": "https://particip.gov.md/ro/document/stages/hotararecu-privire-la-aprobarea-programului-calendaristic-pentru-realizarea-actiunilor-de-organizar/14634",
+      "licence": "public",
+      "descriptor": "Parliament: date read on this page on 18 Nov 2026",
+      "accessed_at": "2026-11-18T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "election",
+     "date": "2025-09-28",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": "Date read in the CEC's calendar decision on the government's portal; cec.md did not load for this vote.",
+     "occurred": true,
+     "origin": "verdict",
+     "ref": "election:MD:legislative:single"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2025-10-11-ga-legislative-second",
+    "program": "verdict",
+    "title": "On 2025-10-11: Gabon: parliamentary election (National Assembly), second round",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-18T00:00:00Z",
+    "published_at": "2026-11-18T00:00:00Z",
+    "valid_until": "2025-10-11T00:00:00Z",
+    "countries": [
+     "GA"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://presidence.ga/2025/06/04/communique-final-du-conseil-des-ministres-du-04-juin-2025/"
+    },
+    "sources": [
+     {
+      "id": "2025-10-11-ga-legislative-second",
+      "publisher": "Presidency of the Gabonese Republic (Council of Ministers communique)",
+      "url": "https://presidence.ga/2025/06/04/communique-final-du-conseil-des-ministres-du-04-juin-2025/",
+      "licence": "public",
+      "descriptor": "National Assembly: date read on this page on 18 Nov 2026",
+      "accessed_at": "2026-11-18T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "election",
+     "date": "2025-10-11",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": true,
+     "origin": "verdict",
+     "ref": "election:GA:legislative:second"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2025-10-12-cm-presidential",
+    "program": "verdict",
+    "title": "On 2025-10-12: Cameroon: presidential election",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-18T00:00:00Z",
+    "published_at": "2026-11-18T00:00:00Z",
+    "valid_until": "2025-10-12T00:00:00Z",
+    "countries": [
+     "CM"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.prc.cm/fr/actualites/8008-paul-biya-devoir-accompli"
+    },
+    "sources": [
+     {
+      "id": "2025-10-12-cm-presidential",
+      "publisher": "Presidency of the Republic of Cameroon (prc.cm)",
+      "url": "https://www.prc.cm/fr/actualites/8008-paul-biya-devoir-accompli",
+      "licence": "public",
+      "descriptor": "President of the Republic: date read on this page on 18 Nov 2026",
+      "accessed_at": "2026-11-18T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "election",
+     "date": "2025-10-12",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": true,
+     "origin": "verdict",
+     "ref": "election:CM:presidential:single"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2025-10-25-ci-presidential",
+    "program": "verdict",
+    "title": "On 2025-10-25: Côte d'Ivoire: presidential election",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-18T00:00:00Z",
+    "published_at": "2026-11-18T00:00:00Z",
+    "valid_until": "2025-10-25T00:00:00Z",
+    "countries": [
+     "CI"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://cei.ci/wp-content/uploads/2025/10/EPR_2025_RESULTAT_NATIONAL.pdf"
+    },
+    "sources": [
+     {
+      "id": "2025-10-25-ci-presidential",
+      "publisher": "Commission Électorale Indépendante (CEI), Côte d'Ivoire",
+      "url": "https://cei.ci/wp-content/uploads/2025/10/EPR_2025_RESULTAT_NATIONAL.pdf",
+      "licence": "public",
+      "descriptor": "President of the Republic: date read on this page on 18 Nov 2026",
+      "accessed_at": "2026-11-18T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "election",
+     "date": "2025-10-25",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": true,
+     "origin": "verdict",
+     "ref": "election:CI:presidential:single"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2025-10-29-nl-legislative",
+    "program": "verdict",
+    "title": "On 2025-10-29: Netherlands: parliamentary election (House of Representatives)",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-18T00:00:00Z",
+    "published_at": "2026-11-18T00:00:00Z",
+    "valid_until": "2025-10-29T00:00:00Z",
+    "countries": [
+     "NL"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.rijksoverheid.nl/actueel/nieuws/2025/06/06/tweede-kamerverkiezing-officieel-vastgesteld-op-woensdag-29-oktober-2025"
+    },
+    "sources": [
+     {
+      "id": "2025-10-29-nl-legislative",
+      "publisher": "Rijksoverheid (Government of the Netherlands)",
+      "url": "https://www.rijksoverheid.nl/actueel/nieuws/2025/06/06/tweede-kamerverkiezing-officieel-vastgesteld-op-woensdag-29-oktober-2025",
+      "licence": "public",
+      "descriptor": "Tweede Kamer (House of Representatives): date read on this page on 18 Nov 2026",
+      "accessed_at": "2026-11-18T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "election",
+     "date": "2025-10-29",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": true,
+     "origin": "verdict",
+     "ref": "election:NL:legislative:single"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2025-11-11-iq-legislative",
+    "program": "verdict",
+    "title": "On 2025-11-11: Iraq: parliamentary election (Council of Representatives)",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-18T00:00:00Z",
+    "published_at": "2026-11-18T00:00:00Z",
+    "valid_until": "2025-11-11T00:00:00Z",
+    "countries": [
+     "IQ"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://ihec.iq/34887/2025/07/"
+    },
+    "sources": [
+     {
+      "id": "2025-11-11-iq-legislative",
+      "publisher": "Independent High Electoral Commission of Iraq (IHEC)",
+      "url": "https://ihec.iq/34887/2025/07/",
+      "licence": "public",
+      "descriptor": "Council of Representatives: date read on this page on 18 Nov 2026",
+      "accessed_at": "2026-11-18T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "election",
+     "date": "2025-11-11",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": true,
+     "origin": "verdict",
+     "ref": "election:IQ:legislative:single"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2025-12-27-ci-legislative",
+    "program": "verdict",
+    "title": "On 2025-12-27: Côte d'Ivoire: parliamentary election (National Assembly)",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-18T00:00:00Z",
+    "published_at": "2026-11-18T00:00:00Z",
+    "valid_until": "2025-12-27T00:00:00Z",
+    "countries": [
+     "CI"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://cei.ci/wp-content/uploads/2025/12/DECISION-N003-EDAN-2025.pdf"
+    },
+    "sources": [
+     {
+      "id": "2025-12-27-ci-legislative",
+      "publisher": "Commission Électorale Indépendante (CEI), Côte d'Ivoire",
+      "url": "https://cei.ci/wp-content/uploads/2025/12/DECISION-N003-EDAN-2025.pdf",
+      "licence": "public",
+      "descriptor": "National Assembly (255 seats): date read on this page on 18 Nov 2026",
+      "accessed_at": "2026-11-18T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "election",
+     "date": "2025-12-27",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": "Two constituencies voted again on 21 Feb 2026 (not entered).",
+     "occurred": true,
+     "origin": "verdict",
+     "ref": "election:CI:legislative:single"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2026-03-08-co-legislative",
+    "program": "verdict",
+    "title": "On 2026-03-08: Colombia: parliamentary election (Congress)",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-18T00:00:00Z",
+    "published_at": "2026-11-18T00:00:00Z",
+    "valid_until": "2026-03-08T00:00:00Z",
+    "countries": [
+     "CO"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.procuraduria.gov.co/control-electoral/Paginas/presidencia-congreso-2026.aspx"
+    },
+    "sources": [
+     {
+      "id": "2026-03-08-co-legislative",
+      "publisher": "Procuraduria General de la Nacion (cites Registraduria Resolution 2581 of 2025)",
+      "url": "https://www.procuraduria.gov.co/control-electoral/Paginas/presidencia-congreso-2026.aspx",
+      "licence": "public",
+      "descriptor": "Congress of the Republic (Chamber of Representatives and Senate): date read on this page on 18 Nov 2026",
+      "accessed_at": "2026-11-18T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "election",
+     "date": "2026-03-08",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": "Read on the Procuraduría's page citing the Registraduría's resolution; the Registraduría answered 403.",
+     "occurred": true,
+     "origin": "verdict",
+     "ref": "election:CO:legislative:single"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2026-03-22-it-referendum",
+    "program": "verdict",
+    "title": "On 2026-03-22: Italy: constitutional referendum on the judicial reform (voting 22 and 23 March)",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-18T00:00:00Z",
+    "published_at": "2026-11-18T00:00:00Z",
+    "valid_until": "2026-03-22T00:00:00Z",
+    "countries": [
+     "IT"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.interno.gov.it/it/speciali/referendum-22-e-23-marzo-2026"
+    },
+    "sources": [
+     {
+      "id": "2026-03-22-it-referendum",
+      "publisher": "Ministero dell'Interno (Italy)",
+      "url": "https://www.interno.gov.it/it/speciali/referendum-22-e-23-marzo-2026",
+      "licence": "public",
+      "descriptor": "Confirmatory constitutional referendum on the judicial-system reform law, voting 22-23 March 2026: date read on this page on 18 Nov 2026",
+      "accessed_at": "2026-11-18T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "election",
+     "date": "2026-03-22",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": true,
+     "origin": "verdict",
+     "ref": "election:IT:referendum:single"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2026-04-12-hu-legislative",
+    "program": "verdict",
+    "title": "On 2026-04-12: Hungary: parliamentary election (National Assembly)",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-18T00:00:00Z",
+    "published_at": "2026-11-18T00:00:00Z",
+    "valid_until": "2026-04-12T00:00:00Z",
+    "countries": [
+     "HU"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://njt.jog.gov.hu/jogszabaly/2026-1-30-76"
+    },
+    "sources": [
+     {
+      "id": "2026-04-12-hu-legislative",
+      "publisher": "President of the Republic, resolution 1/2026 (I. 13.) KE, via Nemzeti Jogszabálytár; also National Election Office (valasztas.hu)",
+      "url": "https://njt.jog.gov.hu/jogszabaly/2026-1-30-76",
+      "licence": "public",
+      "descriptor": "National Assembly (Országgyűlés): date read on this page on 18 Nov 2026",
+      "accessed_at": "2026-11-18T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "election",
+     "date": "2026-04-12",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": true,
+     "origin": "verdict",
+     "ref": "election:HU:legislative:single"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2026-04-19-bg-legislative",
+    "program": "verdict",
+    "title": "On 2026-04-19: Bulgaria: parliamentary election (National Assembly)",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-18T00:00:00Z",
+    "published_at": "2026-11-18T00:00:00Z",
+    "valid_until": "2026-04-19T00:00:00Z",
+    "countries": [
+     "BG"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://dv.parliament.bg/DVWeb/showMaterialDV.jsp?idMat=241520"
+    },
+    "sources": [
+     {
+      "id": "2026-04-19-bg-legislative",
+      "publisher": "President of Bulgaria, Decree No. 58 of 19 Feb 2026, State Gazette (dv.parliament.bg)",
+      "url": "https://dv.parliament.bg/DVWeb/showMaterialDV.jsp?idMat=241520",
+      "licence": "public",
+      "descriptor": "National Assembly: date read on this page on 18 Nov 2026",
+      "accessed_at": "2026-11-18T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "election",
+     "date": "2026-04-19",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": true,
+     "origin": "verdict",
+     "ref": "election:BG:legislative:single"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2026-05-30-mt-legislative",
+    "program": "verdict",
+    "title": "On 2026-05-30: Malta: parliamentary election (House of Representatives)",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "claimed",
+    "product_category": "current",
+    "data_as_of": "2026-11-18T00:00:00Z",
+    "published_at": "2026-11-18T00:00:00Z",
+    "valid_until": "2026-05-30T00:00:00Z",
+    "countries": [
+     "MT"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://en.wikipedia.org/wiki/2026_Maltese_general_election"
+    },
+    "sources": [
+     {
+      "id": "2026-05-30-mt-legislative",
+      "publisher": "Wikipedia (2026 Maltese general election)",
+      "url": "https://en.wikipedia.org/wiki/2026_Maltese_general_election",
+      "licence": "public",
+      "descriptor": "House of Representatives: date read on this page on 18 Nov 2026",
+      "accessed_at": "2026-11-18T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "election",
+     "date": "2026-05-30",
+     "at": null,
+     "verified": false,
+     "forecast_ids": [],
+     "note": "Snap election; date from secondary reporting. electoral.gov.mt and president.gov.mt answered 403.",
+     "occurred": true,
+     "origin": "verdict",
+     "ref": "election:MT:legislative:single"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2026-05-31-co-presidential-first",
+    "program": "verdict",
+    "title": "On 2026-05-31: Colombia: presidential election, first round",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-18T00:00:00Z",
+    "published_at": "2026-11-18T00:00:00Z",
+    "valid_until": "2026-05-31T00:00:00Z",
+    "countries": [
+     "CO"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.procuraduria.gov.co/micrositio-control-electoral-2021-2022--menu-control-electoral-2021-2022/presidencia-congreso-2026/Pages/default.aspx"
+    },
+    "sources": [
+     {
+      "id": "2026-05-31-co-presidential-first",
+      "publisher": "Procuraduria General de la Nacion (cites Registraduria Resolution 2580 of 5 March 2025)",
+      "url": "https://www.procuraduria.gov.co/micrositio-control-electoral-2021-2022--menu-control-electoral-2021-2022/presidencia-congreso-2026/Pages/default.aspx",
+      "licence": "public",
+      "descriptor": "President and Vice President: date read on this page on 18 Nov 2026",
+      "accessed_at": "2026-11-18T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "election",
+     "date": "2026-05-31",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": "Read on the Procuraduría's page citing the Registraduría's resolution; the Registraduría answered 403.",
+     "occurred": true,
+     "origin": "verdict",
+     "ref": "election:CO:presidential:first"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2026-06-07-am-legislative",
+    "program": "verdict",
+    "title": "On 2026-06-07: Armenia: parliamentary election (National Assembly)",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-18T00:00:00Z",
+    "published_at": "2026-11-18T00:00:00Z",
+    "valid_until": "2026-06-07T00:00:00Z",
+    "countries": [
+     "AM"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.elections.am/Elections/Parliamentary"
+    },
+    "sources": [
+     {
+      "id": "2026-06-07-am-legislative",
+      "publisher": "Central Electoral Commission of the Republic of Armenia",
+      "url": "https://www.elections.am/Elections/Parliamentary",
+      "licence": "public",
+      "descriptor": "National Assembly: date read on this page on 18 Nov 2026",
+      "accessed_at": "2026-11-18T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "election",
+     "date": "2026-06-07",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": true,
+     "origin": "verdict",
+     "ref": "election:AM:legislative:single"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2026-06-21-co-presidential-second",
+    "program": "verdict",
+    "title": "On 2026-06-21: Colombia: presidential election, second round",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "claimed",
+    "product_category": "current",
+    "data_as_of": "2026-11-18T00:00:00Z",
+    "published_at": "2026-11-18T00:00:00Z",
+    "valid_until": "2026-06-21T00:00:00Z",
+    "countries": [
+     "CO"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.eltiempo.com/politica/elecciones-colombia-2026/resultados-segunda-vuelta-presidencial-2026-siga-el-minuto-a-minuto-del-preconteo-de-la-registraduria-nacional-3565893"
+    },
+    "sources": [
+     {
+      "id": "2026-06-21-co-presidential-second",
+      "publisher": "El Tiempo (newspaper)",
+      "url": "https://www.eltiempo.com/politica/elecciones-colombia-2026/resultados-segunda-vuelta-presidencial-2026-siga-el-minuto-a-minuto-del-preconteo-de-la-registraduria-nacional-3565893",
+      "licence": "public",
+      "descriptor": "President and Vice President (runoff): date read on this page on 18 Nov 2026",
+      "accessed_at": "2026-11-18T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "election",
+     "date": "2026-06-21",
+     "at": null,
+     "verified": false,
+     "forecast_ids": [],
+     "note": "Runoff date from press reports; the Registraduría answered 403.",
+     "occurred": true,
+     "origin": "verdict",
+     "ref": "election:CO:presidential:second"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2026-09-20-ru-legislative",
+    "program": "verdict",
+    "title": "On 2026-09-20: Russia: parliamentary election (State Duma)",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "claimed",
+    "product_category": "current",
+    "data_as_of": "2026-11-18T00:00:00Z",
+    "published_at": "2026-11-18T00:00:00Z",
+    "valid_until": "2026-09-20T00:00:00Z",
+    "countries": [
+     "RU"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.consultant.ru/law/hotdocs/94491.html"
+    },
+    "sources": [
+     {
+      "id": "2026-09-20-ru-legislative",
+      "publisher": "ConsultantPlus (reproducing Presidential Decree No. 428 of 16 Jun 2026)",
+      "url": "https://www.consultant.ru/law/hotdocs/94491.html",
+      "licence": "public",
+      "descriptor": "State Duma (9th convocation): date read on this page on 18 Nov 2026",
+      "accessed_at": "2026-11-18T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "election",
+     "date": "2026-09-20",
+     "at": null,
+     "verified": false,
+     "forecast_ids": [],
+     "note": "Decree No. 428 of 16 Jun 2026 sets 20 Sep; voting ran 18 to 20 Sep (CEC, as reported). Read in ConsultantPlus's copy of the decree; cikrf.ru, kremlin.ru and duma.gov.ru did not load.",
+     "occurred": true,
+     "origin": "verdict",
+     "ref": "election:RU:legislative:single"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2026-10-03-lv-legislative",
+    "program": "verdict",
+    "title": "On 2026-10-03: Latvia: parliamentary election (Saeima)",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-18T00:00:00Z",
+    "published_at": "2026-11-18T00:00:00Z",
+    "valid_until": "2026-10-03T00:00:00Z",
+    "countries": [
+     "LV"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://lvportals.lv/dienaskartiba/395352-valsts-prezidents-edgars-rinkevics-piedalas-15-saeimas-velesanas-2026"
+    },
+    "sources": [
+     {
+      "id": "2026-10-03-lv-legislative",
+      "publisher": "Office of the President of Latvia, published on LV portals (Latvijas Vestnesis, official gazette publisher)",
+      "url": "https://lvportals.lv/dienaskartiba/395352-valsts-prezidents-edgars-rinkevics-piedalas-15-saeimas-velesanas-2026",
+      "licence": "public",
+      "descriptor": "15th Saeima (single chamber): date read on this page on 18 Nov 2026",
+      "accessed_at": "2026-11-18T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "election",
+     "date": "2026-10-03",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": "Read on the President's office item on the official gazette's portal; the Central Election Commission's pages show the election without the date.",
+     "occurred": true,
+     "origin": "verdict",
+     "ref": "election:LV:legislative:single"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2026-10-04-ba-legislative",
+    "program": "verdict",
+    "title": "On 2026-10-04: Bosnia and Herzegovina: parliamentary election (House of Representatives)",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-18T00:00:00Z",
+    "published_at": "2026-11-18T00:00:00Z",
+    "valid_until": "2026-10-04T00:00:00Z",
+    "countries": [
+     "BA"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.izbori.ba/?Lang=3&CategoryID=64&Id=6166"
+    },
+    "sources": [
+     {
+      "id": "2026-10-04-ba-legislative",
+      "publisher": "Central Election Commission of Bosnia and Herzegovina (CIK BiH)",
+      "url": "https://www.izbori.ba/?Lang=3&CategoryID=64&Id=6166",
+      "licence": "public",
+      "descriptor": "House of Representatives of the Parliamentary Assembly of BiH: date read on this page on 18 Nov 2026",
+      "accessed_at": "2026-11-18T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "election",
+     "date": "2026-10-04",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": true,
+     "origin": "verdict",
+     "ref": "election:BA:legislative:single"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2026-10-04-ba-presidential",
+    "program": "verdict",
+    "title": "On 2026-10-04: Bosnia and Herzegovina: presidential election",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-18T00:00:00Z",
+    "published_at": "2026-11-18T00:00:00Z",
+    "valid_until": "2026-10-04T00:00:00Z",
+    "countries": [
+     "BA"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.izbori.ba/?Lang=3&CategoryID=64&Id=6166"
+    },
+    "sources": [
+     {
+      "id": "2026-10-04-ba-presidential",
+      "publisher": "Central Election Commission of Bosnia and Herzegovina (CIK BiH)",
+      "url": "https://www.izbori.ba/?Lang=3&CategoryID=64&Id=6166",
+      "licence": "public",
+      "descriptor": "Presidency of Bosnia and Herzegovina (three members, direct vote): date read on this page on 18 Nov 2026",
+      "accessed_at": "2026-11-18T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "election",
+     "date": "2026-10-04",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": true,
+     "origin": "verdict",
+     "ref": "election:BA:presidential:single"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2026-10-25-bg-presidential-first",
+    "program": "verdict",
+    "title": "On 2026-10-25: Bulgaria: presidential election, first round",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-18T00:00:00Z",
+    "published_at": "2026-11-18T00:00:00Z",
+    "valid_until": "2026-10-25T00:00:00Z",
+    "countries": [
+     "BG"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://dv.parliament.bg/DVWeb/showMaterialDV.jsp?idMat=245127"
+    },
+    "sources": [
+     {
+      "id": "2026-10-25-bg-presidential-first",
+      "publisher": "National Assembly of Bulgaria, decision published in State Gazette no. 70 of 4 Aug 2026 (dv.parliament.bg)",
+      "url": "https://dv.parliament.bg/DVWeb/showMaterialDV.jsp?idMat=245127",
+      "licence": "public",
+      "descriptor": "President and Vice President: date read on this page on 18 Nov 2026",
+      "accessed_at": "2026-11-18T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "election",
+     "date": "2026-10-25",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": true,
+     "origin": "verdict",
+     "ref": "election:BG:presidential:first"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
     "id": "verdict:calendar:2026-10-26-canada-jp-update",
     "program": "verdict",
     "title": "On 2026-10-26: Japan: Canada's travel advice, Regional advisory removed: Risk levels section – removed advisory to avoid non-essential travel to the Ryukyu Islands",
@@ -58,6 +2110,114 @@
      "occurred": true,
      "origin": "cordon",
      "ref": "JP"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2026-10-27-il-legislative",
+    "program": "verdict",
+    "title": "On 2026-10-27: Israel: parliamentary election (Knesset)",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-18T00:00:00Z",
+    "published_at": "2026-11-18T00:00:00Z",
+    "valid_until": "2026-10-27T00:00:00Z",
+    "countries": [
+     "IL"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.gov.il/BlobFolder/generalpage/time--table-26/he/%D7%9C%D7%95%D7%97%20%D7%94%D7%96%D7%9E%D7%A0%D7%99%D7%9D%20%D7%9C%D7%91%D7%97%D7%99%D7%A8%D7%95%D7%AA%20%D7%9C%D7%9B%D7%A0%D7%A1%D7%AA%20%D7%94-26.pdf"
+    },
+    "sources": [
+     {
+      "id": "2026-10-27-il-legislative",
+      "publisher": "Central Elections Committee (Israel), Office of the Legal Adviser, timetable published via gov.il",
+      "url": "https://www.gov.il/BlobFolder/generalpage/time--table-26/he/%D7%9C%D7%95%D7%97%20%D7%94%D7%96%D7%9E%D7%A0%D7%99%D7%9D%20%D7%9C%D7%91%D7%97%D7%99%D7%A8%D7%95%D7%AA%20%D7%9C%D7%9B%D7%A0%D7%A1%D7%AA%20%D7%94-26.pdf",
+      "licence": "public",
+      "descriptor": "Knesset (26th): date read on this page on 18 Nov 2026",
+      "accessed_at": "2026-11-18T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "election",
+     "date": "2026-10-27",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": "Date read in the Central Elections Committee's timetable (published 17 Aug 2026); its results site did not load.",
+     "occurred": true,
+     "origin": "verdict",
+     "ref": "election:IL:legislative:single"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2026-11-01-bg-presidential-second",
+    "program": "verdict",
+    "title": "On 2026-11-01: Bulgaria: presidential election, second round",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "claimed",
+    "product_category": "current",
+    "data_as_of": "2026-11-18T00:00:00Z",
+    "published_at": "2026-11-18T00:00:00Z",
+    "valid_until": "2026-11-01T00:00:00Z",
+    "countries": [
+     "BG"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.bta.bg/en/news/bulgaria/1233984-central-election-commission-sets-november-1-run-off-says-1-525-034-voters-cast-"
+    },
+    "sources": [
+     {
+      "id": "2026-11-01-bg-presidential-second",
+      "publisher": "BTA (Bulgarian News Agency) reporting the Central Election Commission",
+      "url": "https://www.bta.bg/en/news/bulgaria/1233984-central-election-commission-sets-november-1-run-off-says-1-525-034-voters-cast-",
+      "licence": "public",
+      "descriptor": "President and Vice President: date read on this page on 18 Nov 2026",
+      "accessed_at": "2026-11-18T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "election",
+     "date": "2026-11-01",
+     "at": null,
+     "verified": false,
+     "forecast_ids": [],
+     "note": "Runoff date as BTA reports the Central Election Commission's decision; cik.bg answered 403.",
+     "occurred": true,
+     "origin": "verdict",
+     "ref": "election:BG:presidential:second"
     }
    }
   },
@@ -166,6 +2326,60 @@
      "occurred": true,
      "origin": "cordon",
      "ref": "NP"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2026-11-03-us-legislative",
+    "program": "verdict",
+    "title": "On 2026-11-03: United States: parliamentary election (House of Representatives)",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-18T00:00:00Z",
+    "published_at": "2026-11-18T00:00:00Z",
+    "valid_until": "2026-11-03T00:00:00Z",
+    "countries": [
+     "US"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.fec.gov/help-candidates-and-committees/dates-and-deadlines/2026-reporting-dates/federal-election-activity-periods-each-state-2026"
+    },
+    "sources": [
+     {
+      "id": "2026-11-03-us-legislative",
+      "publisher": "Federal Election Commission",
+      "url": "https://www.fec.gov/help-candidates-and-committees/dates-and-deadlines/2026-reporting-dates/federal-election-activity-periods-each-state-2026",
+      "licence": "public",
+      "descriptor": "House of Representatives (general election): date read on this page on 18 Nov 2026",
+      "accessed_at": "2026-11-18T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "election",
+     "date": "2026-11-03",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": "Date set by 2 U.S.C. 7; read on the FEC's 2026 page.",
+     "occurred": true,
+     "origin": "verdict",
+     "ref": "election:US:legislative:single"
     }
    }
   },
@@ -779,6 +2993,114 @@
      "occurred": false,
      "origin": "verdict",
      "ref": null
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2026-11-28-tw-referendum",
+    "program": "verdict",
+    "title": "Scheduled 2026-11-28: Taiwan: national referendum, case 22",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-18T00:00:00Z",
+    "published_at": "2026-11-18T00:00:00Z",
+    "valid_until": "2026-11-28T00:00:00Z",
+    "countries": [
+     "TW"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://web.cec.gov.tw/api/file/3ea9497f-7945-49a2-bd4b-375e3d6f1ddf.pdf"
+    },
+    "sources": [
+     {
+      "id": "2026-11-28-tw-referendum",
+      "publisher": "Central Election Commission (Taiwan)",
+      "url": "https://web.cec.gov.tw/api/file/3ea9497f-7945-49a2-bd4b-375e3d6f1ddf.pdf",
+      "licence": "public",
+      "descriptor": "National referendum case 22 (use of nuclear power / ending the non-nuclear homeland policy): date read on this page on 18 Nov 2026",
+      "accessed_at": "2026-11-18T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "election",
+     "date": "2026-11-28",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": "Same day as local elections (not entered).",
+     "occurred": false,
+     "origin": "verdict",
+     "ref": "election:TW:referendum:single"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2026-11-29-es-legislative",
+    "program": "verdict",
+    "title": "Scheduled 2026-11-29: Spain: parliamentary election (Congress of Deputies and Senate)",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-18T00:00:00Z",
+    "published_at": "2026-11-18T00:00:00Z",
+    "valid_until": "2026-11-29T00:00:00Z",
+    "countries": [
+     "ES"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.lamoncloa.gob.es/serviciosdeprensa/notasprensa/interior/paginas/guia-dudas-elecciones-generales-29n.aspx"
+    },
+    "sources": [
+     {
+      "id": "2026-11-29-es-legislative",
+      "publisher": "Gobierno de España, La Moncloa (Ministry of the Interior press note)",
+      "url": "https://www.lamoncloa.gob.es/serviciosdeprensa/notasprensa/interior/paginas/guia-dudas-elecciones-generales-29n.aspx",
+      "licence": "public",
+      "descriptor": "Congreso de los Diputados (and Senate, upper house not in scope): date read on this page on 18 Nov 2026",
+      "accessed_at": "2026-11-18T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "election",
+     "date": "2026-11-29",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": false,
+     "origin": "verdict",
+     "ref": "election:ES:legislative:single"
     }
    }
   },
@@ -2188,6 +4510,60 @@
    "geometry": null,
    "properties": {
     "contract": "tic-feed/2",
+    "id": "verdict:calendar:2027-02-07-cm-legislative",
+    "program": "verdict",
+    "title": "Scheduled 2027-02-07: Cameroon: parliamentary election (National Assembly)",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "claimed",
+    "product_category": "current",
+    "data_as_of": "2026-11-18T00:00:00Z",
+    "published_at": "2026-11-18T00:00:00Z",
+    "valid_until": "2027-02-07T00:00:00Z",
+    "countries": [
+     "CM"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://fr.journalducameroun.com/double-scrutin-du-7-fevrier-2027-voici-ce-que-dit-le-code-electoral/"
+    },
+    "sources": [
+     {
+      "id": "2027-02-07-cm-legislative",
+      "publisher": "Journal du Cameroun (news); decree reported signed/published 9 Nov 2026",
+      "url": "https://fr.journalducameroun.com/double-scrutin-du-7-fevrier-2027-voici-ce-que-dit-le-code-electoral/",
+      "licence": "public",
+      "descriptor": "National Assembly (180 seats; held together with municipal elections): date read on this page on 18 Nov 2026",
+      "accessed_at": "2026-11-18T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "election",
+     "date": "2027-02-07",
+     "at": null,
+     "verified": false,
+     "forecast_ids": [],
+     "note": "With municipal elections. Press reports a convening decree signed 9 Nov 2026; the decree text was not found on prc.cm.",
+     "occurred": false,
+     "origin": "verdict",
+     "ref": "election:CM:legislative:single"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
     "id": "verdict:calendar:2027-03-17-fomc-decision",
     "program": "verdict",
     "title": "Scheduled 2027-03-17: Federal Reserve FOMC rate decision",
@@ -2286,6 +4662,60 @@
      "occurred": false,
      "origin": "headwind",
      "ref": "ECB"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2027-04-18-fr-presidential-first",
+    "program": "verdict",
+    "title": "Scheduled 2027-04-18: France: presidential election, first round",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "claimed",
+    "product_category": "current",
+    "data_as_of": "2026-11-18T00:00:00Z",
+    "published_at": "2026-11-18T00:00:00Z",
+    "valid_until": "2027-04-18T00:00:00Z",
+    "countries": [
+     "FR"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.elysee.fr/emmanuel-macron/2026/07/01/compte-rendu-du-conseil-des-ministres-du-mercredi-1er-juillet-2026"
+    },
+    "sources": [
+     {
+      "id": "2027-04-18-fr-presidential-first",
+      "publisher": "Présidence de la République (Council of Ministers report of 1 Jul 2026)",
+      "url": "https://www.elysee.fr/emmanuel-macron/2026/07/01/compte-rendu-du-conseil-des-ministres-du-mercredi-1er-juillet-2026",
+      "licence": "public",
+      "descriptor": "President of the Republic: date read on this page on 18 Nov 2026",
+      "accessed_at": "2026-11-18T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "election",
+     "date": "2027-04-18",
+     "at": null,
+     "verified": false,
+     "forecast_ids": [],
+     "note": "Announced by the government (Council of Ministers, 1 Jul 2026); the decree convoking the electorate, which fixes the date in law, is not yet published (due by about early Feb 2027).",
+     "occurred": false,
+     "origin": "verdict",
+     "ref": "election:FR:presidential:first"
     }
    }
   },
@@ -2712,6 +5142,168 @@
      "occurred": false,
      "origin": "cordon",
      "ref": "CZIB-2017-07"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2027-05-02-fr-presidential-second",
+    "program": "verdict",
+    "title": "Scheduled 2027-05-02: France: presidential election, second round",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "claimed",
+    "product_category": "current",
+    "data_as_of": "2026-11-18T00:00:00Z",
+    "published_at": "2026-11-18T00:00:00Z",
+    "valid_until": "2027-05-02T00:00:00Z",
+    "countries": [
+     "FR"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.elysee.fr/emmanuel-macron/2026/07/01/compte-rendu-du-conseil-des-ministres-du-mercredi-1er-juillet-2026"
+    },
+    "sources": [
+     {
+      "id": "2027-05-02-fr-presidential-second",
+      "publisher": "Présidence de la République (Council of Ministers report of 1 Jul 2026)",
+      "url": "https://www.elysee.fr/emmanuel-macron/2026/07/01/compte-rendu-du-conseil-des-ministres-du-mercredi-1er-juillet-2026",
+      "licence": "public",
+      "descriptor": "President of the Republic: date read on this page on 18 Nov 2026",
+      "accessed_at": "2026-11-18T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "election",
+     "date": "2027-05-02",
+     "at": null,
+     "verified": false,
+     "forecast_ids": [],
+     "note": "Announced by the government (Council of Ministers, 1 Jul 2026); the decree convoking the electorate, which fixes the date in law, is not yet published (due by about early Feb 2027).",
+     "occurred": false,
+     "origin": "verdict",
+     "ref": "election:FR:presidential:second"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2027-09-11-ps-legislative",
+    "program": "verdict",
+    "title": "Scheduled 2027-09-11: Palestine: parliamentary election (Legislative Council)",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-18T00:00:00Z",
+    "published_at": "2026-11-18T00:00:00Z",
+    "valid_until": "2027-09-11T00:00:00Z",
+    "countries": [
+     "PS"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.elections.ps/tabid/235/language/en-US/Default.aspx"
+    },
+    "sources": [
+     {
+      "id": "2027-09-11-ps-legislative",
+      "publisher": "Central Elections Commission-Palestine",
+      "url": "https://www.elections.ps/tabid/235/language/en-US/Default.aspx",
+      "licence": "public",
+      "descriptor": "Palestinian Legislative Council (concurrent with presidential election): date read on this page on 18 Nov 2026",
+      "accessed_at": "2026-11-18T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "election",
+     "date": "2027-09-11",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": "With the presidential election. A presidential decree cancelled the legislative elections called for 28 Nov 2026 and set this date (CEC page).",
+     "occurred": false,
+     "origin": "verdict",
+     "ref": "election:PS:legislative:single"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2027-09-11-ps-presidential-first",
+    "program": "verdict",
+    "title": "Scheduled 2027-09-11: Palestine: presidential election, first round",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-18T00:00:00Z",
+    "published_at": "2026-11-18T00:00:00Z",
+    "valid_until": "2027-09-11T00:00:00Z",
+    "countries": [
+     "PS"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://www.elections.ps/tabid/235/language/en-US/Default.aspx"
+    },
+    "sources": [
+     {
+      "id": "2027-09-11-ps-presidential-first",
+      "publisher": "Central Elections Commission-Palestine",
+      "url": "https://www.elections.ps/tabid/235/language/en-US/Default.aspx",
+      "licence": "public",
+      "descriptor": "President of the State of Palestine: date read on this page on 18 Nov 2026",
+      "accessed_at": "2026-11-18T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "election",
+     "date": "2027-09-11",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": "With the legislative elections, as the CEC states; it gives no runoff rule.",
+     "occurred": false,
+     "origin": "verdict",
+     "ref": "election:PS:presidential:first"
     }
    }
   }
