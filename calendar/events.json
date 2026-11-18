@@ -233,6 +233,24 @@
       ]
     },
     {
+      "id": "2026-11-17-cdc-malaria-panama-new",
+      "date": "2026-11-17",
+      "title": "Malaria in Panama: CDC issued a level 2 travel health notice (Practice Enhanced Precautions)",
+      "kind": "advisory_change",
+      "countries": [
+        "PA"
+      ],
+      "source": {
+        "publisher": "US Centers for Disease Control and Prevention (CDC), Travelers' Health",
+        "url": "https://wwwnc.cdc.gov/travel/notices/level2/malaria-panama",
+        "descriptor": "Change detected by Cordon between two of its reads"
+      },
+      "ref": "malaria-panama",
+      "origin": "cordon",
+      "occurred": true,
+      "added": "2026-11-18"
+    },
+    {
       "id": "2026-11-18-apec-leaders-shenzhen",
       "date": "2026-11-18",
       "title": "33rd APEC Economic Leaders' Meeting opens in Shenzhen (18 to 19 Nov)",
@@ -275,6 +293,23 @@
       "ref": "FFPI",
       "origin": "headwind",
       "added": "2026-11-15"
+    },
+    {
+      "id": "2026-12-04-fr-2026-23412",
+      "date": "2026-12-04",
+      "title": "USTR: Applications for Inclusion on the Binational Panels Roster Under the United States-Mexico-Canada Agreement (date named in the rule)",
+      "kind": "rule_date",
+      "countries": [
+        "CA",
+        "MX"
+      ],
+      "source": {
+        "publisher": "US Federal Register (USTR)",
+        "url": "https://www.federalregister.gov/documents/2026/11/18/2026-23412/applications-for-inclusion-on-the-binational-panels-roster-under-the-united-states-mexico-canada"
+      },
+      "ref": "2026-23412",
+      "origin": "headwind",
+      "added": "2026-11-18"
     },
     {
       "id": "2026-12-09-fomc-decision",
