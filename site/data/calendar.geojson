@@ -399,7 +399,7 @@
     "msg_type": "new",
     "human_review": "full",
     "us_person_data": "none",
-    "status_class": "claimed",
+    "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
     "published_at": "2026-11-18T15:47:06Z",
@@ -414,15 +414,15 @@
     "precision_class": "none",
     "visual": {
      "type": "page",
-     "url": "https://www.alwihdainfo.com/tchad-le-conseil-constitutionnel-proclame-les-resultats-definitifs-des-elections-legislatives-a138132/"
+     "url": "https://ange.td/"
     },
     "sources": [
      {
       "id": "2024-12-29-td-legislative",
-      "publisher": "Alwihda Info (news); ANGE and Presidency pages could not be read",
-      "url": "https://www.alwihdainfo.com/tchad-le-conseil-constitutionnel-proclame-les-resultats-definitifs-des-elections-legislatives-a138132/",
+      "publisher": "Agence Nationale de Gestion des Élections (ANGE), electoral calendar",
+      "url": "https://ange.td/",
       "licence": "public",
-      "descriptor": "National Assembly (coupled with provincial and communal votes): date read on this page on 18 Nov 2026",
+      "descriptor": "National Assembly (with communal and provincial votes): date read on this page on 18 Nov 2026",
       "accessed_at": "2026-11-18T00:00:00Z"
      }
     ],
@@ -430,9 +430,9 @@
      "kind": "election",
      "date": "2024-12-29",
      "at": null,
-     "verified": false,
+     "verified": true,
      "forecast_ids": [],
-     "note": "Date from press reports of the Constitutional Council's final results; ange.td and conseilconstitutionnel.td gave no content and presidence.td answered 403.",
+     "note": "With communal and provincial elections. ANGE's calendar was set before the vote: it gives final results by the Supreme Court on 3 Feb 2025, while the press reports the Constitutional Council's proclamation of 21 or 22 Jan 2025.",
      "occurred": true,
      "origin": "verdict",
      "ref": "election:TD:legislative:single"
@@ -1587,7 +1587,7 @@
     "msg_type": "new",
     "human_review": "full",
     "us_person_data": "none",
-    "status_class": "claimed",
+    "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
     "published_at": "2026-11-18T15:47:06Z",
@@ -1602,13 +1602,13 @@
     "precision_class": "none",
     "visual": {
      "type": "page",
-     "url": "https://en.wikipedia.org/wiki/2026_Maltese_general_election"
+     "url": "https://electoral.gov.mt/pr2-29-05-26-en"
     },
     "sources": [
      {
       "id": "2026-05-30-mt-legislative",
-      "publisher": "Wikipedia (2026 Maltese general election)",
-      "url": "https://en.wikipedia.org/wiki/2026_Maltese_general_election",
+      "publisher": "Electoral Commission of Malta (voting notice of 29 May 2026)",
+      "url": "https://electoral.gov.mt/pr2-29-05-26-en",
       "licence": "public",
       "descriptor": "House of Representatives: date read on this page on 18 Nov 2026",
       "accessed_at": "2026-11-18T00:00:00Z"
@@ -1618,9 +1618,9 @@
      "kind": "election",
      "date": "2026-05-30",
      "at": null,
-     "verified": false,
+     "verified": true,
      "forecast_ids": [],
-     "note": "Snap election; date from secondary reporting. electoral.gov.mt and president.gov.mt answered 403.",
+     "note": "Snap election. The Commission's results page dates the election 27/04/2026, the day the House was dissolved; its voting notice gives polling day as 30 May 2026.",
      "occurred": true,
      "origin": "verdict",
      "ref": "election:MT:legislative:single"
@@ -1749,7 +1749,7 @@
     "msg_type": "new",
     "human_review": "full",
     "us_person_data": "none",
-    "status_class": "claimed",
+    "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
     "published_at": "2026-11-18T15:47:06Z",
@@ -1764,15 +1764,15 @@
     "precision_class": "none",
     "visual": {
      "type": "page",
-     "url": "https://www.eltiempo.com/politica/elecciones-colombia-2026/resultados-segunda-vuelta-presidencial-2026-siga-el-minuto-a-minuto-del-preconteo-de-la-registraduria-nacional-3565893"
+     "url": "https://www.registraduria.gov.co/-Elecciones-2026-.html"
     },
     "sources": [
      {
       "id": "2026-06-21-co-presidential-second",
-      "publisher": "El Tiempo (newspaper)",
-      "url": "https://www.eltiempo.com/politica/elecciones-colombia-2026/resultados-segunda-vuelta-presidencial-2026-siga-el-minuto-a-minuto-del-preconteo-de-la-registraduria-nacional-3565893",
+      "publisher": "Registraduría Nacional del Estado Civil (Elecciones 2026)",
+      "url": "https://www.registraduria.gov.co/-Elecciones-2026-.html",
       "licence": "public",
-      "descriptor": "President and Vice President (runoff): date read on this page on 18 Nov 2026",
+      "descriptor": "President and Vice President, second round: date read on this page on 18 Nov 2026",
       "accessed_at": "2026-11-18T00:00:00Z"
      }
     ],
@@ -1780,9 +1780,9 @@
      "kind": "election",
      "date": "2026-06-21",
      "at": null,
-     "verified": false,
+     "verified": true,
      "forecast_ids": [],
-     "note": "Runoff date from press reports; the Registraduría answered 403.",
+     "note": null,
      "occurred": true,
      "origin": "verdict",
      "ref": "election:CO:presidential:second"
@@ -2181,7 +2181,7 @@
     "msg_type": "new",
     "human_review": "full",
     "us_person_data": "none",
-    "status_class": "claimed",
+    "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
     "published_at": "2026-11-18T15:47:06Z",
@@ -2196,15 +2196,15 @@
     "precision_class": "none",
     "visual": {
      "type": "page",
-     "url": "https://www.bta.bg/en/news/bulgaria/1233984-central-election-commission-sets-november-1-run-off-says-1-525-034-voters-cast-"
+     "url": "https://www.cik.bg/bg/decisions/441/2026-11-03"
     },
     "sources": [
      {
       "id": "2026-11-01-bg-presidential-second",
-      "publisher": "BTA (Bulgarian News Agency) reporting the Central Election Commission",
-      "url": "https://www.bta.bg/en/news/bulgaria/1233984-central-election-commission-sets-november-1-run-off-says-1-525-034-voters-cast-",
+      "publisher": "Central Election Commission of Bulgaria (decision no. 441-PVR of 3 Nov 2026)",
+      "url": "https://www.cik.bg/bg/decisions/441/2026-11-03",
       "licence": "public",
-      "descriptor": "President and Vice President: date read on this page on 18 Nov 2026",
+      "descriptor": "President and Vice President, new election (runoff): date read on this page on 18 Nov 2026",
       "accessed_at": "2026-11-18T00:00:00Z"
      }
     ],
@@ -2212,9 +2212,9 @@
      "kind": "election",
      "date": "2026-11-01",
      "at": null,
-     "verified": false,
+     "verified": true,
      "forecast_ids": [],
-     "note": "Runoff date as BTA reports the Central Election Commission's decision; cik.bg answered 403.",
+     "note": "Runoff called by the CEC's decision 417-PVR of 27 Oct 2026; decision 441-PVR declares the final results of the 1 Nov vote.",
      "occurred": true,
      "origin": "verdict",
      "ref": "election:BG:presidential:second"

@@ -131,14 +131,13 @@
         "TD"
       ],
       "source": {
-        "publisher": "Alwihda Info (news); ANGE and Presidency pages could not be read",
-        "url": "https://www.alwihdainfo.com/tchad-le-conseil-constitutionnel-proclame-les-resultats-definitifs-des-elections-legislatives-a138132/",
-        "descriptor": "National Assembly (coupled with provincial and communal votes): date read on this page on 18 Nov 2026"
+        "publisher": "Agence Nationale de Gestion des Élections (ANGE), electoral calendar",
+        "url": "https://ange.td/",
+        "descriptor": "National Assembly (with communal and provincial votes): date read on this page on 18 Nov 2026"
       },
       "ref": "election:TD:legislative:single",
       "occurred": true,
-      "verified": false,
-      "note": "Date from press reports of the Constitutional Council's final results; ange.td and conseilconstitutionnel.td gave no content and presidence.td answered 403.",
+      "note": "With communal and provincial elections. ANGE's calendar was set before the vote: it gives final results by the Supreme Court on 3 Feb 2025, while the press reports the Constitutional Council's proclamation of 21 or 22 Jan 2025.",
       "added": "2026-11-18"
     },
     {
@@ -512,14 +511,13 @@
         "MT"
       ],
       "source": {
-        "publisher": "Wikipedia (2026 Maltese general election)",
-        "url": "https://en.wikipedia.org/wiki/2026_Maltese_general_election",
+        "publisher": "Electoral Commission of Malta (voting notice of 29 May 2026)",
+        "url": "https://electoral.gov.mt/pr2-29-05-26-en",
         "descriptor": "House of Representatives: date read on this page on 18 Nov 2026"
       },
       "ref": "election:MT:legislative:single",
       "occurred": true,
-      "verified": false,
-      "note": "Snap election; date from secondary reporting. electoral.gov.mt and president.gov.mt answered 403.",
+      "note": "Snap election. The Commission's results page dates the election 27/04/2026, the day the House was dissolved; its voting notice gives polling day as 30 May 2026.",
       "added": "2026-11-18"
     },
     {
@@ -566,14 +564,12 @@
         "CO"
       ],
       "source": {
-        "publisher": "El Tiempo (newspaper)",
-        "url": "https://www.eltiempo.com/politica/elecciones-colombia-2026/resultados-segunda-vuelta-presidencial-2026-siga-el-minuto-a-minuto-del-preconteo-de-la-registraduria-nacional-3565893",
-        "descriptor": "President and Vice President (runoff): date read on this page on 18 Nov 2026"
+        "publisher": "Registraduría Nacional del Estado Civil (Elecciones 2026)",
+        "url": "https://www.registraduria.gov.co/-Elecciones-2026-.html",
+        "descriptor": "President and Vice President, second round: date read on this page on 18 Nov 2026"
       },
       "ref": "election:CO:presidential:second",
       "occurred": true,
-      "verified": false,
-      "note": "Runoff date from press reports; the Registraduría answered 403.",
       "added": "2026-11-18"
     },
     {
@@ -709,14 +705,13 @@
         "BG"
       ],
       "source": {
-        "publisher": "BTA (Bulgarian News Agency) reporting the Central Election Commission",
-        "url": "https://www.bta.bg/en/news/bulgaria/1233984-central-election-commission-sets-november-1-run-off-says-1-525-034-voters-cast-",
-        "descriptor": "President and Vice President: date read on this page on 18 Nov 2026"
+        "publisher": "Central Election Commission of Bulgaria (decision no. 441-PVR of 3 Nov 2026)",
+        "url": "https://www.cik.bg/bg/decisions/441/2026-11-03",
+        "descriptor": "President and Vice President, new election (runoff): date read on this page on 18 Nov 2026"
       },
       "ref": "election:BG:presidential:second",
       "occurred": true,
-      "verified": false,
-      "note": "Runoff date as BTA reports the Central Election Commission's decision; cik.bg answered 403.",
+      "note": "Runoff called by the CEC's decision 417-PVR of 27 Oct 2026; decision 441-PVR declares the final results of the 1 Nov vote.",
       "added": "2026-11-18"
     },
     {
