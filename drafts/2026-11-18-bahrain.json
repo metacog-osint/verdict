@@ -1,0 +1,125 @@
+{
+  "batch": "2026-11-18-bahrain",
+  "prepared": "2026-11-18T15:30:00Z",
+  "note": "From COP's Bahrain case review (_ideas/case-bahrain-2026-11-15.md). Tom set 85% on 18 Nov 2026 and confirmed it after the 17 Nov interception.",
+  "drafts": [
+    {
+      "approved": "Tom Brummer",
+      "item": {
+        "contract": "tic-feed/2",
+        "program": "verdict",
+        "kind": "forecast",
+        "tier": "routine",
+        "status": "draft",
+        "msg_type": "new",
+        "human_review": "full",
+        "us_person_data": "none",
+        "status_class": "assessed",
+        "product_category": "estimative",
+        "data_as_of": "2026-11-18T15:30:00Z",
+        "published_at": "2026-11-18T15:30:00Z",
+        "change_from_prior": "new",
+        "requirement_ids": [
+          "VD-PIR-1"
+        ],
+        "method_version": "verdict-1.0 (event pre-registration)",
+        "geometry": null,
+        "ie_aspect": [
+          "informational"
+        ],
+        "probability": 0.85,
+        "likelihood_term": "very_likely",
+        "confidence": "moderate",
+        "confidence_basis": {
+          "rubric": "tic-confidence-1.0",
+          "factors": {
+            "independent_lines": 2,
+            "contradicted": false,
+            "alternatives_rejected": 0,
+            "method_scored": false,
+            "ease_of_faking": "low",
+            "horizon_days": 14
+          },
+          "caps": [
+            "expertise"
+          ],
+          "raise_by": [
+            "a further independent line of evidence (have 2, High needs 3)",
+            "a scored Verdict record for this method version"
+          ]
+        },
+        "id": "verdict:2026-12-02:bahrain-intercepts-iranian-attack",
+        "title": "Bahrain's military reports intercepting another Iranian aerial attack by 2 Dec 2026",
+        "summary": "85% chance Bahrain's military reports intercepting another Iranian aerial attack between this forecast's registration and 2 Dec 2026: Bahrain reported interceptions on 15 and 17 Nov, the IRGC claimed a third strike on 13 Nov (three in five days after a two-month lull), and UKMTO logged tanker attacks in the Gulf on 15 and 16 Nov.",
+        "countries": [
+          "BH",
+          "IR"
+        ],
+        "pmesii_pt": [
+          "military"
+        ],
+        "ascope": [
+          "areas"
+        ],
+        "alternatives": [
+          {
+            "hypothesis": "Iran pauses strikes on Bahrain (a lull like September to November, or a ceasefire)",
+            "tell_apart": "no Bahrain Defence Force or Bahrain News Agency interception statement and no IRGC claim on Bahrain through 2 Dec"
+          },
+          {
+            "hypothesis": "Attacks continue but only US forces report the interceptions",
+            "tell_apart": "CENTCOM statements on drones shot down over Bahrain with no Bahraini statement"
+          }
+        ],
+        "resolution": {
+          "rule": "Yes if the Bahrain Defence Force or the Bahrain News Agency states that Bahrain's air defences intercepted an Iranian aerial attack (drone or missile) dated after this forecast's published_at and on or before 2 Dec 2026 (Bahrain time), or two of Reuters, AP and AFP report such a Bahraini statement. An interception reported only by US forces does not count. No otherwise.",
+          "source": "Bahrain News Agency (bna.bh), Bahrain Defence Force statements, Reuters, AP, AFP",
+          "resolve_by": "2026-12-09T23:59:00Z",
+          "known_at": "2026-12-02T21:00:00Z",
+          "void_if": "a Bahraini interception dated 18 Nov 2026 was reported before this forecast's published_at"
+        },
+        "valid_until": "2026-12-02T21:00:00Z",
+        "sources": [
+          {
+            "id": "reuters-2026-11-17-bahrain",
+            "publisher": "Reuters (via Yahoo News)",
+            "url": "https://www.yahoo.com/news/us/articles/bahrain-intercepts-iranian-drones-targeting-124229805.html",
+            "licence": "news (link and short quotation only)",
+            "descriptor": "Bahrain's air defences intercepted Iranian drones on 17 Nov 2026 aimed at the Sheikh Isa base radar; CENTCOM: no damage; the third strike in five days",
+            "grade": "B2",
+            "independence_group": "reuters",
+            "accessed_at": "2026-11-18T15:20:00Z",
+            "source_type": "news"
+          },
+          {
+            "id": "reuters-2026-11-15-bahrain",
+            "publisher": "Reuters (via CNBC)",
+            "url": "https://www.cnbc.com/amp/2026/11/15/bahrain-iran-drone-attacks-tehran-us-base.html",
+            "licence": "news (link and short quotation only)",
+            "descriptor": "Bahrain's military said it intercepted several Iranian aerial attacks on 15 Nov 2026, its first since September; the IRGC claimed six drones at a US base",
+            "grade": "B2",
+            "independence_group": "reuters",
+            "accessed_at": "2026-11-18T15:20:00Z",
+            "source_type": "news"
+          },
+          {
+            "id": "alarabiya-2026-11-15-bahrain",
+            "publisher": "Al Arabiya",
+            "url": "https://english.alarabiya.net/News/middle-east/2026/11/15/bahrain-says-air-defenses-intercepted-destroyed-iranian-drones",
+            "licence": "news (link and short quotation only)",
+            "descriptor": "The Bahrain Defence Force said its air defences intercepted and destroyed the attacks before they reached their targets (15 Nov 2026)",
+            "grade": "B3",
+            "independence_group": "al-arabiya",
+            "accessed_at": "2026-11-18T15:20:00Z",
+            "source_type": "news"
+          }
+        ],
+        "visual": {
+          "type": "page",
+          "url": "https://www.bna.bh/en/"
+        }
+      },
+      "registered_at": "2026-11-18T15:47:06Z"
+    }
+  ]
+}
