@@ -20,6 +20,7 @@ with `--by` naming the person who resolves them. Anything it cannot check is lis
 from __future__ import annotations
 
 import csv
+import hashlib
 import io
 import json
 import re
@@ -31,6 +32,20 @@ from pathlib import Path
 import verdict
 
 UA = {"User-Agent": "Verdict/1.0 (+https://theintelligence.company)"}
+
+
+class _Rows(list):
+    """Rows read from a source; body_sha256 is the hash of the raw bytes fetched (None for fixtures)."""
+    body_sha256 = None
+
+
+class _Doc(dict):
+    body_sha256 = None
+
+
+def _evidence(url: str, fetched_at: str | None, rows, body_sha256: str | None = None, **extra) -> dict:
+    """The evidence block a proposal carries into ledger/evidence/<id>.json."""
+    return {"source_url": url, "fetched_at": fetched_at, "body_sha256": body_sha256, "rows": rows, **extra}
 
 VIS_HOURLY_RE = re.compile(
     r"Yes if ICAO station (?P<icao>[A-Z0-9]{4}) \((?P<station>[^)]+)\) reports (?P<name>.+?) "
@@ -136,7 +151,8 @@ def fetch_easa() -> dict:
     rows = parse_easa_csv(text)
     if len(rows) < 5:
         return {"error": f"EASA CSV: only {len(rows)} bulletins parsed"}
-    return {"bulletins": rows, "fetched_at": verdict.now_utc(), "url": EASA_CSV}
+    return {"bulletins": rows, "fetched_at": verdict.now_utc(), "url": EASA_CSV,
+            "body_sha256": hashlib.sha256(body).hexdigest(), "body_bytes": len(body)}
 
 
 def evaluate_czib_rule(fc: dict, rule: str, easa: dict | None) -> dict | None:
@@ -187,7 +203,9 @@ def evaluate_czib_rule(fc: dict, rule: str, easa: dict | None) -> dict | None:
     else:
         outcome, why = 1, f"active, revised {b['revised']}, valid until {b['valid_until']} (beyond {cutoff})"
     return {"id": fid, "outcome": outcome, "url": EASA_PAGE, "note": f"{seen}. {'Yes' if outcome else 'No'}: {why}.",
-            "rule_type": "easa_czib", "needs_review": review}
+            "rule_type": "easa_czib", "needs_review": review,
+            "evidence": _evidence(easa.get("url") or EASA_CSV, read_at, rows, easa.get("body_sha256"),
+                                  body_bytes=easa.get("body_bytes"))}
 
 
 # ---- Vis weather -----------------------------------------------------------------------------------------------
@@ -205,7 +223,10 @@ def _fetch_open_meteo_day(lat: float, lon: float, day: str, variables: list[str]
     url = "https://archive-api.open-meteo.com/v1/archive?" + urllib.parse.urlencode(params)
     req = urllib.request.Request(url, headers=UA)
     with urllib.request.urlopen(req, timeout=30) as resp:
-        return json.loads(resp.read(2_000_000)), url
+        raw = resp.read(2_000_000)
+    doc = _Doc(json.loads(raw))
+    doc.body_sha256 = hashlib.sha256(raw).hexdigest()
+    return doc, url
 
 
 def _full_day(values) -> list[float] | None:
@@ -231,6 +252,7 @@ def evaluate_vis_rule(fc: dict, rule: str, weather_archives: dict | None = None,
     coords = geom.get("coordinates") or []
     lon, lat = (coords[0], coords[1]) if len(coords) >= 2 else (None, None)
 
+    fetched_at = None
     fixture = (weather_archives or {}).get(f"{icao}:{day}") or (weather_archives or {}).get(fid)
     if fixture is not None:
         archive = fixture
@@ -240,6 +262,7 @@ def evaluate_vis_rule(fc: dict, rule: str, weather_archives: dict | None = None,
     elif lat is None or lon is None:
         return _skip(fid, "no coordinates to read the weather archive at")
     else:
+        fetched_at = verdict.now_utc()
         if m_hourly:
             vars_needed = [m_hourly.group("var")]
         elif m_sum:
@@ -255,6 +278,8 @@ def evaluate_vis_rule(fc: dict, rule: str, weather_archives: dict | None = None,
     review = [f"the rule's source is {declared}; this reading is Open-Meteo's reanalysis at the station's "
               f"coordinates: check it against {icao}'s METARs before resolving"]
     hourly = archive.get("hourly") or {}
+    ev = _evidence(url, fetched_at, [{k: v for k, v in hourly.items()}], getattr(archive, "body_sha256", None),
+                   hash_note="Open-Meteo archive API body")
     if m_hourly:
         var, op, unit = m_hourly.group("var"), m_hourly.group("op"), m_hourly.group("unit")
         thr, min_h = float(m_hourly.group("thr")), int(m_hourly.group("min_h"))
@@ -269,7 +294,7 @@ def evaluate_vis_rule(fc: dict, rule: str, weather_archives: dict | None = None,
         note = (f"Open-Meteo archive at {icao}'s coordinates, {day} UTC: {var} {op} {thr} {unit} for {qualifying}/24 h "
                 f"(required >= {min_h} h; extreme {round(peak, 2)} {unit}).")
         return {"id": fid, "outcome": outcome, "url": url, "note": note, "rule_type": "vis_hourly",
-                "needs_review": review}
+                "needs_review": review, "evidence": ev}
 
     if m_sum:
         thr, unit = float(m_sum.group("thr")), m_sum.group("unit")
@@ -281,7 +306,7 @@ def evaluate_vis_rule(fc: dict, rule: str, weather_archives: dict | None = None,
         note = (f"Open-Meteo archive at {icao}'s coordinates, {day} UTC: daily precipitation {total} {unit} "
                 f"(threshold >= {thr} {unit}).")
         return {"id": fid, "outcome": outcome, "url": url, "note": note, "rule_type": "vis_sum",
-                "needs_review": review}
+                "needs_review": review, "evidence": ev}
 
     thr, p_thr, min_h = float(m_joint.group("thr")), float(m_joint.group("p_thr")), int(m_joint.group("min_h"))
     temps, precs = _full_day(hourly.get("temperature_2m")), _full_day(hourly.get("precipitation"))
@@ -291,7 +316,8 @@ def evaluate_vis_rule(fc: dict, rule: str, weather_archives: dict | None = None,
     outcome = 1 if qualifying >= min_h else 0
     note = (f"Open-Meteo archive at {icao}'s coordinates, {day} UTC: joint icing (T <= {thr} C and precip >= "
             f"{p_thr} mm/h) for {qualifying}/24 h (required >= {min_h} h).")
-    return {"id": fid, "outcome": outcome, "url": url, "note": note, "rule_type": "vis_joint", "needs_review": review}
+    return {"id": fid, "outcome": outcome, "url": url, "note": note, "rule_type": "vis_joint", "needs_review": review,
+            "evidence": ev}
 
 
 # ---- Wake PortWatch --------------------------------------------------------------------------------------------
@@ -317,7 +343,9 @@ def evaluate_portwatch_rule(fc: dict, rule: str, portwatch_data: dict | None = N
     note = (f"IMF PortWatch ({portid} {day} UTC): 7-day rolling {metric} = {round(val, 2)} vessels/day "
             f"(threshold {op} {thr} vessels/day).")
     return {"id": fid, "outcome": outcome, "url": rec.get("url") or "https://portwatch.imf.org/", "note": note,
-            "rule_type": "wake_portwatch", "needs_review": []}
+            "rule_type": "wake_portwatch", "needs_review": [],
+            "evidence": _evidence(rec.get("url") or "https://portwatch.imf.org/", rec.get("fetched_at"), [rec],
+                                  rec.get("body_sha256"))}
 
 
 # ---- Blackout US power: EAGLE-I outage history ----------------------------------------------------------------
@@ -449,6 +477,7 @@ def fetch_eaglei(needs: dict[int, set[str]]) -> dict:
         if not f:
             continue
         md5 = hashlib.md5()
+        sha = hashlib.sha256()
 
         class _Hash(io.RawIOBase):
             def __init__(self, raw):
@@ -461,13 +490,15 @@ def fetch_eaglei(needs: dict[int, set[str]]) -> dict:
                 chunk = self.raw.read(len(b))
                 b[:len(chunk)] = chunk
                 md5.update(chunk)
+                sha.update(chunk)
                 return len(chunk)
 
         with urllib.request.urlopen(urllib.request.Request(f["download_url"], headers=UA), timeout=300) as raw:
             text = io.TextIOWrapper(io.BufferedReader(_Hash(raw), 1 << 20), encoding="utf-8-sig", newline="")
             got = read_eaglei_year(text, states, caps)
         ok = md5.hexdigest() == f.get("computed_md5")
-        out[year] = {**got, "file": f["name"], "url": f["download_url"], "md5_ok": ok}
+        out[year] = {**got, "file": f["name"], "url": f["download_url"], "md5_ok": ok,
+                     "sha256": sha.hexdigest(), "fetched_at": verdict.now_utc()}
     return out
 
 
@@ -540,8 +571,14 @@ def evaluate_eaglei_rule(fc: dict, rule: str, eaglei_data: dict | None = None) -
                           f"than 100,000 customers above its modelled size. That is a broken report (8 Jan 2025, "
                           f"Southern California Edison) or a real outage EAGLE-I put on one county (Fiona, Uri); "
                           f"a person decides")
+    rows = [{"run_utc": when(i), "state_total": series[i], "suspect": i in sus} for i in above[:500]]
+    d0 = eaglei_data[spec["years"][0]]
     return {"id": fid, "outcome": outcome, "url": EAGLEI_DOI, "note": note, "rule_type": "blackout_eaglei",
-            "needs_review": review}
+            "needs_review": review,
+            "evidence": _evidence(d0.get("url") or EAGLEI_DOI, d0.get("fetched_at"), rows, d0.get("sha256"),
+                                  hash_note=f"SHA-256 of {d0.get('file', 'the first year file')} as streamed; "
+                                            f"rows are the window's runs over the line (first 500 of {len(above)})",
+                                  files=[eaglei_data[y].get("file") for y in spec["years"]])}
 
 
 # ---- COP outage triage: OONI's own hourly counts -------------------------------------------------------------
@@ -580,16 +617,20 @@ def ooni_spans(start: datetime, end: datetime, base_h: int) -> list[tuple[str, s
 
 def fetch_ooni_hours(cc: str, start: datetime, end: datetime, base_h: int) -> list[dict]:
     """OONI's hourly aggregation rows for a country over the baseline and the window."""
-    rows = []
+    rows = _Rows()
+    digest = hashlib.sha256()
     for since, until in ooni_spans(start, end, base_h):
         q = urllib.parse.urlencode({"probe_cc": cc, "since": since, "until": until,
                                     "axis_x": "measurement_start_day", "time_grain": "hour"})
         with urllib.request.urlopen(urllib.request.Request(f"{OONI_API}?{q}", headers=UA), timeout=60) as r:
-            payload = json.loads(r.read(16_000_000))
+            raw = r.read(16_000_000)
+        digest.update(raw)
+        payload = json.loads(raw)
         res = payload.get("result") if isinstance(payload, dict) else None
         if not isinstance(res, list):
             raise ValueError(f"OONI aggregation {since} to {until}: no hourly result list")
         rows += res
+    rows.body_sha256 = digest.hexdigest()  # of the responses, in the order read
     return rows
 
 
@@ -622,6 +663,7 @@ def evaluate_ooni_rule(fc: dict, rule: str, ooni_data: dict | None = None, allow
     base_h, min_m = int(m.group("base_h")), int(m.group("min_m"))
     share_line, rise = float(m.group("share")) / 100, float(m.group("rise"))
     rows = (ooni_data or {}).get(fid)
+    fetched_at = None
     if rows is None:
         if not allow_fetch:
             return _skip(fid, "no OONI counts supplied")
@@ -629,6 +671,7 @@ def evaluate_ooni_rule(fc: dict, rule: str, ooni_data: dict | None = None, allow
             rows = fetch_ooni_hours(cc, start, end, base_h)
         except Exception as exc:  # not read: skipped, never a No
             return _skip(fid, f"OONI not read: {type(exc).__name__}: {exc}"[:200])
+        fetched_at = verdict.now_utc()
     wm, wh = ooni_tally(rows, start, end)
     bm, bh = ooni_tally(rows, start - timedelta(hours=base_h), start)
     share = wh / wm if wm else None
@@ -647,7 +690,9 @@ def evaluate_ooni_rule(fc: dict, rule: str, ooni_data: dict | None = None, allow
         "probe_cc": cc, "since": start.strftime("%Y-%m-%d"), "until": (end + timedelta(days=1)).strftime("%Y-%m-%d"),
         "time_grain": "hour", "axis_x": "measurement_start_day"}))
     return {"id": fid, "outcome": 1 if yes else 0, "url": url, "note": note, "rule_type": "cop_ooni_window",
-            "needs_review": review}
+            "needs_review": review,
+            "evidence": _evidence(url, fetched_at, list(rows), getattr(rows, "body_sha256", None),
+                                  hash_note="SHA-256 of OONI's aggregation responses concatenated in the order read")}
 
 
 # ---- Driver ----------------------------------------------------------------------------------------------------
@@ -716,7 +761,7 @@ def auto_resolve(
             continue
         if apply:
             rec = verdict.resolve(fid, res["outcome"], res["url"], note=res["note"], by=by.strip(), root=root,
-                                  when=when)
+                                  when=when, evidence=res.get("evidence"))
             applied.append(rec["id"])
 
     out_file = out_path or (root / "drafts" / "resolutions_proposed.json")

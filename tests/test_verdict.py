@@ -945,5 +945,155 @@ class AutoResolve(unittest.TestCase):
         self.assertEqual(verdict.calendar_problems(self.tmp, registers.ids(self.tmp / "doctrine")), [])
 
 
+class Retention(unittest.TestCase):
+    """Nothing is lost: resolution evidence snapshots (D1) and the calendar's dropped events (D2)."""
+
+    def setUp(self):
+        self.tmp = Path(tempfile.mkdtemp())
+        shutil.copytree(ROOT / "doctrine", self.tmp / "doctrine")
+        (self.tmp / "drafts").mkdir()
+        (self.tmp / "calendar").mkdir()
+        self.drafts = self.tmp / "drafts" / "test.json"
+        self.drafts.write_text(json.dumps({"drafts": [{"approved": "Tom Brummer", "item": ITEM}]}), encoding="utf-8")
+        verdict.register(self.drafts, self.tmp, when="2026-11-01T12:00:00Z")
+        self.fid = ITEM["id"]
+        self.ev_path = self.tmp / "ledger" / "evidence" / "verdict_test_one.json"
+
+    def tearDown(self):
+        shutil.rmtree(self.tmp, ignore_errors=True)
+
+    def test_resolve_writes_an_evidence_file_with_rows_time_and_hash(self):
+        ev = {"source_url": "https://example.org/data.csv", "fetched_at": "2026-11-06T12:00:00Z",
+              "body_sha256": "ab" * 32, "rows": [{"k": 1}, {"k": 2}]}
+        rec = verdict.resolve(self.fid, 1, "https://example.org/r", root=self.tmp, when="2026-11-06T12:00:00Z",
+                              evidence=ev)
+        saved = json.loads(self.ev_path.read_text(encoding="utf-8"))
+        self.assertEqual((saved["id"], saved["outcome"], saved["source_url"], saved["fetched_at"]),
+                         (self.fid, 1, "https://example.org/data.csv", "2026-11-06T12:00:00Z"))
+        self.assertEqual((saved["body_sha256"], saved["rows"], saved["body_stored"]), ("ab" * 32, [{"k": 1}, {"k": 2}], False))
+        self.assertEqual(rec["evidence"]["snapshot"], "ledger/evidence/verdict_test_one.json")
+        self.assertEqual(verdict.check(self.tmp), [])
+
+    def test_body_is_kept_only_when_asked_and_small(self):
+        import hashlib
+        body = b"a,b\n1,2\n"
+        verdict.resolve(self.fid, 0, "https://example.org/r", root=self.tmp, when="2026-11-06T12:00:00Z",
+                        evidence={"body": body, "fetched_at": "2026-11-06T12:00:00Z"}, store_body=True)
+        saved = json.loads(self.ev_path.read_text(encoding="utf-8"))
+        self.assertEqual((saved["body_stored"], saved["body"], saved["body_sha256"]),
+                         (True, body.decode(), hashlib.sha256(body).hexdigest()))
+        self.ev_path.unlink()
+        (self.tmp / "ledger" / "resolutions.jsonl").unlink()
+        big = b"x" * (verdict.BODY_MAX + 1)
+        verdict.resolve(self.fid, 0, "https://example.org/r", root=self.tmp, when="2026-11-06T12:00:00Z",
+                        evidence={"body": big}, store_body=True)
+        saved = json.loads(self.ev_path.read_text(encoding="utf-8"))
+        self.assertFalse(saved["body_stored"])
+        self.assertNotIn("body", saved)
+        self.assertEqual(saved["body_sha256"], hashlib.sha256(big).hexdigest())
+
+    def test_no_evidence_still_leaves_a_file_and_never_overwrites(self):
+        verdict.resolve(self.fid, 1, "https://example.org/r", root=self.tmp, when="2026-11-06T12:00:00Z")
+        self.assertIn("snapshot", json.loads(self.ev_path.read_text(encoding="utf-8")))
+        before = self.ev_path.read_text(encoding="utf-8")
+        with self.assertRaises(SystemExit):  # already resolved
+            verdict.resolve(self.fid, 0, "https://example.org/r2", root=self.tmp, when="2026-11-06T13:00:00Z",
+                            evidence={"rows": [1]})
+        self.assertEqual(self.ev_path.read_text(encoding="utf-8"), before)
+        self.assertEqual(len(verdict.read_lines(self.tmp / verdict.RESOLUTIONS)), 1)
+
+    def test_existing_evidence_file_blocks_the_resolution_and_is_not_overwritten(self):
+        self.ev_path.parent.mkdir(parents=True)
+        self.ev_path.write_text("{}", encoding="utf-8")
+        with self.assertRaises(SystemExit):
+            verdict.resolve(self.fid, 1, "https://example.org/r", root=self.tmp, when="2026-11-06T12:00:00Z")
+        self.assertEqual(self.ev_path.read_text(encoding="utf-8"), "{}")
+        self.assertEqual(verdict.read_lines(self.tmp / verdict.RESOLUTIONS), [])
+
+    def test_evidence_is_picked_up_from_a_held_proposal(self):
+        prop = {"generated_at": "2026-11-06T11:00:00Z", "proposed": [
+            {"id": self.fid, "evidence": {"source_url": "https://example.org/x", "fetched_at": "2026-11-06T11:00:00Z",
+                                          "body_sha256": "cd" * 32, "rows": [{"v": 9}]}}]}
+        (self.tmp / "drafts" / "resolutions_proposed.json").write_text(json.dumps(prop), encoding="utf-8")
+        ev = verdict.evidence_from_proposals(self.tmp, self.fid)
+        verdict.resolve(self.fid, 1, "https://example.org/r", root=self.tmp, when="2026-11-06T12:00:00Z", evidence=ev)
+        saved = json.loads(self.ev_path.read_text(encoding="utf-8"))
+        self.assertEqual((saved["rows"], saved["body_sha256"], saved["from_proposal_generated_at"]),
+                         ([{"v": 9}], "cd" * 32, "2026-11-06T11:00:00Z"))
+        self.assertIsNone(verdict.evidence_from_proposals(self.tmp, "verdict:other"))
+
+    def test_auto_resolve_apply_writes_evidence_with_the_hash_of_what_it_read(self):
+        import auto_resolve
+        fc = copy.deepcopy(ITEM)
+        fc.update({"id": AutoResolve.CZIB_ID, "valid_until": "2026-11-17T00:00:00Z",
+                   "resolution": {"rule": AutoResolve.EASA_RULE, "source": "EASA", "known_at": "2026-11-16T00:00:00Z",
+                                  "resolve_by": "2026-11-30T23:59:00Z"}})
+        self.drafts.write_text(json.dumps({"drafts": [{"approved": "Tom Brummer", "item": fc}]}), encoding="utf-8")
+        verdict.register(self.drafts, self.tmp, when="2026-11-01T12:00:00Z")
+        easa = AutoResolve._easa("2026-11-17T06:00:00Z")
+        easa["body_sha256"], easa["body_bytes"] = "ef" * 32, 1234
+        res = auto_resolve.auto_resolve(root=self.tmp, now="2026-11-17T12:00:00Z", easa=easa, fetch=False,
+                                        apply=True, by="Tom Brummer")
+        self.assertEqual(res["applied"], [AutoResolve.CZIB_ID])
+        p = self.tmp / "ledger" / "evidence" / "verdict_2026-11-16_easa-iran-czib-renewed.json"
+        saved = json.loads(p.read_text(encoding="utf-8"))
+        self.assertEqual((saved["body_sha256"], saved["body_bytes"], saved["fetched_at"]),
+                         ("ef" * 32, 1234, "2026-11-17T06:00:00Z"))
+        self.assertEqual(saved["rows"][0]["id"], "CZIB-2026-04")
+        self.assertEqual(verdict.check(self.tmp), [])
+
+    # ---- D2: calendar/dropped.jsonl ----
+
+    SRC = {"publisher": "Test", "url": "https://example.org"}
+    PAST = {"id": "p1", "date": "2026-11-10", "title": "Already past", "kind": "bulletin_expiry",
+            "countries": [], "source": SRC, "ref": "CZIB-9"}
+    FUT = {"id": "f1", "date": "2026-12-20", "title": "Rescheduled release", "kind": "bulletin_expiry",
+           "countries": [], "source": SRC, "ref": "CZIB-8"}
+
+    def dropped(self):
+        return verdict.read_lines(self.tmp / verdict.DROPPED)
+
+    def test_events_first_seen_past_and_future_events_no_longer_sent_are_kept(self):
+        (self.tmp / "calendar" / "events.json").write_text(json.dumps({"events": []}), encoding="utf-8")
+        verdict.sync_calendar(self.tmp, {"source": "cordon", "events": [self.FUT]}, today="2026-11-15")
+        r = verdict.sync_calendar(self.tmp, {"source": "cordon", "events": [self.PAST]}, today="2026-11-16")
+        d = self.dropped()
+        self.assertEqual([(x["id"], x["reason"], x["dropped_on"]) for x in d],
+                         [("p1", "first_seen_past", "2026-11-16"), ("f1", "origin_stopped_sending", "2026-11-16")]
+                         if d[0]["id"] == "p1" else
+                         [("f1", "origin_stopped_sending", "2026-11-16"), ("p1", "first_seen_past", "2026-11-16")])
+        self.assertEqual({x["id"]: x["event"]["title"] for x in d}, {"p1": "Already past", "f1": "Rescheduled release"})
+        # the live calendar is exactly what it was before this change: neither event is in it
+        self.assertEqual(verdict.read_calendar(self.tmp), [])
+        self.assertEqual(r["dropped"], ["f1"])
+
+    def test_dropped_file_is_append_only_and_a_repeat_sync_adds_nothing(self):
+        (self.tmp / "calendar" / "events.json").write_text(json.dumps({"events": []}), encoding="utf-8")
+        verdict.sync_calendar(self.tmp, {"source": "cordon", "events": [self.PAST]}, today="2026-11-16")
+        first = (self.tmp / verdict.DROPPED).read_text(encoding="utf-8")
+        verdict.sync_calendar(self.tmp, {"source": "cordon", "events": [self.PAST]}, today="2026-11-17")
+        self.assertEqual((self.tmp / verdict.DROPPED).read_text(encoding="utf-8"), first)
+        other = {**self.PAST, "id": "p2", "date": "2026-11-11"}
+        verdict.sync_calendar(self.tmp, {"source": "cordon", "events": [self.PAST, other]}, today="2026-11-18")
+        text = (self.tmp / verdict.DROPPED).read_text(encoding="utf-8")
+        self.assertTrue(text.startswith(first), "earlier lines are kept byte for byte")
+        self.assertEqual([x["id"] for x in self.dropped()], ["p1", "p2"])
+
+    def test_an_event_a_forecast_is_linked_to_is_still_kept_and_not_recorded_as_dropped(self):
+        (self.tmp / "ledger").mkdir(exist_ok=True)
+        fc = copy.deepcopy(ITEM)
+        fc.update({"id": "verdict:t:iran", "status": "actual", "approved_by": "T"})
+        fc["resolution"] = {"rule": AutoResolve.EASA_RULE, "source": "EASA", "known_at": "2026-12-30T00:00:00Z",
+                            "resolve_by": "2026-12-31T23:59:00Z"}
+        (self.tmp / "ledger" / "forecasts.jsonl").write_text(json.dumps(fc) + "\n", encoding="utf-8")
+        was = {"id": "e-iran", "date": "2026-12-20", "title": "Iran expires", "kind": "bulletin_expiry",
+               "countries": [], "source": self.SRC, "ref": "CZIB-2026-04"}
+        (self.tmp / "calendar" / "events.json").write_text(json.dumps({"events": []}), encoding="utf-8")
+        verdict.sync_calendar(self.tmp, {"source": "cordon", "events": [was]}, today="2026-11-15")
+        verdict.sync_calendar(self.tmp, {"source": "cordon", "events": []}, today="2026-11-16")
+        self.assertEqual([e["id"] for e in verdict.read_calendar(self.tmp)], ["e-iran"])
+        self.assertEqual(self.dropped(), [])
+
+
 if __name__ == "__main__":
     unittest.main()

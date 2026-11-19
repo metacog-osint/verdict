@@ -24,6 +24,8 @@ edited or removed; a correction is a new line (msg_type update or cancel, with s
 the timestamp lock. ledger/clusters.jsonl, append-only too, names forecasts that one decision settles together.
 """
 import argparse
+import base64
+import hashlib
 import json
 import re
 import subprocess
@@ -38,6 +40,12 @@ from tic_doctrine import contract, registers  # noqa: E402
 FORECASTS = Path("ledger") / "forecasts.jsonl"
 RESOLUTIONS = Path("ledger") / "resolutions.jsonl"
 CLUSTERS = Path("ledger") / "clusters.jsonl"
+EVIDENCE_DIR = Path("ledger") / "evidence"
+DROPPED = Path("calendar") / "dropped.jsonl"
+PROPOSALS = Path("drafts") / "resolutions_proposed.json"
+# A fetched body is stored in the evidence file only when it is this small and the caller says the source allows it;
+# otherwise the file keeps the rows read and the body's SHA-256.
+BODY_MAX = 64 * 1024
 CALENDAR = Path("calendar") / "events.json"
 BINS = 10
 # Resolved forecasts a program needs before its skill is given, a declared cluster counting once. Below this the base
@@ -364,6 +372,30 @@ def calendar_item(ev: dict, generated: str) -> dict:
     }
 
 
+def record_dropped(root: Path, lost: list, today: str) -> int:
+    """Append events the sync did not keep to calendar/dropped.jsonl (append-only, never rewritten).
+
+    reason `first_seen_past`: the origin sent an event already past on the day it was first seen (and not marked
+    occurred). reason `origin_stopped_sending`: a future event the origin no longer sends and no forecast is linked to.
+    An (id, reason, date) already in the file is not written again, so a daily sync does not repeat itself. Returns
+    the number of lines written."""
+    if not lost:
+        return 0
+    path = root / DROPPED
+    have = {(r.get("id"), r.get("reason"), (r.get("event") or {}).get("date")) for r in read_lines(path)}
+    new = []
+    for reason, ev in lost:
+        key = (ev.get("id"), reason, ev.get("date"))
+        if key in have:
+            continue
+        have.add(key)
+        new.append({"id": ev.get("id"), "reason": reason, "dropped_on": today, "origin": ev.get("origin"),
+                    "event": ev})
+    if new:
+        append_lines(path, new)
+    return len(new)
+
+
 def sync_calendar(root: Path, incoming: dict, today: str | None = None) -> dict:
     """Merge another program's dated events (Cordon's or Headwind's data/events.json) into calendar/events.json.
 
@@ -392,8 +424,10 @@ def sync_calendar(root: Path, incoming: dict, today: str | None = None) -> dict:
         return [i for i in ids if not known.get(i) or date <= known[i]]
 
     fresh = []
+    lost = []  # events that leave the calendar here; kept in calendar/dropped.jsonl (retention, 18 Nov 2026)
     for e in incoming.get("events", []):
         if e["date"] < today and e["id"] not in before and not e.get("occurred"):
+            lost.append(("first_seen_past", {**e, "origin": origin}))
             continue  # an expiry already past when first seen
         prev = before.get(e["id"], {})
         item = {k: e[k] for k in ("id", "date", "title", "kind", "countries", "source", "ref") if k in e}
@@ -420,12 +454,14 @@ def sync_calendar(root: Path, incoming: dict, today: str | None = None) -> dict:
                     e["forecast_ids"] = ids
             if e["date"] >= today:  # no longer sent by the origin
                 if not ids:
+                    lost.append(("origin_stopped_sending", e))
                     continue
                 kept_linked.append(e["id"])
         kept.append(e)
     cal["events"] = sorted(kept + fresh, key=lambda e: (e["date"], e["id"]))
     path.parent.mkdir(exist_ok=True)
     path.write_text(json.dumps(cal, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
+    record_dropped(root, lost, today)
     dropped = [i for i in before if i not in {e["id"] for e in cal["events"]}]
     return {"origin": origin, "incoming": len(fresh), "added": sorted(fresh_ids - set(before)),
             "dropped": dropped, "kept_linked": kept_linked, "total": len(cal["events"])}
@@ -618,8 +654,75 @@ def register(draft_path: Path, root: Path = ROOT, when: str | None = None) -> li
     return [it["id"] for _, it in ready]
 
 
+def evidence_file(fid: str) -> Path:
+    """ledger/evidence/<id>.json; characters Windows paths cannot hold (the colons in an id) become underscores."""
+    return EVIDENCE_DIR / (re.sub(r"[^A-Za-z0-9._-]", "_", fid) + ".json")
+
+
+def fetch_body(url: str, timeout: int = 40, limit: int = 8_000_000) -> dict:
+    """Read `url` now. Returns {source_url, fetched_at, body (bytes), body_sha256, body_bytes}."""
+    import urllib.request
+    req = urllib.request.Request(url, headers={"User-Agent": "Verdict (The Intelligence Company)"})
+    with urllib.request.urlopen(req, timeout=timeout) as r:
+        body = r.read(limit)
+    return {"source_url": url, "fetched_at": now_utc(), "body": body,
+            "body_sha256": hashlib.sha256(body).hexdigest(), "body_bytes": len(body)}
+
+
+def evidence_from_proposals(root: Path, fid: str) -> dict | None:
+    """The `evidence` block auto-resolve stored for this forecast in drafts/resolutions_proposed.json, if any."""
+    p = root / PROPOSALS
+    if not p.exists():
+        return None
+    try:
+        doc = json.loads(p.read_text(encoding="utf-8"))
+    except ValueError:
+        return None
+    for prop in doc.get("proposed", []):
+        if prop.get("id") == fid and prop.get("evidence"):
+            return {**prop["evidence"], "from_proposal_generated_at": doc.get("generated_at")}
+    return None
+
+
+def write_evidence(root: Path, fid: str, outcome: int, when: str, url: str, evidence: dict | None,
+                   store_body: bool = False) -> dict:
+    """Write ledger/evidence/<id>.json (create-only: an existing file is never overwritten). Returns the record.
+
+    `evidence` may hold rows (the evidence rows read), source_url, fetched_at, body_sha256, body_bytes and body
+    (bytes). The body itself is kept only when store_body is true and it is at most BODY_MAX bytes; otherwise the
+    file keeps the rows and the hash."""
+    ev = dict(evidence or {})
+    body = ev.pop("body", None)
+    rec = {"id": fid, "outcome": int(outcome), "resolved_at": when, "source_url": ev.get("source_url") or url,
+           "fetched_at": ev.get("fetched_at"), "body_sha256": ev.get("body_sha256"),
+           "body_bytes": ev.get("body_bytes"), "rows": ev.get("rows", [])}
+    for k in ("from_proposal_generated_at", "hash_note"):
+        if ev.get(k):
+            rec[k] = ev[k]
+    if body is not None and not rec["body_sha256"]:
+        rec["body_sha256"] = hashlib.sha256(body).hexdigest()
+        rec["body_bytes"] = len(body)
+    rec["body_stored"] = False
+    if body is not None and store_body and len(body) <= BODY_MAX:
+        try:
+            rec["body"] = body.decode("utf-8")
+        except UnicodeDecodeError:
+            rec["body_b64"] = base64.b64encode(body).decode("ascii")
+        rec["body_stored"] = True
+    if not (ev.get("rows") or rec["body_sha256"]):
+        rec["snapshot"] = "none: no rows or fetched body were available when this was resolved"
+    p = root / evidence_file(fid)
+    p.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        with p.open("x", encoding="utf-8", newline="\n") as f:
+            f.write(json.dumps(rec, indent=1, ensure_ascii=False) + "\n")
+    except FileExistsError:
+        raise SystemExit(f"{fid}: {evidence_file(fid)} already exists; evidence is never overwritten")
+    return rec
+
+
 def resolve(fid: str, outcome: int, url: str, note: str = "", by: str = "", root: Path = ROOT,
-            when: str | None = None) -> dict:
+            when: str | None = None, evidence: dict | None = None, store_body: bool = False) -> dict:
     fc = {f.get("id"): f for f in read_lines(root / FORECASTS)}
     if fid not in fc:
         raise SystemExit(f"{fid}: not in the ledger")
@@ -629,8 +732,10 @@ def resolve(fid: str, outcome: int, url: str, note: str = "", by: str = "", root
     ca = check_after(fc[fid])
     if ca and _t(when) < _t(ca):
         raise SystemExit(f"{fid}: not resolved. Its rule allows a check only after {ca}; it is {when}.")
+    write_evidence(root, fid, outcome, when, url, evidence, store_body)  # first: no evidence file, no resolution
     rec = {"id": fid, "outcome": int(outcome), "resolved_at": when,
-           "evidence": {"url": url, "accessed_at": when}, "note": note, "resolved_by": by}
+           "evidence": {"url": url, "accessed_at": when, "snapshot": evidence_file(fid).as_posix()},
+           "note": note, "resolved_by": by}
     append_lines(root / RESOLUTIONS, [rec])
     return rec
 
@@ -720,6 +825,12 @@ def main(argv=None) -> int:
     s.add_argument("--url", required=True)
     s.add_argument("--note", default="")
     s.add_argument("--by", default="")
+    s.add_argument("--fetch", action="store_true",
+                   help="read --url now and keep its fetch time and SHA-256 in ledger/evidence/<id>.json "
+                        "(unless auto-resolve already left evidence for this forecast)")
+    s.add_argument("--store-body", action="store_true",
+                   help="with --fetch: also keep the body when it is 64 KB or less (only where the source's licence "
+                        "allows redistribution)")
     sc = sub.add_parser("score")
     sc.add_argument("--out")
     cl = sub.add_parser("cluster")
@@ -796,7 +907,10 @@ def main(argv=None) -> int:
         print("registered:", ", ".join(ids) if ids else "nothing (no approved, unregistered drafts)")
         return 0
     if a.cmd == "resolve":
-        print(json.dumps(resolve(a.id, a.outcome, a.url, a.note, a.by)))
+        ev = evidence_from_proposals(ROOT, a.id)
+        if a.fetch and not ev:
+            ev = fetch_body(a.url)
+        print(json.dumps(resolve(a.id, a.outcome, a.url, a.note, a.by, evidence=ev, store_body=a.store_body)))
         return 0
     if a.cmd == "cluster":
         print(json.dumps(declare_cluster(a.id, a.members, a.reason)))
