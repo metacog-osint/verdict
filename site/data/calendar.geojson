@@ -3001,6 +3001,114 @@
    "geometry": null,
    "properties": {
     "contract": "tic-feed/2",
+    "id": "verdict:calendar:2026-11-18-cdc-malaria-yemen-removed",
+    "program": "verdict",
+    "title": "On 2026-11-18: Malaria in Yemen: CDC removed its level 2 travel health notice",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-19T00:00:00Z",
+    "published_at": "2026-11-19T03:12:47Z",
+    "valid_until": "2026-11-18T00:00:00Z",
+    "countries": [
+     "YE"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://wwwnc.cdc.gov/travel/notices/level2/malaria-yemen"
+    },
+    "sources": [
+     {
+      "id": "2026-11-18-cdc-malaria-yemen-removed",
+      "publisher": "US Centers for Disease Control and Prevention (CDC), Travelers' Health",
+      "url": "https://wwwnc.cdc.gov/travel/notices/level2/malaria-yemen",
+      "licence": "public",
+      "descriptor": "Change detected by Cordon between two of its reads",
+      "accessed_at": "2026-11-19T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "advisory_change",
+     "date": "2026-11-18",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": true,
+     "origin": "cordon",
+     "ref": "malaria-yemen"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "id": "verdict:calendar:2026-11-18-cdc-mdr-typhoid-senegal-new",
+    "program": "verdict",
+    "title": "On 2026-11-18: Multidrug-Resistant Typhoid Fever in Senegal: CDC issued a level 1 travel health notice (Practice Usual Precautions)",
+    "kind": "observation",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "reported",
+    "product_category": "current",
+    "data_as_of": "2026-11-19T00:00:00Z",
+    "published_at": "2026-11-19T03:12:47Z",
+    "valid_until": "2026-11-18T00:00:00Z",
+    "countries": [
+     "SN"
+    ],
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-calendar-1.0",
+    "precision_class": "none",
+    "visual": {
+     "type": "page",
+     "url": "https://wwwnc.cdc.gov/travel/notices/level1/mdr-typhoid-senegal"
+    },
+    "sources": [
+     {
+      "id": "2026-11-18-cdc-mdr-typhoid-senegal-new",
+      "publisher": "US Centers for Disease Control and Prevention (CDC), Travelers' Health",
+      "url": "https://wwwnc.cdc.gov/travel/notices/level1/mdr-typhoid-senegal",
+      "licence": "public",
+      "descriptor": "Change detected by Cordon between two of its reads",
+      "accessed_at": "2026-11-19T00:00:00Z"
+     }
+    ],
+    "event": {
+     "kind": "advisory_change",
+     "date": "2026-11-18",
+     "at": null,
+     "verified": true,
+     "forecast_ids": [],
+     "note": null,
+     "occurred": true,
+     "origin": "cordon",
+     "ref": "mdr-typhoid-senegal"
+    }
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
     "id": "verdict:calendar:2026-11-28-tw-referendum",
     "program": "verdict",
     "title": "Scheduled 2026-11-28: Taiwan: national referendum, case 22",

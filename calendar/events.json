@@ -980,6 +980,42 @@
       "added": "2026-10-31"
     },
     {
+      "id": "2026-11-18-cdc-malaria-yemen-removed",
+      "date": "2026-11-18",
+      "title": "Malaria in Yemen: CDC removed its level 2 travel health notice",
+      "kind": "advisory_change",
+      "countries": [
+        "YE"
+      ],
+      "source": {
+        "publisher": "US Centers for Disease Control and Prevention (CDC), Travelers' Health",
+        "url": "https://wwwnc.cdc.gov/travel/notices/level2/malaria-yemen",
+        "descriptor": "Change detected by Cordon between two of its reads"
+      },
+      "ref": "malaria-yemen",
+      "origin": "cordon",
+      "occurred": true,
+      "added": "2026-11-19"
+    },
+    {
+      "id": "2026-11-18-cdc-mdr-typhoid-senegal-new",
+      "date": "2026-11-18",
+      "title": "Multidrug-Resistant Typhoid Fever in Senegal: CDC issued a level 1 travel health notice (Practice Usual Precautions)",
+      "kind": "advisory_change",
+      "countries": [
+        "SN"
+      ],
+      "source": {
+        "publisher": "US Centers for Disease Control and Prevention (CDC), Travelers' Health",
+        "url": "https://wwwnc.cdc.gov/travel/notices/level1/mdr-typhoid-senegal",
+        "descriptor": "Change detected by Cordon between two of its reads"
+      },
+      "ref": "mdr-typhoid-senegal",
+      "origin": "cordon",
+      "occurred": true,
+      "added": "2026-11-19"
+    },
+    {
       "id": "2026-11-28-tw-referendum",
       "date": "2026-11-28",
       "title": "Taiwan: national referendum, case 22",
