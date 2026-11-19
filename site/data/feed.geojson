@@ -2,7 +2,7 @@
  "type": "FeatureCollection",
  "contract": "tic-feed/2",
  "program": "verdict",
- "generated_at": "2026-11-18T15:47:06Z",
+ "generated_at": "2026-11-19T03:12:47Z",
  "licence": "Verdict (MIT); each forecast's sources as cited",
  "attribution": "Verdict, The Intelligence Company",
  "language_key": "https://github.com/metacog-osint/tic-doctrine/blob/main/docs/language-key.md",
@@ -1018,6 +1018,313 @@
     "visual": {
      "type": "page",
      "url": "https://www.bna.bh/en/"
+    },
+    "approved_by": "Tom Brummer"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "program": "verdict",
+    "kind": "forecast",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "assessed",
+    "product_category": "estimative",
+    "data_as_of": "2026-11-18T21:00:00Z",
+    "published_at": "2026-11-19T03:12:47Z",
+    "change_from_prior": "new",
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-1.0 (event pre-registration)",
+    "ie_aspect": [
+     "physical"
+    ],
+    "probability": 0.55,
+    "likelihood_term": "roughly_even_chance",
+    "confidence": "low",
+    "confidence_basis": {
+     "rubric": "tic-confidence-1.0",
+     "factors": {
+      "contradicted": false,
+      "alternatives_rejected": 0,
+      "method_scored": false,
+      "horizon_days": 7,
+      "independent_lines": 1,
+      "ease_of_faking": "low"
+     },
+     "caps": [
+      "method_unscored"
+     ],
+     "raise_by": [
+      "a scored Verdict record for weekly-call questions of this kind"
+     ]
+    },
+    "id": "verdict:2026-11-29:ukmto-hormuz-attacks-8-plus",
+    "title": "UKMTO publishes 8 or more Attack reports within 900 km of Bandar Abbas, 23-29 Nov 2026",
+    "summary": "55% chance UKMTO publishes 8 or more Attack reports for incidents within 900 km of Bandar Abbas between 00:00 UTC 23 Nov and 23:59 UTC 29 Nov 2026: weekly counts since 28 Sep ran 8, 10, 11, 3, 6, 8 and 4.",
+    "countries": [
+     "IR",
+     "OM",
+     "AE"
+    ],
+    "pmesii_pt": [
+     "military"
+    ],
+    "ascope": [
+     "areas"
+    ],
+    "alternatives": [
+     {
+      "hypothesis": "The tempo stays at November's lower rate (3 to 6 a week)",
+      "tell_apart": "a count of 3 to 6 Attack reports in the window"
+     },
+     {
+      "hypothesis": "A surge past October's peak",
+      "tell_apart": "a count above 11 in the window"
+     }
+    ],
+    "resolution": {
+     "rule": "Yes if UKMTO's incident list (ukmto.org, the list Wake reads) shows 8 or more reports of type \"Attack\" whose creation time (utcDateCreated) falls from 00:00 UTC 23 Nov 2026 to 23:59 UTC 29 Nov 2026 and whose position lies within 900 km of 27.218 N 56.378 E; counted on a check after 00:00 UTC on 30 Nov 2026, with the list saved at the check. No otherwise.",
+     "source": "UKMTO (UK Maritime Trade Operations, Royal Navy) incident list, via Wake's wake:ukmto items",
+     "resolve_by": "2026-12-07T23:59:00Z",
+     "known_at": "2026-11-30T00:00:00Z",
+     "void_if": null
+    },
+    "valid_until": "2026-11-30T00:00:00Z",
+    "reference": {
+     "probability": 0.41,
+     "basis": "Rolling 7-day counts of UKMTO Attack reports within 900 km of Bandar Abbas, one a day from 6 Oct to 18 Nov 2026, reached 8 or more on 18 of 44 (41%). UKMTO's list, read 18 Nov 2026 16:44 UTC; type, time and position only."
+    },
+    "sources": [
+     {
+      "id": "ukmto-list-2026-11-18",
+      "publisher": "UKMTO (Royal Navy)",
+      "url": "https://www.ukmto.org/",
+      "licence": "UK Crown copyright, reports as published (type, time and position only)",
+      "descriptor": "UKMTO's incident list: 54 reports in the circle from 30 Sep to 18 Nov 2026; Monday-to-Sunday weeks since 28 Sep: 8, 10, 11, 3, 6, 8, 4",
+      "grade": "B2",
+      "independence_group": "ukmto",
+      "accessed_at": "2026-11-18T16:44:00Z",
+      "source_type": "official"
+     }
+    ],
+    "visual": {
+     "type": "page",
+     "url": "https://cop.theintelligence.company/"
+    },
+    "approved_by": "Tom Brummer"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "program": "verdict",
+    "kind": "forecast",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "assessed",
+    "product_category": "estimative",
+    "data_as_of": "2026-11-18T21:00:00Z",
+    "published_at": "2026-11-19T03:12:47Z",
+    "change_from_prior": "new",
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-1.0 (event pre-registration)",
+    "ie_aspect": [
+     "physical"
+    ],
+    "probability": 0.4,
+    "likelihood_term": "unlikely",
+    "confidence": "low",
+    "confidence_basis": {
+     "rubric": "tic-confidence-1.0",
+     "factors": {
+      "contradicted": false,
+      "alternatives_rejected": 0,
+      "method_scored": false,
+      "horizon_days": 11,
+      "independent_lines": 1,
+      "ease_of_faking": "low"
+     },
+     "caps": [
+      "method_unscored"
+     ],
+     "raise_by": [
+      "a scored Verdict record for weekly-call questions of this kind"
+     ]
+    },
+    "id": "verdict:2026-11-29:hormuz-transits-above-90d-median",
+    "title": "IMF PortWatch's 7-day mean of Strait of Hormuz transits is 4.0 a day or more on 29 Nov 2026",
+    "summary": "40% chance IMF PortWatch's 7-day rolling mean of vessel transits through the Strait of Hormuz is 4.0 a day or more on 29 Nov 2026 (28 or more transits in the 7 days, above the 90-day median of 3.86): the week to 15 Nov was 2.29 a day, the lowest of those 90 days.",
+    "countries": [
+     "IR",
+     "OM",
+     "AE"
+    ],
+    "pmesii_pt": [
+     "economic",
+     "infrastructure"
+    ],
+    "ascope": [
+     "areas"
+    ],
+    "alternatives": [
+     {
+      "hypothesis": "Traffic stays at its floor (about 2 a day)",
+      "tell_apart": "a 7-day mean near 2 on 29 Nov"
+     },
+     {
+      "hypothesis": "A partial reopening",
+      "tell_apart": "a 7-day mean well above 5 on 29 Nov"
+     }
+    ],
+    "resolution": {
+     "rule": "Yes if IMF PortWatch Daily_Chokepoints_Data (portid='chokepoint6') reports a 7-day rolling n_total >= 4.0 vessels/day (28 or more transits in the 7 days to 29 Nov, above the 90-day median of 3.86 vessels/day) on 2026-11-29 UTC.",
+     "source": "IMF PortWatch Daily_Chokepoints_Data (https://portwatch.imf.org/), via Wake; the IMF does not endorse the analysis",
+     "resolve_by": "2026-12-20T23:59:00Z",
+     "known_at": "2026-12-10T00:00:00Z",
+     "void_if": "PortWatch publishes no Strait of Hormuz counts for 23-29 Nov 2026 by 20 Dec 2026"
+    },
+    "valid_until": "2026-12-10T00:00:00Z",
+    "reference": {
+     "probability": 0.6,
+     "basis": "Wake's PortWatch fixture (chokepoint6 daily n_total, 20 Sep 2025 to 8 Nov 2026, read 15 Nov): of the 33 days in 2026 with a 7-day mean below 3.0, 20 (61%) were followed 14 days later by a 7-day mean of 4.0 or more; over the 90 days to 8 Nov the mean was 4.0 or more on 44 (49%). Days are autocorrelated, so few independent spells stand behind the 61%."
+    },
+    "sources": [
+     {
+      "id": "wake-chokepoint-hormuz-2026-11-15",
+      "publisher": "IMF PortWatch (via Wake)",
+      "url": "https://portwatch.imf.org/",
+      "licence": "IMF PortWatch terms; the IMF does not endorse the analysis",
+      "descriptor": "Strait of Hormuz, 7-day mean 2.29 transits a day in the week to 15 Nov 2026, against a 90-day median of 3.86 (z -2.5)",
+      "grade": "A2",
+      "independence_group": "imf-portwatch",
+      "accessed_at": "2026-11-18T16:41:00Z",
+      "source_type": "official"
+     }
+    ],
+    "visual": {
+     "type": "page",
+     "url": "https://cop.theintelligence.company/"
+    },
+    "approved_by": "Tom Brummer"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "program": "verdict",
+    "kind": "forecast",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "assessed",
+    "product_category": "estimative",
+    "data_as_of": "2026-11-18T21:00:00Z",
+    "published_at": "2026-11-19T03:12:47Z",
+    "change_from_prior": "new",
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-1.0 (event pre-registration)",
+    "ie_aspect": [
+     "physical"
+    ],
+    "probability": 0.15,
+    "likelihood_term": "very_unlikely",
+    "confidence": "low",
+    "confidence_basis": {
+     "rubric": "tic-confidence-1.0",
+     "factors": {
+      "contradicted": false,
+      "alternatives_rejected": 0,
+      "method_scored": false,
+      "horizon_days": 14,
+      "independent_lines": 1,
+      "ease_of_faking": "low"
+     },
+     "caps": [
+      "method_unscored"
+     ],
+     "raise_by": [
+      "a scored Verdict record for weekly-call questions of this kind"
+     ]
+    },
+    "id": "verdict:2026-12-06:gulf-confirmed-internet-outage",
+    "title": "Blackout reports a confirmed internet outage in a Gulf state, Iran or Iraq beginning 23 Nov-6 Dec 2026",
+    "summary": "15% chance Blackout reports a confirmed internet outage in Iran, the UAE, Oman, Qatar, Bahrain, Kuwait, Saudi Arabia or Iraq that begins between 00:00 UTC 23 Nov and 23:59 UTC 6 Dec 2026: Access Now's STOP documents 6 shutdowns in Iran and 7 in Iraq in 2025 (Iraq's all between February and August), none in the other six.",
+    "countries": [
+     "IR",
+     "AE",
+     "OM",
+     "QA",
+     "BH",
+     "KW",
+     "SA",
+     "IQ"
+    ],
+    "pmesii_pt": [
+     "infrastructure",
+     "information"
+    ],
+    "ascope": [
+     "areas"
+    ],
+    "alternatives": [
+     {
+      "hypothesis": "Connectivity holds, as on every day since Blackout joined COP on 12 Nov",
+      "tell_apart": "no BO-IND-1, -9 or -10 item naming one of the eight in the window"
+     },
+     {
+      "hypothesis": "A fault on one network only (still Yes if Cloudflare verified it)",
+      "tell_apart": "a BO-IND-10 item naming one network, with no country-level IODA outage"
+     }
+    ],
+    "resolution": {
+     "rule": "Yes if Blackout's feed, or COP's suite ledger of it, carries a confirmed outage naming Iran, the UAE, Oman, Qatar, Bahrain, Kuwait, Saudi Arabia or Iraq that began from 00:00 UTC 23 Nov 2026 to 23:59 UTC 6 Dec 2026: an IODA country-level outage (BO-IND-1), a Cloudflare-verified traffic anomaly (BO-IND-10) or a Cloudflare Radar Outage Center entry (BO-IND-9); counted on a check after 00:00 UTC on 7 Dec 2026. A single-signal dip (BO-IND-4), a route leak or a hijack does not count. No otherwise.",
+     "source": "Blackout (IODA; Cloudflare Radar, CC BY-NC 4.0), through COP's suite ledger",
+     "resolve_by": "2026-12-14T23:59:00Z",
+     "known_at": "2026-12-07T00:00:00Z",
+     "void_if": null
+    },
+    "valid_until": "2026-12-07T00:00:00Z",
+    "reference": {
+     "probability": 0.15,
+     "basis": "Access Now #KeepItOn STOP, 2025: 6 documented shutdowns in Iran (5 in June, 1 in December, so about 2 episodes) and 7 in Iraq (all February to August, exam months), none in the other six. Counting records, a 14-day window holds one 21% of the time; counting Iran's episodes, about 7%; Iraq adds little in late Nov. A few points added for network faults Cloudflare verifies, which STOP doesn't count."
+    },
+    "sources": [
+     {
+      "id": "stop-2025",
+      "publisher": "Access Now, #KeepItOn STOP",
+      "url": "https://www.accessnow.org/keepiton/",
+      "licence": "no data licence stated; counts only",
+      "descriptor": "2025 shutdown counts by country",
+      "grade": "B2",
+      "independence_group": "access-now",
+      "accessed_at": "2026-11-13T05:15:00Z",
+      "source_type": "ngo"
+     }
+    ],
+    "visual": {
+     "type": "page",
+     "url": "https://cop.theintelligence.company/"
     },
     "approved_by": "Tom Brummer"
    }

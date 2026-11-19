@@ -2,7 +2,7 @@
  "type": "FeatureCollection",
  "contract": "tic-feed/2",
  "program": "verdict",
- "generated_at": "2026-11-18T15:47:06Z",
+ "generated_at": "2026-11-19T03:12:47Z",
  "licence": "Verdict (MIT); each event's source as cited",
  "attribution": "Verdict event calendar, The Intelligence Company",
  "language_key": "https://github.com/metacog-osint/tic-doctrine/blob/main/docs/language-key.md",
@@ -24,7 +24,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2024-11-03T00:00:00Z",
     "countries": [
      "MD"
@@ -78,7 +78,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2024-11-05T00:00:00Z",
     "countries": [
      "US"
@@ -132,7 +132,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2024-11-05T00:00:00Z",
     "countries": [
      "US"
@@ -186,7 +186,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2024-11-16T00:00:00Z",
     "countries": [
      "GA"
@@ -240,7 +240,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2024-11-17T00:00:00Z",
     "countries": [
      "SN"
@@ -294,7 +294,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2024-11-24T00:00:00Z",
     "countries": [
      "RO"
@@ -348,7 +348,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2024-12-01T00:00:00Z",
     "countries": [
      "RO"
@@ -402,7 +402,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2024-12-29T00:00:00Z",
     "countries": [
      "TD"
@@ -456,7 +456,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2025-02-23T00:00:00Z",
     "countries": [
      "DE"
@@ -510,7 +510,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2025-04-12T00:00:00Z",
     "countries": [
      "GA"
@@ -564,7 +564,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2025-05-03T00:00:00Z",
     "countries": [
      "AU"
@@ -618,7 +618,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2025-05-04T00:00:00Z",
     "countries": [
      "RO"
@@ -672,7 +672,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2025-05-18T00:00:00Z",
     "countries": [
      "PL"
@@ -726,7 +726,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2025-05-18T00:00:00Z",
     "countries": [
      "RO"
@@ -780,7 +780,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2025-06-01T00:00:00Z",
     "countries": [
      "PL"
@@ -834,7 +834,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2025-06-08T00:00:00Z",
     "countries": [
      "IT"
@@ -888,7 +888,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2025-08-23T00:00:00Z",
     "countries": [
      "TW"
@@ -942,7 +942,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2025-09-27T00:00:00Z",
     "countries": [
      "GA"
@@ -996,7 +996,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2025-09-28T00:00:00Z",
     "countries": [
      "MD"
@@ -1050,7 +1050,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2025-10-11T00:00:00Z",
     "countries": [
      "GA"
@@ -1104,7 +1104,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2025-10-12T00:00:00Z",
     "countries": [
      "CM"
@@ -1158,7 +1158,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2025-10-25T00:00:00Z",
     "countries": [
      "CI"
@@ -1212,7 +1212,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2025-10-29T00:00:00Z",
     "countries": [
      "NL"
@@ -1266,7 +1266,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2025-11-11T00:00:00Z",
     "countries": [
      "IQ"
@@ -1320,7 +1320,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2025-12-27T00:00:00Z",
     "countries": [
      "CI"
@@ -1374,7 +1374,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2026-03-08T00:00:00Z",
     "countries": [
      "CO"
@@ -1428,7 +1428,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2026-03-22T00:00:00Z",
     "countries": [
      "IT"
@@ -1482,7 +1482,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2026-04-12T00:00:00Z",
     "countries": [
      "HU"
@@ -1536,7 +1536,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2026-04-19T00:00:00Z",
     "countries": [
      "BG"
@@ -1590,7 +1590,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2026-05-30T00:00:00Z",
     "countries": [
      "MT"
@@ -1644,7 +1644,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2026-05-31T00:00:00Z",
     "countries": [
      "CO"
@@ -1698,7 +1698,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2026-06-07T00:00:00Z",
     "countries": [
      "AM"
@@ -1752,7 +1752,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2026-06-21T00:00:00Z",
     "countries": [
      "CO"
@@ -1806,7 +1806,7 @@
     "status_class": "claimed",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2026-09-20T00:00:00Z",
     "countries": [
      "RU"
@@ -1860,7 +1860,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2026-10-03T00:00:00Z",
     "countries": [
      "LV"
@@ -1914,7 +1914,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2026-10-04T00:00:00Z",
     "countries": [
      "BA"
@@ -1968,7 +1968,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2026-10-04T00:00:00Z",
     "countries": [
      "BA"
@@ -2022,7 +2022,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2026-10-25T00:00:00Z",
     "countries": [
      "BG"
@@ -2076,7 +2076,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-15T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2026-10-26T00:00:00Z",
     "countries": [
      "JP"
@@ -2130,7 +2130,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2026-10-27T00:00:00Z",
     "countries": [
      "IL"
@@ -2184,7 +2184,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2026-11-01T00:00:00Z",
     "countries": [
      "BG"
@@ -2238,7 +2238,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-15T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2026-11-03T00:00:00Z",
     "countries": [
      "CN"
@@ -2292,7 +2292,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-15T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2026-11-03T00:00:00Z",
     "countries": [
      "NP"
@@ -2346,7 +2346,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2026-11-03T00:00:00Z",
     "countries": [
      "US"
@@ -2400,7 +2400,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-10-31T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2026-11-06T00:00:00Z",
     "countries": [],
     "requirement_ids": [
@@ -2454,7 +2454,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-10-31T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2026-11-10T00:00:00Z",
     "countries": [
      "US",
@@ -2511,7 +2511,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-15T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2026-11-12T00:00:00Z",
     "countries": [
      "MX"
@@ -2565,7 +2565,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-10-31T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2026-11-16T00:00:00Z",
     "countries": [
      "IR"
@@ -2621,7 +2621,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-10-31T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2026-11-16T00:00:00Z",
     "countries": [
      "IQ"
@@ -2677,7 +2677,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-10-31T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2026-11-16T00:00:00Z",
     "countries": [
      "LB"
@@ -2733,7 +2733,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-10-31T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2026-11-16T00:00:00Z",
     "countries": [
      "BH",
@@ -2793,7 +2793,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-10-31T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2026-11-16T00:00:00Z",
     "countries": [
      "JO"
@@ -2849,7 +2849,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-10-31T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2026-11-16T00:00:00Z",
     "countries": [
      "SA"
@@ -2905,7 +2905,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2026-11-17T00:00:00Z",
     "countries": [
      "PA"
@@ -2959,7 +2959,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-10-31T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2026-11-18T00:00:00Z",
     "countries": [
      "CN"
@@ -3013,7 +3013,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2026-11-28T00:00:00Z",
     "countries": [
      "TW"
@@ -3067,7 +3067,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2026-11-29T00:00:00Z",
     "countries": [
      "ES"
@@ -3121,7 +3121,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-15T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2026-12-03T00:00:00Z",
     "countries": [],
     "requirement_ids": [
@@ -3173,7 +3173,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-15T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2026-12-04T00:00:00Z",
     "countries": [],
     "requirement_ids": [
@@ -3225,7 +3225,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2026-12-04T00:00:00Z",
     "countries": [
      "CA",
@@ -3280,7 +3280,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-15T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2026-12-09T00:00:00Z",
     "countries": [
      "US"
@@ -3334,7 +3334,7 @@
     "status_class": "claimed",
     "product_category": "current",
     "data_as_of": "2026-10-31T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2026-12-15T00:00:00Z",
     "countries": [
      "LY"
@@ -3388,7 +3388,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-15T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2026-12-17T00:00:00Z",
     "countries": [],
     "requirement_ids": [
@@ -3440,7 +3440,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-16T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2027-01-09T00:00:00Z",
     "countries": [
      "CN"
@@ -3494,7 +3494,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-16T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2027-01-09T00:00:00Z",
     "countries": [
      "CN"
@@ -3548,7 +3548,7 @@
     "status_class": "claimed",
     "product_category": "current",
     "data_as_of": "2026-10-31T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2027-01-09T00:00:00Z",
     "countries": [
      "US",
@@ -3603,7 +3603,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-15T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2027-01-10T00:00:00Z",
     "countries": [],
     "requirement_ids": [
@@ -3655,7 +3655,7 @@
     "status_class": "claimed",
     "product_category": "current",
     "data_as_of": "2026-10-31T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2027-01-10T00:00:00Z",
     "countries": [
      "US",
@@ -3710,7 +3710,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-16T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2027-01-12T00:00:00Z",
     "countries": [
      "CA"
@@ -3764,7 +3764,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-15T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2027-01-27T00:00:00Z",
     "countries": [
      "US"
@@ -3818,7 +3818,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-10-31T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2027-01-31T00:00:00Z",
     "countries": [
      "LY"
@@ -3872,7 +3872,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-10-31T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2027-01-31T00:00:00Z",
     "countries": [
      "AF"
@@ -3926,7 +3926,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-10-31T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2027-01-31T00:00:00Z",
     "countries": [
      "PK"
@@ -3980,7 +3980,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-10-31T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2027-01-31T00:00:00Z",
     "countries": [
      "UA"
@@ -4034,7 +4034,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-10-31T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2027-01-31T00:00:00Z",
     "countries": [
      "SD"
@@ -4088,7 +4088,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-10-31T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2027-01-31T00:00:00Z",
     "countries": [
      "RU"
@@ -4142,7 +4142,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-16T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2027-01-31T00:00:00Z",
     "countries": [
      "IR"
@@ -4196,7 +4196,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-16T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2027-01-31T00:00:00Z",
     "countries": [
      "IQ"
@@ -4250,7 +4250,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-16T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2027-01-31T00:00:00Z",
     "countries": [
      "LB"
@@ -4304,7 +4304,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-16T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2027-01-31T00:00:00Z",
     "countries": [
      "BH",
@@ -4362,7 +4362,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-16T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2027-01-31T00:00:00Z",
     "countries": [
      "JO"
@@ -4416,7 +4416,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-16T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2027-01-31T00:00:00Z",
     "countries": [
      "SA"
@@ -4470,7 +4470,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-15T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2027-02-04T00:00:00Z",
     "countries": [],
     "requirement_ids": [
@@ -4522,7 +4522,7 @@
     "status_class": "claimed",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2027-02-07T00:00:00Z",
     "countries": [
      "CM"
@@ -4576,7 +4576,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-15T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2027-03-17T00:00:00Z",
     "countries": [
      "US"
@@ -4630,7 +4630,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-15T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2027-03-18T00:00:00Z",
     "countries": [],
     "requirement_ids": [
@@ -4682,7 +4682,7 @@
     "status_class": "claimed",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2027-04-18T00:00:00Z",
     "countries": [
      "FR"
@@ -4736,7 +4736,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-16T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2027-04-20T00:00:00Z",
     "countries": [],
     "requirement_ids": [
@@ -4788,7 +4788,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-16T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2027-04-26T00:00:00Z",
     "countries": [],
     "requirement_ids": [
@@ -4840,7 +4840,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-15T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2027-04-28T00:00:00Z",
     "countries": [
      "US"
@@ -4894,7 +4894,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-15T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2027-04-29T00:00:00Z",
     "countries": [],
     "requirement_ids": [
@@ -4946,7 +4946,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-10-31T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2027-04-30T00:00:00Z",
     "countries": [
      "ML"
@@ -5000,7 +5000,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-16T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2027-04-30T00:00:00Z",
     "countries": [
      "SY"
@@ -5054,7 +5054,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-10-31T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2027-04-30T00:00:00Z",
     "countries": [
      "SO"
@@ -5108,7 +5108,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-10-31T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2027-04-30T00:00:00Z",
     "countries": [
      "YE"
@@ -5162,7 +5162,7 @@
     "status_class": "claimed",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2027-05-02T00:00:00Z",
     "countries": [
      "FR"
@@ -5216,7 +5216,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2027-09-11T00:00:00Z",
     "countries": [
      "PS"
@@ -5270,7 +5270,7 @@
     "status_class": "reported",
     "product_category": "current",
     "data_as_of": "2026-11-18T00:00:00Z",
-    "published_at": "2026-11-18T15:47:06Z",
+    "published_at": "2026-11-19T03:12:47Z",
     "valid_until": "2027-09-11T00:00:00Z",
     "countries": [
      "PS"
