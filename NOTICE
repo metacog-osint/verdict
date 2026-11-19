@@ -1,0 +1,12 @@
+Verdict: Copyright © 2026 Thomas Brummer, The Intelligence Company.
+The code is licensed under the GNU Affero General Public License v3.0 (LICENSE).
+
+Third-party and shared files in this repository keep their own licences:
+
+- doctrine/kit/        The Intelligence Company doctrine kit, MIT (doctrine/kit/LICENSE)
+- tic-*.js, tic-*.css in site/ and site_src/
+  The Intelligence Company's shared site scripts (tic-time), MIT.
+  Canonical copies: site/shared/ in github.com/metacog-osint/theintelligence-company.
+
+Each forecast cites its sources, which keep their own terms; doctrine/sources.json
+records them.

@@ -493,7 +493,7 @@ def calendar_feed(root: Path = ROOT, generated: str | None = None) -> dict:
     generated = generated or now_utc()
     items = [calendar_item(ev, generated) for ev in sorted(read_calendar(root), key=lambda e: e.get("at") or e["date"])]
     return {"type": "FeatureCollection", "contract": "tic-feed/2", "program": "verdict", "generated_at": generated,
-            "licence": "Verdict (MIT); each event's source as cited",
+            "licence": "Verdict (code GNU AGPL-3.0); each event's source as cited",
             "attribution": "Verdict event calendar, The Intelligence Company",
             "language_key": "https://github.com/metacog-osint/tic-doctrine/blob/main/docs/language-key.md",
             "features": [{"type": "Feature", "geometry": None, "properties": {k: v for k, v in it.items()
