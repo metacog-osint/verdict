@@ -57,4 +57,4 @@ and SEDI for rare events.
 Forecasts follow ICD 203's likelihood terms and keep confidence separate from likelihood (aligned with the directive's
 standards; it binds US intelligence agencies, not us). The method is in `doctrine/method.md`.
 
-Code under the MIT licence. A project of The Intelligence Company.
+Code under the GNU AGPL-3.0 (`LICENSE`); shared and third-party files keep their own licences, listed in `NOTICE`. A project of The Intelligence Company.

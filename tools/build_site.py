@@ -83,7 +83,7 @@ def build() -> dict[str, str]:
     scores = verdict.score(ROOT)
     scores["generated_at"] = as_of
     feed = {"type": "FeatureCollection", "contract": "tic-feed/2", "program": "verdict", "generated_at": as_of,
-            "licence": "Verdict (MIT); each forecast's sources as cited",
+            "licence": "Verdict (code GNU AGPL-3.0); each forecast's sources as cited",
             "attribution": "Verdict, The Intelligence Company",
             "language_key": "https://github.com/metacog-osint/tic-doctrine/blob/main/docs/language-key.md",
             "features": [{"type": "Feature", "geometry": None,
