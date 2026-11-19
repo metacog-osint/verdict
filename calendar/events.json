@@ -581,14 +581,13 @@
         "RU"
       ],
       "source": {
-        "publisher": "ConsultantPlus (reproducing Presidential Decree No. 428 of 16 Jun 2026)",
-        "url": "https://www.consultant.ru/law/hotdocs/94491.html",
-        "descriptor": "State Duma (9th convocation): date read on this page on 18 Nov 2026"
+        "publisher": "President of Russia (Decree No. 428 of 16 Jun 2026, kremlin.ru)",
+        "url": "http://kremlin.ru/acts/bank/53341",
+        "descriptor": "State Duma (9th convocation): date read on this page on 19 Nov 2026"
       },
       "ref": "election:RU:legislative:single",
       "occurred": true,
-      "verified": false,
-      "note": "Decree No. 428 of 16 Jun 2026 sets 20 Sep; voting ran 18 to 20 Sep (CEC, as reported). Read in ConsultantPlus's copy of the decree; cikrf.ru, kremlin.ru and duma.gov.ru did not load.",
+      "note": "Decree No. 428 of 16 Jun 2026 calls the election for 20 Sep 2026; voting ran 18 to 20 Sep (CEC, as reported). cikrf.ru did not load on 19 Nov 2026.",
       "added": "2026-11-18"
     },
     {
