@@ -1238,6 +1238,20 @@
       "added": "2026-11-16"
     },
     {
+      "id": "2027-01-19-fr-2026-23529",
+      "date": "2027-01-19",
+      "title": "BIS: Addressing Remote Access to Advanced Semiconductors (comments close)",
+      "kind": "rule_date",
+      "countries": [],
+      "source": {
+        "publisher": "US Federal Register (BIS)",
+        "url": "https://www.federalregister.gov/documents/2026/11/19/2026-23529/addressing-remote-access-to-advanced-semiconductors"
+      },
+      "ref": "2026-23529",
+      "origin": "headwind",
+      "added": "2026-11-20"
+    },
+    {
       "id": "2027-01-27-fomc-decision",
       "date": "2027-01-27",
       "title": "Federal Reserve FOMC rate decision",
