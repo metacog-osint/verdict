@@ -8,6 +8,8 @@
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="tic-time.css">
 <script src="tic-time.js"></script>
+<link rel="stylesheet" href="tic-fold.css">
+<script src="tic-fold.js" defer></script>
 </head>
 <body>
 <header class="top">
@@ -60,7 +62,7 @@
 
   <section class="card" aria-labelledby="list-h">
     <div class="card-head"><h2 id="list-h">The ledger in full</h2></div>
-    <div id="list"></div>
+    <div id="list" data-tic-fold></div>
   </section>
 
   <section class="card prose" aria-labelledby="how-h">

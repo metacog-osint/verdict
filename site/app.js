@@ -61,7 +61,7 @@
       h("span", { "class": "axis-q" }, ["Question"]),
       h("span", { "class": "axis-scale" }, ["0%", "25%", "50%", "75%", "100%"].map(function (t) { return h("span", null, [t]); })),
       h("span", { "class": "axis-when" }, ["Event date"])]);
-    var list = h("div", { role: "list" });
+    var list = h("div", { role: "list", id: "board-list", "data-tic-fold": "" });  // tic-fold.js: a window about ten rows tall
     rows.forEach(function (r) {
       var svg = s("svg", { viewBox: "0 0 100 26", preserveAspectRatio: "none", role: "img",
         "aria-label": r.title + ": " + pct(r.probability) + (r.status === "resolved" ? (r.outcome ? ", happened" : ", did not happen") : ", open") });
@@ -161,11 +161,12 @@
   function timeline(cal) {
     var box = document.getElementById("timeline");
     var evs = (cal.features || []).map(function (f) { return f.properties; });
-    var ul = h("ol", { "class": "tl" });
+    var ul = h("ol", { "class": "tl", id: "tl-list", "aria-labelledby": "ev-h", "data-tic-fold": "" });  // tic-fold.js: a window about ten rows tall
+    var today = new Date().toISOString().slice(0, 10), next = null;
     evs.forEach(function (e) {
       var ev = e.event || {};
       var has = (ev.forecast_ids || []).length > 0;
-      ul.append(h("li", { "class": "tl-item" + (has ? " has" : "") }, [
+      var li = h("li", { "class": "tl-item" + (has ? " has" : "") }, [
         h("span", { "class": "tl-dot", "aria-hidden": "true" }),
         h("span", { "class": "tl-date" }, [day(ev.date)]),
         h("span", { "class": "tl-title" }, [e.title.replace(/^(Scheduled|On) [0-9-]+: /, ""),
@@ -173,9 +174,19 @@
           ev.occurred ? h("span", { "class": "chip" }, ["happened"]) : null,
           ev.origin === "cordon" ? h("a", { "class": "chip", href: "https://cordon.theintelligence.company/" }, ["from Cordon"]) : null,
           ev.verified === false ? h("span", { "class": "chip conf" }, ["date unconfirmed"]) : null]),
-        ]));
+        ]);
+      ul.append(li);
+      if (!next && String(ev.date || "").slice(0, 10) >= today) next = li;
     });
     box.replaceChildren(ul);
+    // The calendar runs oldest first; open its window at the first event from today on (the earlier ones are a
+    // scroll up). Two frames, so tic-fold.js has made the window first.
+    if (next) requestAnimationFrame(function () { requestAnimationFrame(function () {
+      var w = ul.parentElement;
+      if (w && w.classList.contains("tic-fold-win")) {
+        w.scrollTop += next.getBoundingClientRect().top - w.getBoundingClientRect().top - (parseFloat(getComputedStyle(w).borderTopWidth) || 0);
+      }
+    }); });
   }
 
   function list(rows) {
