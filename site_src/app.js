@@ -223,7 +223,47 @@
     }));
   }
 
+  /* COP's direction words (tools/direction_record.py): counts per word with the plain reference beside them. Skill
+   * reads "held" until a word has enough independent calls. Kept apart from the forecasts and the Brier score. */
+  function directionRecord(d) {
+    var box = document.getElementById("direction-record");
+    if (!d) { box.replaceChildren(h("p", { "class": "empty" }, ["The direction record could not be loaded."])); return; }
+    var rule = (d.rules || [])[(d.rules || []).length - 1];
+    var any = rule && Object.keys(rule.words).some(function (w) { return rule.words[w].scored > 0; });
+    if (!rule) {
+      box.replaceChildren(h("p", { "class": "empty" }, ["No word has been locked yet. Locking starts on " + day(d.first_week) + "."]));
+      return;
+    }
+    if (!any) {
+      box.replaceChildren(h("p", { "class": "empty" }, [d.weeks.locked + (d.weeks.locked === 1 ? " week" : " weeks") +
+        " locked. No word has been scored yet" + (d.next_score ? "; the next score is due " + day(d.next_score) + "." : ".")]));
+      return;
+    }
+    function num(x) { return String(x); }
+    var why = [], notes = [];
+    var tb = h("tbody");
+    ["rising", "edging_up", "easing", "edging_down"].forEach(function (w) {
+      var x = rule.words[w], r = x.reference;
+      if (x.skill_withheld && x.scored > 0 && why.indexOf(x.skill_withheld) < 0) why.push(x.skill_withheld);
+      tb.append(h("tr", null, [h("th", { scope: "row" }, [x.label]), h("td", null, [num(x.scored)]), h("td", null, [num(x.held)]),
+        h("td", { title: r.basis }, [r.share == null ? "—" : pct(r.share) + " of " + r.n]),
+        h("td", null, [num(x.faded)]), h("td", null, [num(x.reversed)]),
+        h("td", null, [x.skill != null ? x.skill.toFixed(2) : x.scored > 0 ? "held" : "—"])]));
+      if (x.scored > 0) {
+        notes.push(x.label + ": press alone " + x.press_only.held + " of " + x.press_only.scored + " held; with another layer " +
+          x.with_other_layers.held + " of " + x.with_other_layers.scored + ". Layers: " + Object.keys(x.layers).join(", ") +
+          (x.void ? ". Void: " + x.void : "") + (x.pending ? ". Waiting: " + x.pending : "") + ".");
+      }
+    });
+    var table = h("table", { "class": "scores-table" }, [h("thead", null, [h("tr", null, ["Word", "Scored", "Held", "No word",
+      "Faded", "Reversed", "Skill"].map(function (t) { return h("th", { scope: "col" }, [t]); }))]), tb]);
+    box.replaceChildren.apply(box, [h("div", { "class": "table-scroll" }, [table])].concat(notes.concat(why).map(function (t) {
+      return h("p", { "class": "scores-note" }, [t]);
+    })));
+  }
+
   function render(data) {
+    directionRecord(data.d);
     tiles(data.f.forecasts, data.s);
     board(data.f.forecasts);
     calibration(data.f.forecasts, data.s);
@@ -235,10 +275,13 @@
   }
 
   T.mountSettings(document.getElementById("time-settings"));
+  var directionData = fetch("data/direction.json", { cache: "no-cache" }).then(function (r) {
+    return r.ok ? r.json() : null;
+  }).catch(function () { return null; });
   Promise.all(["data/forecasts.json", "data/scores.json", "data/calendar.geojson"].map(function (u) {
     return fetch(u, { cache: "no-cache" }).then(function (r) { if (!r.ok) throw new Error(u + " " + r.status); return r.json(); });
-  })).then(function (d) {
-    var data = { f: d[0], s: d[1], c: d[2] };
+  }).concat([directionData])).then(function (d) {
+    var data = { f: d[0], s: d[1], c: d[2], d: d[3] };
     render(data);
     T.onChange(function () { render(data); });
   }).catch(function (e) {

@@ -62,15 +62,17 @@ jobs:
         run: |
           python tools/verdict.py calendar --sync cordon
           python tools/verdict.py calendar --sync headwind || echo "::warning::Headwind's events were not synced"
+          python tools/direction_record.py sync || echo "::error::COP's direction log was not taken"
           python tools/verdict.py check
+          python tools/direction_record.py check
           python tools/build_site.py
           python tools/build_site.py --check
       - name: Commit when the calendar changed
         run: |
-          if [ -n "$(git status --porcelain -- calendar site)" ]; then
+          if [ -n "$(git status --porcelain -- calendar site ledger/direction-log.jsonl)" ]; then
             git config user.name "verdict-bot"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add calendar site
+            git add calendar site ledger/direction-log.jsonl
             git commit -q -m "calendar: sync from Cordon and Headwind $(date -u +%Y-%m-%d)"
             git push -q origin HEAD:main
           else
