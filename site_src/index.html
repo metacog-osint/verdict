@@ -60,6 +60,21 @@
     </section>
   </div>
 
+  <section class="card" aria-labelledby="dir-h">
+    <div class="card-head">
+      <h2 id="dir-h">COP's direction words</h2>
+      <p class="muted small">How often a measured change was still there a week later. Each Monday
+        <a href="https://cop.theintelligence.company/scoring.html#direction">COP</a> locks one word per place. A word
+        held if the layers that moved still passed COP's move test the following week, against the baseline that earned
+        the word. Beside it: how often the same layers moved where no word had been given.</p>
+    </div>
+    <div id="direction-record" class="small"></div>
+    <p class="scores-note small">A direction word is not a warning or a forecast and carries no probability, so this
+      record is kept apart from the Brier score above. A run in one direction counts once, and places sharing one press
+      series count once. <a href="https://github.com/metacog-osint/verdict/blob/main/ledger/direction-log.jsonl">The
+      locked log</a>.</p>
+  </section>
+
   <section class="card" aria-labelledby="list-h">
     <div class="card-head"><h2 id="list-h">The ledger in full</h2></div>
     <div id="list" data-tic-fold></div>

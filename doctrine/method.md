@@ -31,3 +31,17 @@ at registration from a plain rule (a base rate, a market, no change) with its so
 what could have been said without judgment. Forecasts registered before 15 Nov 2026 carry no reference.
 Reliability diagrams, POD/FAR/CSI/Peirce for threshold warnings and SEDI for rare events follow as the record grows.
 Misses stay in.
+
+## COP's direction words
+A direction word is not a forecast and carries no probability, so its record is kept apart from the Brier score. Each
+Monday COP locks one word per place in a hash-chained, append-only log, from data through Sunday. The following Monday
+to Sunday, each layer that moved is put through COP's own move test against the frozen 14-day baseline logged with the
+word. The word **held** if those layers still read moved (two of them for Rising or Easing), **reversed** if more read
+the opposite way, and otherwise **faded**. A layer read on fewer than 5 of the 7 days voids the call. Mixed, Steady and
+Building are not scored.
+
+The reference is how often the same layers moved that way in place-weeks where they had not moved (for Rising and
+Easing, Steady places where two or more layers did). A run in one direction counts once, and places whose only move is
+one shared press series count once. Skill, the held share minus the reference, is given per word from 30 independent
+scored calls. A change to any threshold or layer starts a new count. Words from before 23 Nov 2026, including every
+backfilled word, are never scored.

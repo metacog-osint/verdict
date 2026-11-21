@@ -16,15 +16,17 @@ jobs:
       - name: Doctrine kit copy and registers (tic-doctrine)
         run: python doctrine/kit/tic.py kitcheck && python doctrine/kit/tic.py registers doctrine
       - name: Tests
-        run: python tests/test_verdict.py
+        run: python tests/test_verdict.py && python tests/test_direction_record.py
       - name: Ledger valid, linted, and append-only since the previous commit
         env:
           BASE: ${{ github.event_name == 'pull_request' && format('origin/{0}', github.base_ref) || github.event.before }}
         run: |
           if [ -n "$BASE" ] && git cat-file -e "$BASE^{commit}" 2>/dev/null; then
             python tools/verdict.py check --base "$BASE"
+            python tools/direction_record.py check --base "$BASE"
           else
             python tools/verdict.py check
+            python tools/direction_record.py check
           fi
       - name: Scorecard site matches the ledger (site/ is generated; run python tools/build_site.py)
         run: python tools/build_site.py --check

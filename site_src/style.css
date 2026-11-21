@@ -60,6 +60,7 @@ a { color: var(--mark); }
 .scores-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-variant-numeric: tabular-nums; }
 .scores-table th, .scores-table td { text-align: left; padding: 4px 6px; border-top: 1px solid var(--soft); }
 .scores-note { color: var(--muted); margin: 8px 0 0; }
+.table-scroll { overflow-x: auto; }
 details.item { border-top: 1px solid var(--soft); padding: 8px 2px; }
 details.item:first-child { border-top: 0; }
 details.item summary { cursor: pointer; display: flex; gap: 10px; flex-wrap: wrap; align-items: baseline; }
