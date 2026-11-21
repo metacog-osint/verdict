@@ -1,5 +1,5 @@
 {
- "as_of": "2026-11-21T18:40:23Z",
+ "as_of": "2026-11-21T19:06:58Z",
  "forecasts": [
   {
    "id": "verdict:2026-11-25:shenzhou-24-in-closure-window",
@@ -54,6 +54,79 @@
      "publisher": "The Space Devs, Launch Library 2",
      "url": "https://ll.thespacedevs.com/2.3.0/launches/c9605b67-8a53-4239-a8ae-577fe3b79799/",
      "descriptor": "NET 25 Nov 2026 00:18 UTC, net_precision Minute, window 00:08-00:48 UTC, status Go; updates 'NET November 25' (24 Oct) and 'GO for launch per NOTAMs' (20 Nov)"
+    }
+   ],
+   "status": "open",
+   "outcome": null,
+   "resolved_at": null,
+   "evidence": null,
+   "brier": null
+  },
+  {
+   "id": "verdict:2026-11-28:xichang-lm2d-payload-yaogan-or-shiyan",
+   "title": "The Xichang launch scheduled for 26 Nov 2026 carries a numbered Yaogan or Shiyan payload",
+   "summary": "Whether China's state media or CASC name the payload of the Long March 2D that Launch matched to closure areas A6099/26 (ZPKM) and A6100/26 (ZGZU) as a Yaogan or Shiyan satellite with a series number.",
+   "probability": 0.9,
+   "likelihood": "Very likely (80-95%)",
+   "confidence": "moderate",
+   "raise_by": [
+    "a further independent line of evidence (have 2, High needs 3)",
+    "a scored Verdict record for this method version"
+   ],
+   "published_at": "2026-11-21T19:06:58Z",
+   "approved_by": "Tom Brummer",
+   "event_date": "2026-11-26",
+   "known_at": "2026-11-26T09:30:00Z",
+   "check_after": "2026-11-28T10:00:00Z",
+   "resolve_by": "2026-12-05T23:59:00Z",
+   "cluster": null,
+   "reference": {
+    "probability": 0.94,
+    "basis": "Measured 21 Nov 2026 from GCAT and Launch's history (NotamForChina, Joey0609). Plain rule: Long March 2C/2D launches from Xichang at 34-36 deg since Sep 2017: 30 of 32 were a numbered Yaogan or Shiyan (28 Yaogan, 2 Shiyan); the other 2 were Xinjishu Shiyan, which this rule counts as No. For context: the 2-area ZPKM+ZGZU pattern with the far area at 567-572 NM: 4 of 5 since 2020 (Yaogan 42-01, Yaogan 43-03, Shiyan 30-01/02, Shiyan 30-03/04; the other was Einstein Probe, 29 deg, science). The same far ZGZU area on any vehicle: 8 of 9. All Long March 2D launches from Xichang since 2020: 19 of 23; the others were 1 Xinjishu Shiyan and 3 SatNet technology test launches (50 and 55 deg, a different pattern)."
+   },
+   "rule": "Yes if, within 48 hours of lift-off, Xinhua, CCTV, CASC or CNSA names the main payload of the orbital launch from Xichang matched to closure areas A6099/26 ZPKM and A6100/26 ZGZU (or to replacement notices for the same launch) as 遥感 (Yaogan) or 试验 (Shiyan) followed directly by a series number, for example 遥感四十三号 or 试验三十号. No if it is named any other way, including 新技术试验 (Xinjishu Shiyan) and any name in which 试验 follows another word, such as 卫星互联网技术试验 or 通信技术试验, or if it is not named within 48 hours. GCAT is used only to settle which series a state-media name belongs to. The vehicle (LL2: Long March 2D, 'uncertain') does not change the rule. Resolved on a check after 10:00 UTC on 28 Nov 2026, or 48 hours after lift-off if the launch is later.",
+   "resolution_source": "Xinhua, CCTV, CASC (spacechina.com), CNSA; GCAT (planet4589.org) for series membership",
+   "void_if": "the launch matched to these closures (or to replacement notices for the same launch) does not lift off from Xichang between 26 Nov and 3 Dec 2026 (UTC)",
+   "alternatives": [
+    {
+     "hypothesis": "Class 1: a numbered Yaogan (遥感) series",
+     "tell_apart": "Xinhua or CASC names the payload 遥感 followed by a number"
+    },
+    {
+     "hypothesis": "Class 2: a numbered Shiyan (试验) series",
+     "tell_apart": "named 试验 followed by a number (Shiyan 30-05/06 would continue the pairs launched 29 Sep 2025 and 12 Mar 2026 on the same bearing)"
+    },
+    {
+     "hypothesis": "Class 3: another Chinese government or state-company series (Xinjishu Shiyan, satellite-internet or communications technology test satellites, Shijian, Tianhui, Gaofen, Ziyuan, a science mission, SatNet/Guowang)",
+     "tell_apart": "named in one of those series"
+    },
+    {
+     "hypothesis": "Class 4: a commercial company's or a foreign customer's payload (Jilin-1, SuperView, PIESAT, Geely, foreign)",
+     "tell_apart": "named for a company constellation or foreign customer"
+    },
+    {
+     "hypothesis": "Class 5: not named within 48 h",
+     "tell_apart": "no state-media or CASC payload name by 09:35 UTC 28 Nov"
+    }
+   ],
+   "countries": [
+    "CN"
+   ],
+   "sources": [
+    {
+     "publisher": "The Intelligence Company, Launch (FAA NMS NOTAMs via Cordon)",
+     "url": "https://launch.theintelligence.company/data/snapshot.json",
+     "descriptor": "Match of the Long March 2D to A6099/26 ZPKM (09:30-09:52 UTC 26 Nov, 315 NM, 104.5 deg) and A6100/26 ZGZU (09:31-09:57 UTC, 572 NM, 106.4 deg), level 'time and place' ('azimuth band and downrange distance seen in the history for this pad')"
+    },
+    {
+     "publisher": "The Space Devs, Launch Library 2",
+     "url": "https://ll.thespacedevs.com/2.3.0/launches/b00f0e9a-48d6-4f26-9cb5-7d19169ff7c4/",
+     "descriptor": "Long March 2D, Unknown Payload, Xichang LC-3, NET 26 Nov 09:35 UTC (precision Hour), window 09:30-09:52, status Go; added 20 Nov 'per NOTAMs; Payload and launch vehicle identities uncertain'"
+    },
+    {
+     "publisher": "Jonathan McDowell, GCAT (via Launch's history)",
+     "url": "https://planet4589.org/space/gcat/",
+     "descriptor": "Payloads, inclinations and owners of Long March 2C/2D launches from Xichang since 2017"
     }
    ],
    "status": "open",
