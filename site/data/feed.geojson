@@ -2,7 +2,7 @@
  "type": "FeatureCollection",
  "contract": "tic-feed/2",
  "program": "verdict",
- "generated_at": "2026-11-20T00:00:00Z",
+ "generated_at": "2026-11-21T18:40:23Z",
  "licence": "Verdict (code GNU AGPL-3.0); each forecast's sources as cited",
  "attribution": "Verdict, The Intelligence Company",
  "language_key": "https://github.com/metacog-osint/tic-doctrine/blob/main/docs/language-key.md",
@@ -1325,6 +1325,123 @@
     "visual": {
      "type": "page",
      "url": "https://cop.theintelligence.company/"
+    },
+    "approved_by": "Tom Brummer"
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": null,
+   "properties": {
+    "contract": "tic-feed/2",
+    "program": "verdict",
+    "kind": "forecast",
+    "tier": "routine",
+    "status": "actual",
+    "msg_type": "new",
+    "human_review": "full",
+    "us_person_data": "none",
+    "status_class": "assessed",
+    "product_category": "estimative",
+    "data_as_of": "2026-11-21T17:36:58Z",
+    "published_at": "2026-11-21T18:40:23Z",
+    "change_from_prior": "new",
+    "requirement_ids": [
+     "VD-PIR-1"
+    ],
+    "method_version": "verdict-1.0 (event pre-registration)",
+    "ie_aspect": [
+     "physical"
+    ],
+    "probability": 0.95,
+    "likelihood_term": "very_likely",
+    "confidence": "moderate",
+    "confidence_basis": {
+     "rubric": "tic-confidence-1.0",
+     "factors": {
+      "independent_lines": 2,
+      "contradicted": false,
+      "alternatives_rejected": 0,
+      "method_scored": false,
+      "ease_of_faking": "low",
+      "horizon_days": 4
+     },
+     "caps": [
+      "argumentation",
+      "expertise"
+     ],
+     "raise_by": [
+      "a further independent line of evidence (have 2, High needs 3)",
+      "examine and reject at least one alternative explanation",
+      "a scored Verdict record for this method version"
+     ],
+     "note": "Lines: Launch Library 2's schedule and the NOTAM windows are not independent (LL2 set its window 'per NOTAMs' on 20 Nov), so they count as one line; the second is the crewed-programme record (CMSA's flights have lifted off inside their notices)."
+    },
+    "id": "verdict:2026-11-25:shenzhou-24-in-closure-window",
+    "title": "Shenzhou 24 lifts off between 00:08 and 00:48 UTC on 25 Nov 2026",
+    "summary": "Whether Long March 2F/G carrying Shenzhou 24 lifts off from Jiuquan inside the window of closure areas A6094/26 (ZXXX) and A6095/26 (ZSHA) that Launch matched to it on 20 Nov 2026.",
+    "countries": [
+     "CN"
+    ],
+    "pmesii_pt": [
+     "infrastructure"
+    ],
+    "ascope": [
+     "areas"
+    ],
+    "alternatives": [
+     {
+      "hypothesis": "A delay of hours to days (the notices are replaced with a later window)",
+      "tell_apart": "new ZXXX/ZSHA notices with a later window, or an LL2 update 'delayed'; no state-media lift-off report on 25 Nov"
+     },
+     {
+      "hypothesis": "A scrub with no new date",
+      "tell_apart": "notices cancelled, LL2 reverts to NET TBD"
+     },
+     {
+      "hypothesis": "Lift-off earlier than the window",
+      "tell_apart": "a reported lift-off time before 00:08 UTC; not seen for a crewed launch"
+     }
+    ],
+    "resolution": {
+     "rule": "Yes if Long March 2F/G carrying Shenzhou 24 lifts off from Jiuquan between 00:08:00 and 00:48:59 UTC on 25 Nov 2026 (the window of closure area A6094/26 ZXXX as Launch's feed showed it on 20 Nov 2026). Lift-off time is the time given by Xinhua, CCTV or the China Manned Space Agency, else GCAT's launch time. No otherwise (later, on another day, scrubbed, or a replaced notice with any other window).",
+     "source": "Xinhua, CCTV, China Manned Space Agency (cmse.gov.cn); GCAT (planet4589.org) as fallback; Launch's feed for the registered window",
+     "resolve_by": "2026-11-28T23:59:00Z",
+     "known_at": "2026-11-25T02:00:00Z",
+     "void_if": "never on a schedule change: notices cancelled or replaced with a different window before or after 00:08 UTC 25 Nov count as No (Tom, 20 Nov 2026). Void only if the registered window cannot be read back from Launch's feed history."
+    },
+    "valid_until": "2026-11-25T02:00:00Z",
+    "reference": {
+     "probability": 1.0,
+     "basis": "Crewed Shenzhou flights 14 and 16-23 for which Launch's Joey0609 notice copy holds notices: 9 of 9 lifted off inside a notice window; LL2's update logs for Shenzhou 22 and 23 show no date change after the notices appeared (chosen by Tom, 20 Nov 2026). The plain rule is that record taken as it stands, 9 of 9 = 1.00. A small sample with no failures. For context only: LL2, 99 Chinese launches 3 Nov 2025 to 20 Nov 2026, CASC vehicles 61 of 73 (84%) and commercial vehicles 17 of 26 (65%) had no day-level schedule change logged after LL2 added them 'per NOTAMs'."
+    },
+    "sources": [
+     {
+      "id": "launch-feed-2026-11-20",
+      "publisher": "The Intelligence Company, Launch (FAA NMS NOTAMs via Cordon)",
+      "url": "https://launch.theintelligence.company/data/snapshot.json",
+      "licence": "FAA data: US Government work; Launch code AGPL-3.0",
+      "descriptor": "Match of Shenzhou 24 to A6094/26 ZXXX (00:08-00:48 UTC 25 Nov) and A6095/26 ZSHA (00:08-00:50 UTC), level 'time and place', azimuths 106.2 and 102.7 deg, 506 and 1,109 NM",
+      "grade": "A2",
+      "independence_group": "notams",
+      "accessed_at": "2026-11-20T17:40:00Z",
+      "source_type": "official notice"
+     },
+     {
+      "id": "ll2-shenzhou-24",
+      "publisher": "The Space Devs, Launch Library 2",
+      "url": "https://ll.thespacedevs.com/2.3.0/launches/c9605b67-8a53-4239-a8ae-577fe3b79799/",
+      "licence": "LL2 terms (free tier, attribution)",
+      "descriptor": "NET 25 Nov 2026 00:18 UTC, net_precision Minute, window 00:08-00:48 UTC, status Go; updates 'NET November 25' (24 Oct) and 'GO for launch per NOTAMs' (20 Nov)",
+      "grade": "B2",
+      "independence_group": "notams",
+      "accessed_at": "2026-11-20T18:10:00Z",
+      "source_type": "aggregator"
+     }
+    ],
+    "visual": {
+     "type": "page",
+     "url": "https://launch.theintelligence.company/#live"
     },
     "approved_by": "Tom Brummer"
    }
