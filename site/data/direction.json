@@ -1,16 +1,141 @@
 {
  "schema": "tic-direction-record/1",
- "as_of": null,
+ "as_of": "2026-11-23T00:20:48Z",
  "what": "Each Monday COP locks one direction word per place. A word held if the layers that moved still passed COP's move test the following week, against the same baseline that earned the word.",
  "not_a_forecast": "A direction word says which measurements moved against their own recent normal. It is not a warning or a forecast and carries no probability, so this record is kept apart from the Brier score.",
  "first_week": "2026-11-23",
  "skill_min_n": 30,
  "weeks": {
-  "locked": 0,
+  "locked": 1,
   "scored": 0,
   "missed": 0
  },
- "next_score": null,
+ "next_score": "2026-12-03",
  "source": "https://raw.githubusercontent.com/metacog-osint/cop/direction-log/direction-log.jsonl",
- "rules": []
+ "rules": [
+  {
+   "rule": "1",
+   "words": {
+    "rising": {
+     "label": "Rising",
+     "new_calls": 1,
+     "continued": 0,
+     "pending": 1,
+     "void": 0,
+     "scored": 0.0,
+     "held": 0.0,
+     "faded": 0.0,
+     "reversed": 0.0,
+     "press_only": {
+      "scored": 0.0,
+      "held": 0.0
+     },
+     "with_other_layers": {
+      "scored": 0.0,
+      "held": 0.0
+     },
+     "layers": {},
+     "reference": {
+      "share": null,
+      "n": 0,
+      "basis": "Steady places where two or more layers moved this way the following week"
+     },
+     "held_share": null,
+     "skill": null,
+     "skill_withheld": "Skill is held until a word has 30 independently scored calls, a shared press series counting once."
+    },
+    "edging_up": {
+     "label": "Edging up",
+     "new_calls": 3,
+     "continued": 0,
+     "pending": 3,
+     "void": 0,
+     "scored": 0.0,
+     "held": 0.0,
+     "faded": 0.0,
+     "reversed": 0.0,
+     "press_only": {
+      "scored": 0.0,
+      "held": 0.0
+     },
+     "with_other_layers": {
+      "scored": 0.0,
+      "held": 0.0
+     },
+     "layers": {},
+     "reference": {
+      "share": null,
+      "n": 0,
+      "basis": "The same layers, in place-weeks where they had not moved"
+     },
+     "held_share": null,
+     "skill": null,
+     "skill_withheld": "Skill is held until a word has 30 independently scored calls, a shared press series counting once."
+    },
+    "easing": {
+     "label": "Easing",
+     "new_calls": 0,
+     "continued": 0,
+     "pending": 0,
+     "void": 0,
+     "scored": 0.0,
+     "held": 0.0,
+     "faded": 0.0,
+     "reversed": 0.0,
+     "press_only": {
+      "scored": 0.0,
+      "held": 0.0
+     },
+     "with_other_layers": {
+      "scored": 0.0,
+      "held": 0.0
+     },
+     "layers": {},
+     "reference": {
+      "share": null,
+      "n": 0,
+      "basis": "Steady places where two or more layers moved this way the following week"
+     },
+     "held_share": null,
+     "skill": null,
+     "skill_withheld": "Skill is held until a word has 30 independently scored calls, a shared press series counting once."
+    },
+    "edging_down": {
+     "label": "Edging down",
+     "new_calls": 0,
+     "continued": 0,
+     "pending": 0,
+     "void": 0,
+     "scored": 0.0,
+     "held": 0.0,
+     "faded": 0.0,
+     "reversed": 0.0,
+     "press_only": {
+      "scored": 0.0,
+      "held": 0.0
+     },
+     "with_other_layers": {
+      "scored": 0.0,
+      "held": 0.0
+     },
+     "layers": {},
+     "reference": {
+      "share": null,
+      "n": 0,
+      "basis": "The same layers, in place-weeks where they had not moved"
+     },
+     "held_share": null,
+     "skill": null,
+     "skill_withheld": "Skill is held until a word has 30 independently scored calls, a shared press series counting once."
+    }
+   },
+   "not_scored": {
+    "mixed": 0,
+    "steady": 13,
+    "building": 0
+   },
+   "weeks_locked": 1,
+   "weeks_followed_up": 0
+  }
+ ]
 }

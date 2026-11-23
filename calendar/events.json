@@ -1015,6 +1015,24 @@
       "added": "2026-11-19"
     },
     {
+      "id": "2026-11-23-canada-cn-update",
+      "date": "2026-11-23",
+      "title": "China: Canada's travel advice, Regional advisory modified: Risk level section – avoid non-essential travel to parts of Gyirong County",
+      "kind": "advisory_change",
+      "countries": [
+        "CN"
+      ],
+      "source": {
+        "publisher": "Global Affairs Canada (Government of Canada)",
+        "url": "https://travel.gc.ca/destinations/china",
+        "descriptor": "Canada's own update note of 2026-11-23T12:01:06Z (read by Cordon)"
+      },
+      "ref": "CN",
+      "origin": "cordon",
+      "occurred": true,
+      "added": "2026-11-23"
+    },
+    {
       "id": "2026-11-28-tw-referendum",
       "date": "2026-11-28",
       "title": "Taiwan: national referendum, case 22",
