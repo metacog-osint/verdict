@@ -271,6 +271,8 @@
     list(data.f.forecasts);
     var asof = document.getElementById("asof");
     asof.setAttribute("datetime", data.f.as_of);
+    var read = document.getElementById("read");
+    if (read) read.setAttribute("datetime", new Date().toISOString());
     T.renderAll(document);
   }
 
