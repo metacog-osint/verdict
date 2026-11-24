@@ -1033,6 +1033,42 @@
       "added": "2026-11-23"
     },
     {
+      "id": "2026-11-23-canada-sa-update",
+      "date": "2026-11-23",
+      "title": "Saudi Arabia: Canada's travel advice: Risk level section – Avoid all travel to King Abdullah Financial District, in Riyadh",
+      "kind": "advisory_change",
+      "countries": [
+        "SA"
+      ],
+      "source": {
+        "publisher": "Global Affairs Canada (Government of Canada)",
+        "url": "https://travel.gc.ca/destinations/saudi-arabia",
+        "descriptor": "Canada's own update note of 2026-11-23T21:02:05Z (read by Cordon)"
+      },
+      "ref": "SA",
+      "origin": "cordon",
+      "occurred": true,
+      "added": "2026-11-24"
+    },
+    {
+      "id": "2026-11-24-canada-cn-update",
+      "date": "2026-11-24",
+      "title": "China: Canada's travel advice, Regional advisory modified: Risk level section – avoid non-essential travel to parts of Gyirong County",
+      "kind": "advisory_change",
+      "countries": [
+        "CN"
+      ],
+      "source": {
+        "publisher": "Global Affairs Canada (Government of Canada)",
+        "url": "https://travel.gc.ca/destinations/china",
+        "descriptor": "Canada's own update note of 2026-11-24T12:20:33Z (read by Cordon)"
+      },
+      "ref": "CN",
+      "origin": "cordon",
+      "occurred": true,
+      "added": "2026-11-24"
+    },
+    {
       "id": "2026-11-28-tw-referendum",
       "date": "2026-11-28",
       "title": "Taiwan: national referendum, case 22",
@@ -1064,20 +1100,6 @@
       },
       "ref": "election:ES:legislative:single",
       "added": "2026-11-18"
-    },
-    {
-      "id": "2026-12-03-fr-2026-19537",
-      "date": "2026-12-03",
-      "title": "BIS: Measures To Restrict Stockpiling of Polysilicon and Polysilicon Derivatives Under Proclamation 11052 (date named in the rule)",
-      "kind": "rule_date",
-      "countries": [],
-      "source": {
-        "publisher": "US Federal Register (BIS)",
-        "url": "https://www.federalregister.gov/documents/2026/09/24/2026-19537/measures-to-restrict-stockpiling-of-polysilicon-and-polysilicon-derivatives-under-proclamation-11052"
-      },
-      "ref": "2026-19537",
-      "origin": "headwind",
-      "added": "2026-11-15"
     },
     {
       "id": "2026-12-04-fao-ffpi-release",
