@@ -7,6 +7,7 @@
 <meta name="description" content="The Intelligence Company's forecast record: every forecast registered here is logged before it can be known, then scored, misses left in.">
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="tic-time.css">
+<link rel="alternate" type="application/geo+json" title="Verdict feed (GeoJSON)" href="data/feed.geojson">
 <link rel="stylesheet" href="tic-nav.css">
 <script src="tic-time.js"></script>
 <script src="tic-nav.js" defer data-current="verdict"></script>
@@ -19,7 +20,6 @@
     <div class="brand"><strong>Verdict</strong><span class="muted">The Intelligence Company</span></div>
     <nav class="top-nav">
       <a href="https://theintelligence.company/">All programs</a>
-      <a href="https://github.com/metacog-osint/verdict">Ledger</a>
       <span id="time-settings"></span>
     </nav>
   </div>
@@ -104,6 +104,12 @@
   <p>A project of The Intelligence Company. Ledger updated <time id="asof" data-tic="datetime"></time>; ledger read <time id="read" data-tic="datetime"></time>.
     Code under the GNU AGPL-3.0; each forecast cites its sources. Aligned with ICD 203's analytic standards, which bind
     US intelligence agencies, not us.</p>
+  <nav class="tic-data" aria-label="Data and downloads"><span class="tic-data-k">Data and downloads</span>
+    <a href="data/feed.geojson">Feed (GeoJSON)</a>
+    <a href="data/forecasts.json">Forecasts (JSON)</a>
+    <a href="data/scores.json">Scores (JSON)</a>
+    <a href="data/calendar.geojson">Calendar (GeoJSON)</a>
+    <a href="https://github.com/metacog-osint/verdict">Source code and ledger</a></nav>
 </footer>
 <script src="app.js"></script>
 </body>
