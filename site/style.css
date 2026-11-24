@@ -30,8 +30,8 @@ a { color: var(--mark); }
   margin-bottom: var(--gap); }
 .card-head h2 { margin: 0 0 4px; font-size: 19px; }
 .card-head p { margin: 0 0 12px; }
-.two { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); }
-@media (max-width: 820px) { .two { grid-template-columns: 1fr; } }
+.two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gap); }
+@media (max-width: 820px) { .two { grid-template-columns: minmax(0, 1fr); } }
 .board-row { display: grid; grid-template-columns: minmax(0, 2.2fr) minmax(140px, 3fr) 92px; gap: 12px; align-items: center;
   padding: 7px 4px; border-top: 1px solid var(--soft); cursor: default; }
 .board-row:first-child { border-top: 0; }
@@ -59,6 +59,10 @@ a { color: var(--mark); }
 .empty { color: var(--muted); font-size: 14px; margin: 8px 0 0; }
 .scores-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-variant-numeric: tabular-nums; }
 .scores-table th, .scores-table td { text-align: left; padding: 4px 6px; border-top: 1px solid var(--soft); }
+@media (max-width: 374px) {
+  .scores-table { font-size: 12px; }
+  .scores-table th, .scores-table td { padding: 4px 3px; overflow-wrap: anywhere; }
+}
 .scores-note { color: var(--muted); margin: 8px 0 0; }
 .table-scroll { overflow-x: auto; }
 details.item { border-top: 1px solid var(--soft); padding: 8px 2px; }
