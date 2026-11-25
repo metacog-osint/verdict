@@ -91,3 +91,9 @@ details.item summary .p { font-variant-numeric: tabular-nums; font-weight: 650; 
 .tl-date { color: var(--muted); font-variant-numeric: tabular-nums; font-size: 13px; }
 .tl-title .chip { margin-left: 6px; }
 @media (max-width: 600px) { .tl-item { grid-template-columns: 22px 1fr; } .tl-title { grid-column: 2; } }
+.tic-data { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 16px; margin: 16px 0 8px; padding-top: 12px;
+  border-top: 1px solid var(--line); font-size: 0.85rem; line-height: 1.4; }
+.tic-data-k { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.tic-data a { display: inline-flex; align-items: center; min-height: 24px; color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+.tic-data a:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+@media (max-width: 760px) { .tic-data { gap: 2px 14px; } .tic-data-k { flex-basis: 100%; } }
