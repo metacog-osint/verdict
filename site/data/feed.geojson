@@ -2,7 +2,7 @@
  "type": "FeatureCollection",
  "contract": "tic-feed/2",
  "program": "verdict",
- "generated_at": "2026-11-24T00:00:00Z",
+ "generated_at": "2026-11-25T00:00:00Z",
  "licence": "Verdict (code GNU AGPL-3.0); each forecast's sources as cited",
  "attribution": "Verdict, The Intelligence Company",
  "language_key": "https://github.com/metacog-osint/tic-doctrine/blob/main/docs/language-key.md",

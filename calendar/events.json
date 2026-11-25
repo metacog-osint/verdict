@@ -1069,6 +1069,42 @@
       "added": "2026-11-24"
     },
     {
+      "id": "2026-11-25-cdc-chikungunya-honduras-new",
+      "date": "2026-11-25",
+      "title": "Chikungunya in Honduras: CDC issued a level 2 travel health notice (Practice Enhanced Precautions)",
+      "kind": "advisory_change",
+      "countries": [
+        "HN"
+      ],
+      "source": {
+        "publisher": "US Centers for Disease Control and Prevention (CDC), Travelers' Health",
+        "url": "https://wwwnc.cdc.gov/travel/notices/level2/chikungunya-honduras",
+        "descriptor": "Change detected by Cordon between two of its reads"
+      },
+      "ref": "chikungunya-honduras",
+      "origin": "cordon",
+      "occurred": true,
+      "added": "2026-11-25"
+    },
+    {
+      "id": "2026-11-25-cdc-yellow-fever-south-sudan-new",
+      "date": "2026-11-25",
+      "title": "Yellow Fever in the Republic of South Sudan: CDC issued a level 2 travel health notice (Practice Enhanced Precautions)",
+      "kind": "advisory_change",
+      "countries": [
+        "SS"
+      ],
+      "source": {
+        "publisher": "US Centers for Disease Control and Prevention (CDC), Travelers' Health",
+        "url": "https://wwwnc.cdc.gov/travel/notices/level2/yellow-fever-south-sudan",
+        "descriptor": "Change detected by Cordon between two of its reads"
+      },
+      "ref": "yellow-fever-south-sudan",
+      "origin": "cordon",
+      "occurred": true,
+      "added": "2026-11-25"
+    },
+    {
       "id": "2026-11-28-tw-referendum",
       "date": "2026-11-28",
       "title": "Taiwan: national referendum, case 22",
