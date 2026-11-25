@@ -11,6 +11,9 @@
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--ink); font-size: 16px; line-height: 1.5; }
 a { color: var(--mark); }
+.skip { position: absolute; left: -9999px; top: 8px; z-index: 100; background: var(--panel); color: var(--mark); padding: 6px 10px; border: 1px solid var(--line); border-radius: 4px; }
+.skip:focus { left: 8px; }
+.noscript { margin: 16px 0 0; padding: 10px 12px; border: 1px solid var(--line); border-radius: 6px; background: var(--panel); }
 .wrap { max-width: 72rem; margin: 0 auto; padding: 0 16px; }
 .muted { color: var(--muted); }
 .small { font-size: 14px; }

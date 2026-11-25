@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23142235'/%3E%3Ccircle cx='16' cy='16' r='9' fill='none' stroke='%23e3a83b' stroke-width='3'/%3E%3Ccircle cx='16' cy='16' r='3' fill='%23e3a83b'/%3E%3C/svg%3E">
 <title>Verdict: forecast record</title>
 <meta name="description" content="The Intelligence Company's forecast record: every forecast registered here is logged before it can be known, then scored, misses left in.">
 <link rel="stylesheet" href="style.css">
@@ -14,6 +15,7 @@
 <script src="tic-fold.js" defer></script>
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
 <header class="top">
   <div class="wrap top-row">
     <div class="brand"><strong>Verdict</strong><span class="muted">The Intelligence Company</span></div>
@@ -25,7 +27,8 @@
   </div>
 </header>
 
-<main class="wrap">
+<main id="main" class="wrap">
+  <noscript><p class="noscript">The forecast table, the scores and the time settings need JavaScript. The ledger and its data files are open without it.</p></noscript>
   <section class="hero">
     <h1>Every forecast registered here, logged before anyone could know, then scored.</h1>
     <p class="lede">Each forecast below was made public in an append-only ledger before its outcome could be known,
