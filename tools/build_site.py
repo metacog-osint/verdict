@@ -14,6 +14,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 import direction_record  # noqa: E402
+import vis_record  # noqa: E402
 import verdict  # noqa: E402
 from tic_doctrine import likelihood  # noqa: E402  (verdict put the kit on sys.path)
 
@@ -94,6 +95,7 @@ def build() -> dict[str, str]:
         "data/forecasts.json": dump({"as_of": as_of, "forecasts": rows}),
         "data/scores.json": dump(scores),
         "data/direction.json": dump(direction_record.record(ROOT)),
+        "data/vis.json": dump(vis_record.record(ROOT)),
         "data/calendar.geojson": dump(verdict.calendar_feed(ROOT, generated=as_of)),
         "data/feed.geojson": dump(feed),
     }

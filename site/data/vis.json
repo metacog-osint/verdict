@@ -1,0 +1,1406 @@
+{
+ "schema": "tic-vis-record/1",
+ "as_of": "2026-11-26T21:12:49Z",
+ "what": "Vis gives each point a daily probability of crossing an Amber and a Red threshold. Verdict joins each forecast to what the point's METARs showed that UTC day and scores it.",
+ "caveat": "Thresholds are indicative (JP 3-59 gives no numeric limits). Vis's forecasts are not official forecasts and are not for flight planning. They are model probabilities, not questions registered in this ledger, so this record is kept apart from the ledger's Brier score.",
+ "not_scored": "Rain, snow, low cloud and icing are not scored: METARs do not measure them as Vis forecasts them.",
+ "readable_when": "at least 100 forecasts and 10 observed events, at 3 or more points",
+ "first_day": "2026-11-19",
+ "observations": "METARs from the NOAA Aviation Weather Center (aviationweather.gov), US public domain",
+ "hazards": {
+  "wind": "Strong wind (gusts)",
+  "vis": "Poor visibility",
+  "heat": "Extreme heat",
+  "cold": "Extreme cold"
+ },
+ "source": "https://raw.githubusercontent.com/metacog-osint/vis/main/history/verify/",
+ "published": "https://vis.theintelligence.company/data/verification.json",
+ "syncs": 1,
+ "trend": [
+  {
+   "scored_at": "2026-11-26T21:12:49Z",
+   "last_day": "2026-11-25",
+   "resolved": 11279
+  }
+ ],
+ "latest": {
+  "first_day": "2026-11-19",
+  "last_day": "2026-11-25",
+  "counted": 22568,
+  "resolved": 11279,
+  "unresolved": 11289,
+  "unresolved_by_reason": [
+   {
+    "hazard": "cold",
+    "why": "no reports from the station",
+    "n": 1826
+   },
+   {
+    "hazard": "cold",
+    "why": "too few reports in the window",
+    "n": 512
+   },
+   {
+    "hazard": "cold",
+    "why": "window shorter than the persistence rule",
+    "n": 496
+   },
+   {
+    "hazard": "heat",
+    "why": "no reports from the station",
+    "n": 1826
+   },
+   {
+    "hazard": "heat",
+    "why": "too few reports in the window",
+    "n": 512
+   },
+   {
+    "hazard": "heat",
+    "why": "window shorter than the persistence rule",
+    "n": 496
+   },
+   {
+    "hazard": "vis",
+    "why": "no reports from the station",
+    "n": 1826
+   },
+   {
+    "hazard": "vis",
+    "why": "too few reports in the window",
+    "n": 463
+   },
+   {
+    "hazard": "vis",
+    "why": "window shorter than the persistence rule",
+    "n": 496
+   },
+   {
+    "hazard": "wind",
+    "why": "no reports from the station",
+    "n": 1826
+   },
+   {
+    "hazard": "wind",
+    "why": "too few reports in the window",
+    "n": 514
+   },
+   {
+    "hazard": "wind",
+    "why": "window shorter than the persistence rule",
+    "n": 496
+   }
+  ],
+  "stations": 31,
+  "stations_without_reports": [
+   "FZNA",
+   "HDAM",
+   "HHAS",
+   "HSPN",
+   "HSSS",
+   "OIKB",
+   "OLBA",
+   "OYHD",
+   "UKBB",
+   "UKOO",
+   "ZKPY"
+  ],
+  "cells": [
+   {
+    "hazard": "wind",
+    "level": "amber",
+    "lead_days": "all",
+    "threshold": 65.0,
+    "n": 1403,
+    "events": 0,
+    "points": 18,
+    "points_with_events": 0,
+    "brier": 0.0,
+    "base_rate": 0.0,
+    "skill": null,
+    "readable": false,
+    "reliability": [
+     {
+      "band": "Almost no chance",
+      "n": 1399,
+      "mean_p": 0.0,
+      "observed": 0.0
+     },
+     {
+      "band": "Very unlikely",
+      "n": 4,
+      "mean_p": 0.063,
+      "observed": 0.0
+     }
+    ]
+   },
+   {
+    "hazard": "wind",
+    "level": "amber",
+    "lead_days": 0,
+    "threshold": 65.0,
+    "n": 257,
+    "events": 0,
+    "points": 18,
+    "points_with_events": 0,
+    "brier": 0.0,
+    "base_rate": 0.0,
+    "skill": null,
+    "readable": false
+   },
+   {
+    "hazard": "wind",
+    "level": "amber",
+    "lead_days": 1,
+    "threshold": 65.0,
+    "n": 320,
+    "events": 0,
+    "points": 17,
+    "points_with_events": 0,
+    "brier": 0.0,
+    "base_rate": 0.0,
+    "skill": null,
+    "readable": false
+   },
+   {
+    "hazard": "wind",
+    "level": "amber",
+    "lead_days": 2,
+    "threshold": 65.0,
+    "n": 252,
+    "events": 0,
+    "points": 17,
+    "points_with_events": 0,
+    "brier": 0.0,
+    "base_rate": 0.0,
+    "skill": null,
+    "readable": false
+   },
+   {
+    "hazard": "wind",
+    "level": "amber",
+    "lead_days": 3,
+    "threshold": 65.0,
+    "n": 217,
+    "events": 0,
+    "points": 17,
+    "points_with_events": 0,
+    "brier": 0.0,
+    "base_rate": 0.0,
+    "skill": null,
+    "readable": false
+   },
+   {
+    "hazard": "wind",
+    "level": "amber",
+    "lead_days": 4,
+    "threshold": 65.0,
+    "n": 170,
+    "events": 0,
+    "points": 17,
+    "points_with_events": 0,
+    "brier": 0.0001,
+    "base_rate": 0.0,
+    "skill": null,
+    "readable": false
+   },
+   {
+    "hazard": "wind",
+    "level": "amber",
+    "lead_days": 5,
+    "threshold": 65.0,
+    "n": 119,
+    "events": 0,
+    "points": 17,
+    "points_with_events": 0,
+    "brier": 0.0,
+    "base_rate": 0.0,
+    "skill": null,
+    "readable": false
+   },
+   {
+    "hazard": "wind",
+    "level": "amber",
+    "lead_days": 6,
+    "threshold": 65.0,
+    "n": 68,
+    "events": 0,
+    "points": 17,
+    "points_with_events": 0,
+    "brier": 0.0,
+    "base_rate": 0.0,
+    "skill": null,
+    "readable": false
+   },
+   {
+    "hazard": "wind",
+    "level": "red",
+    "lead_days": "all",
+    "threshold": 90.0,
+    "n": 1403,
+    "events": 0,
+    "points": 18,
+    "points_with_events": 0,
+    "brier": 0.0,
+    "base_rate": 0.0,
+    "skill": null,
+    "readable": false,
+    "reliability": [
+     {
+      "band": "Almost no chance",
+      "n": 1403,
+      "mean_p": 0.0,
+      "observed": 0.0
+     }
+    ]
+   },
+   {
+    "hazard": "wind",
+    "level": "red",
+    "lead_days": 0,
+    "threshold": 90.0,
+    "n": 257,
+    "events": 0,
+    "points": 18,
+    "points_with_events": 0,
+    "brier": 0.0,
+    "base_rate": 0.0,
+    "skill": null,
+    "readable": false
+   },
+   {
+    "hazard": "wind",
+    "level": "red",
+    "lead_days": 1,
+    "threshold": 90.0,
+    "n": 320,
+    "events": 0,
+    "points": 17,
+    "points_with_events": 0,
+    "brier": 0.0,
+    "base_rate": 0.0,
+    "skill": null,
+    "readable": false
+   },
+   {
+    "hazard": "wind",
+    "level": "red",
+    "lead_days": 2,
+    "threshold": 90.0,
+    "n": 252,
+    "events": 0,
+    "points": 17,
+    "points_with_events": 0,
+    "brier": 0.0,
+    "base_rate": 0.0,
+    "skill": null,
+    "readable": false
+   },
+   {
+    "hazard": "wind",
+    "level": "red",
+    "lead_days": 3,
+    "threshold": 90.0,
+    "n": 217,
+    "events": 0,
+    "points": 17,
+    "points_with_events": 0,
+    "brier": 0.0,
+    "base_rate": 0.0,
+    "skill": null,
+    "readable": false
+   },
+   {
+    "hazard": "wind",
+    "level": "red",
+    "lead_days": 4,
+    "threshold": 90.0,
+    "n": 170,
+    "events": 0,
+    "points": 17,
+    "points_with_events": 0,
+    "brier": 0.0,
+    "base_rate": 0.0,
+    "skill": null,
+    "readable": false
+   },
+   {
+    "hazard": "wind",
+    "level": "red",
+    "lead_days": 5,
+    "threshold": 90.0,
+    "n": 119,
+    "events": 0,
+    "points": 17,
+    "points_with_events": 0,
+    "brier": 0.0,
+    "base_rate": 0.0,
+    "skill": null,
+    "readable": false
+   },
+   {
+    "hazard": "wind",
+    "level": "red",
+    "lead_days": 6,
+    "threshold": 90.0,
+    "n": 68,
+    "events": 0,
+    "points": 17,
+    "points_with_events": 0,
+    "brier": 0.0,
+    "base_rate": 0.0,
+    "skill": null,
+    "readable": false
+   },
+   {
+    "hazard": "vis",
+    "level": "amber",
+    "lead_days": "all",
+    "threshold": 3000.0,
+    "n": 1434,
+    "events": 152,
+    "points": 19,
+    "points_with_events": 5,
+    "brier": 0.1292,
+    "base_rate": 0.106,
+    "skill": -0.364,
+    "readable": true,
+    "reliability": [
+     {
+      "band": "Almost no chance",
+      "n": 1305,
+      "mean_p": 0.001,
+      "observed": 0.116
+     },
+     {
+      "band": "Very unlikely",
+      "n": 59,
+      "mean_p": 0.103,
+      "observed": 0.0
+     },
+     {
+      "band": "Unlikely",
+      "n": 21,
+      "mean_p": 0.332,
+      "observed": 0.0
+     },
+     {
+      "band": "Roughly even chance",
+      "n": 9,
+      "mean_p": 0.502,
+      "observed": 0.0
+     },
+     {
+      "band": "Likely",
+      "n": 17,
+      "mean_p": 0.706,
+      "observed": 0.0
+     },
+     {
+      "band": "Very likely",
+      "n": 15,
+      "mean_p": 0.888,
+      "observed": 0.0
+     },
+     {
+      "band": "Almost certain",
+      "n": 8,
+      "mean_p": 0.976,
+      "observed": 0.0
+     }
+    ]
+   },
+   {
+    "hazard": "vis",
+    "level": "amber",
+    "lead_days": 0,
+    "threshold": 3000.0,
+    "n": 259,
+    "events": 16,
+    "points": 18,
+    "points_with_events": 4,
+    "brier": 0.0748,
+    "base_rate": 0.0618,
+    "skill": -0.291,
+    "readable": true,
+    "reliability": [
+     {
+      "band": "Almost no chance",
+      "n": 248,
+      "mean_p": 0.0,
+      "observed": 0.065
+     },
+     {
+      "band": "Very unlikely",
+      "n": 5,
+      "mean_p": 0.078,
+      "observed": 0.0
+     },
+     {
+      "band": "Unlikely",
+      "n": 1,
+      "mean_p": 0.258,
+      "observed": 0.0
+     },
+     {
+      "band": "Roughly even chance",
+      "n": 1,
+      "mean_p": 0.516,
+      "observed": 0.0
+     },
+     {
+      "band": "Likely",
+      "n": 2,
+      "mean_p": 0.774,
+      "observed": 0.0
+     },
+     {
+      "band": "Very likely",
+      "n": 1,
+      "mean_p": 0.903,
+      "observed": 0.0
+     },
+     {
+      "band": "Almost certain",
+      "n": 1,
+      "mean_p": 1.0,
+      "observed": 0.0
+     }
+    ]
+   },
+   {
+    "hazard": "vis",
+    "level": "amber",
+    "lead_days": 1,
+    "threshold": 3000.0,
+    "n": 327,
+    "events": 31,
+    "points": 18,
+    "points_with_events": 5,
+    "brier": 0.113,
+    "base_rate": 0.0948,
+    "skill": -0.317,
+    "readable": true,
+    "reliability": [
+     {
+      "band": "Almost no chance",
+      "n": 304,
+      "mean_p": 0.001,
+      "observed": 0.102
+     },
+     {
+      "band": "Very unlikely",
+      "n": 11,
+      "mean_p": 0.091,
+      "observed": 0.0
+     },
+     {
+      "band": "Unlikely",
+      "n": 4,
+      "mean_p": 0.355,
+      "observed": 0.0
+     },
+     {
+      "band": "Roughly even chance",
+      "n": 3,
+      "mean_p": 0.505,
+      "observed": 0.0
+     },
+     {
+      "band": "Very likely",
+      "n": 2,
+      "mean_p": 0.919,
+      "observed": 0.0
+     },
+     {
+      "band": "Almost certain",
+      "n": 3,
+      "mean_p": 0.979,
+      "observed": 0.0
+     }
+    ]
+   },
+   {
+    "hazard": "vis",
+    "level": "amber",
+    "lead_days": 2,
+    "threshold": 3000.0,
+    "n": 257,
+    "events": 25,
+    "points": 18,
+    "points_with_events": 5,
+    "brier": 0.1248,
+    "base_rate": 0.0973,
+    "skill": -0.421,
+    "readable": true,
+    "reliability": [
+     {
+      "band": "Almost no chance",
+      "n": 234,
+      "mean_p": 0.001,
+      "observed": 0.107
+     },
+     {
+      "band": "Very unlikely",
+      "n": 9,
+      "mean_p": 0.118,
+      "observed": 0.0
+     },
+     {
+      "band": "Unlikely",
+      "n": 4,
+      "mean_p": 0.306,
+      "observed": 0.0
+     },
+     {
+      "band": "Roughly even chance",
+      "n": 2,
+      "mean_p": 0.532,
+      "observed": 0.0
+     },
+     {
+      "band": "Likely",
+      "n": 2,
+      "mean_p": 0.645,
+      "observed": 0.0
+     },
+     {
+      "band": "Very likely",
+      "n": 3,
+      "mean_p": 0.892,
+      "observed": 0.0
+     },
+     {
+      "band": "Almost certain",
+      "n": 3,
+      "mean_p": 0.968,
+      "observed": 0.0
+     }
+    ]
+   },
+   {
+    "hazard": "vis",
+    "level": "amber",
+    "lead_days": 3,
+    "threshold": 3000.0,
+    "n": 224,
+    "events": 25,
+    "points": 18,
+    "points_with_events": 5,
+    "brier": 0.1486,
+    "base_rate": 0.1116,
+    "skill": -0.499,
+    "readable": true,
+    "reliability": [
+     {
+      "band": "Almost no chance",
+      "n": 199,
+      "mean_p": 0.001,
+      "observed": 0.126
+     },
+     {
+      "band": "Very unlikely",
+      "n": 9,
+      "mean_p": 0.104,
+      "observed": 0.0
+     },
+     {
+      "band": "Unlikely",
+      "n": 4,
+      "mean_p": 0.331,
+      "observed": 0.0
+     },
+     {
+      "band": "Roughly even chance",
+      "n": 2,
+      "mean_p": 0.468,
+      "observed": 0.0
+     },
+     {
+      "band": "Likely",
+      "n": 4,
+      "mean_p": 0.75,
+      "observed": 0.0
+     },
+     {
+      "band": "Very likely",
+      "n": 5,
+      "mean_p": 0.903,
+      "observed": 0.0
+     },
+     {
+      "band": "Almost certain",
+      "n": 1,
+      "mean_p": 0.968,
+      "observed": 0.0
+     }
+    ]
+   },
+   {
+    "hazard": "vis",
+    "level": "amber",
+    "lead_days": 4,
+    "threshold": 3000.0,
+    "n": 173,
+    "events": 22,
+    "points": 18,
+    "points_with_events": 5,
+    "brier": 0.1595,
+    "base_rate": 0.1272,
+    "skill": -0.437,
+    "readable": true,
+    "reliability": [
+     {
+      "band": "Almost no chance",
+      "n": 150,
+      "mean_p": 0.001,
+      "observed": 0.147
+     },
+     {
+      "band": "Very unlikely",
+      "n": 12,
+      "mean_p": 0.126,
+      "observed": 0.0
+     },
+     {
+      "band": "Unlikely",
+      "n": 1,
+      "mean_p": 0.226,
+      "observed": 0.0
+     },
+     {
+      "band": "Roughly even chance",
+      "n": 1,
+      "mean_p": 0.484,
+      "observed": 0.0
+     },
+     {
+      "band": "Likely",
+      "n": 6,
+      "mean_p": 0.688,
+      "observed": 0.0
+     },
+     {
+      "band": "Very likely",
+      "n": 3,
+      "mean_p": 0.86,
+      "observed": 0.0
+     }
+    ]
+   },
+   {
+    "hazard": "vis",
+    "level": "amber",
+    "lead_days": 5,
+    "threshold": 3000.0,
+    "n": 122,
+    "events": 21,
+    "points": 18,
+    "points_with_events": 5,
+    "brier": 0.1924,
+    "base_rate": 0.1721,
+    "skill": -0.35,
+    "readable": true,
+    "reliability": [
+     {
+      "band": "Almost no chance",
+      "n": 108,
+      "mean_p": 0.002,
+      "observed": 0.194
+     },
+     {
+      "band": "Very unlikely",
+      "n": 7,
+      "mean_p": 0.102,
+      "observed": 0.0
+     },
+     {
+      "band": "Unlikely",
+      "n": 3,
+      "mean_p": 0.355,
+      "observed": 0.0
+     },
+     {
+      "band": "Likely",
+      "n": 3,
+      "mean_p": 0.677,
+      "observed": 0.0
+     },
+     {
+      "band": "Very likely",
+      "n": 1,
+      "mean_p": 0.806,
+      "observed": 0.0
+     }
+    ]
+   },
+   {
+    "hazard": "vis",
+    "level": "amber",
+    "lead_days": 6,
+    "threshold": 3000.0,
+    "n": 72,
+    "events": 12,
+    "points": 18,
+    "points_with_events": 3,
+    "brier": 0.1746,
+    "base_rate": 0.1667,
+    "skill": null,
+    "readable": false
+   },
+   {
+    "hazard": "vis",
+    "level": "red",
+    "lead_days": "all",
+    "threshold": 1000.0,
+    "n": 1423,
+    "events": 19,
+    "points": 19,
+    "points_with_events": 1,
+    "brier": 0.0296,
+    "base_rate": 0.0134,
+    "skill": null,
+    "readable": false,
+    "reliability": [
+     {
+      "band": "Almost no chance",
+      "n": 1336,
+      "mean_p": 0.001,
+      "observed": 0.014
+     },
+     {
+      "band": "Very unlikely",
+      "n": 37,
+      "mean_p": 0.113,
+      "observed": 0.0
+     },
+     {
+      "band": "Unlikely",
+      "n": 9,
+      "mean_p": 0.298,
+      "observed": 0.0
+     },
+     {
+      "band": "Roughly even chance",
+      "n": 10,
+      "mean_p": 0.478,
+      "observed": 0.0
+     },
+     {
+      "band": "Likely",
+      "n": 15,
+      "mean_p": 0.684,
+      "observed": 0.0
+     },
+     {
+      "band": "Very likely",
+      "n": 14,
+      "mean_p": 0.864,
+      "observed": 0.0
+     },
+     {
+      "band": "Almost certain",
+      "n": 2,
+      "mean_p": 0.968,
+      "observed": 0.0
+     }
+    ]
+   },
+   {
+    "hazard": "vis",
+    "level": "red",
+    "lead_days": 0,
+    "threshold": 1000.0,
+    "n": 258,
+    "events": 0,
+    "points": 18,
+    "points_with_events": 0,
+    "brier": 0.0096,
+    "base_rate": 0.0,
+    "skill": null,
+    "readable": false
+   },
+   {
+    "hazard": "vis",
+    "level": "red",
+    "lead_days": 1,
+    "threshold": 1000.0,
+    "n": 324,
+    "events": 4,
+    "points": 18,
+    "points_with_events": 1,
+    "brier": 0.0269,
+    "base_rate": 0.0123,
+    "skill": null,
+    "readable": false
+   },
+   {
+    "hazard": "vis",
+    "level": "red",
+    "lead_days": 2,
+    "threshold": 1000.0,
+    "n": 254,
+    "events": 2,
+    "points": 18,
+    "points_with_events": 1,
+    "brier": 0.0301,
+    "base_rate": 0.0079,
+    "skill": null,
+    "readable": false
+   },
+   {
+    "hazard": "vis",
+    "level": "red",
+    "lead_days": 3,
+    "threshold": 1000.0,
+    "n": 220,
+    "events": 3,
+    "points": 18,
+    "points_with_events": 1,
+    "brier": 0.0409,
+    "base_rate": 0.0136,
+    "skill": null,
+    "readable": false
+   },
+   {
+    "hazard": "vis",
+    "level": "red",
+    "lead_days": 4,
+    "threshold": 1000.0,
+    "n": 173,
+    "events": 3,
+    "points": 18,
+    "points_with_events": 1,
+    "brier": 0.0361,
+    "base_rate": 0.0173,
+    "skill": null,
+    "readable": false
+   },
+   {
+    "hazard": "vis",
+    "level": "red",
+    "lead_days": 5,
+    "threshold": 1000.0,
+    "n": 122,
+    "events": 3,
+    "points": 18,
+    "points_with_events": 1,
+    "brier": 0.0324,
+    "base_rate": 0.0246,
+    "skill": null,
+    "readable": false
+   },
+   {
+    "hazard": "vis",
+    "level": "red",
+    "lead_days": 6,
+    "threshold": 1000.0,
+    "n": 72,
+    "events": 4,
+    "points": 18,
+    "points_with_events": 1,
+    "brier": 0.0568,
+    "base_rate": 0.0556,
+    "skill": null,
+    "readable": false
+   },
+   {
+    "hazard": "heat",
+    "level": "amber",
+    "lead_days": "all",
+    "threshold": 40.0,
+    "n": 1404,
+    "events": 0,
+    "points": 18,
+    "points_with_events": 0,
+    "brier": 0.0,
+    "base_rate": 0.0,
+    "skill": null,
+    "readable": false,
+    "reliability": [
+     {
+      "band": "Almost no chance",
+      "n": 1404,
+      "mean_p": 0.0,
+      "observed": 0.0
+     }
+    ]
+   },
+   {
+    "hazard": "heat",
+    "level": "amber",
+    "lead_days": 0,
+    "threshold": 40.0,
+    "n": 258,
+    "events": 0,
+    "points": 18,
+    "points_with_events": 0,
+    "brier": 0.0,
+    "base_rate": 0.0,
+    "skill": null,
+    "readable": false
+   },
+   {
+    "hazard": "heat",
+    "level": "amber",
+    "lead_days": 1,
+    "threshold": 40.0,
+    "n": 320,
+    "events": 0,
+    "points": 17,
+    "points_with_events": 0,
+    "brier": 0.0,
+    "base_rate": 0.0,
+    "skill": null,
+    "readable": false
+   },
+   {
+    "hazard": "heat",
+    "level": "amber",
+    "lead_days": 2,
+    "threshold": 40.0,
+    "n": 252,
+    "events": 0,
+    "points": 17,
+    "points_with_events": 0,
+    "brier": 0.0,
+    "base_rate": 0.0,
+    "skill": null,
+    "readable": false
+   },
+   {
+    "hazard": "heat",
+    "level": "amber",
+    "lead_days": 3,
+    "threshold": 40.0,
+    "n": 217,
+    "events": 0,
+    "points": 17,
+    "points_with_events": 0,
+    "brier": 0.0,
+    "base_rate": 0.0,
+    "skill": null,
+    "readable": false
+   },
+   {
+    "hazard": "heat",
+    "level": "amber",
+    "lead_days": 4,
+    "threshold": 40.0,
+    "n": 170,
+    "events": 0,
+    "points": 17,
+    "points_with_events": 0,
+    "brier": 0.0,
+    "base_rate": 0.0,
+    "skill": null,
+    "readable": false
+   },
+   {
+    "hazard": "heat",
+    "level": "amber",
+    "lead_days": 5,
+    "threshold": 40.0,
+    "n": 119,
+    "events": 0,
+    "points": 17,
+    "points_with_events": 0,
+    "brier": 0.0,
+    "base_rate": 0.0,
+    "skill": null,
+    "readable": false
+   },
+   {
+    "hazard": "heat",
+    "level": "amber",
+    "lead_days": 6,
+    "threshold": 40.0,
+    "n": 68,
+    "events": 0,
+    "points": 17,
+    "points_with_events": 0,
+    "brier": 0.0,
+    "base_rate": 0.0,
+    "skill": null,
+    "readable": false
+   },
+   {
+    "hazard": "heat",
+    "level": "red",
+    "lead_days": "all",
+    "threshold": 45.0,
+    "n": 1404,
+    "events": 0,
+    "points": 18,
+    "points_with_events": 0,
+    "brier": 0.0,
+    "base_rate": 0.0,
+    "skill": null,
+    "readable": false,
+    "reliability": [
+     {
+      "band": "Almost no chance",
+      "n": 1404,
+      "mean_p": 0.0,
+      "observed": 0.0
+     }
+    ]
+   },
+   {
+    "hazard": "heat",
+    "level": "red",
+    "lead_days": 0,
+    "threshold": 45.0,
+    "n": 258,
+    "events": 0,
+    "points": 18,
+    "points_with_events": 0,
+    "brier": 0.0,
+    "base_rate": 0.0,
+    "skill": null,
+    "readable": false
+   },
+   {
+    "hazard": "heat",
+    "level": "red",
+    "lead_days": 1,
+    "threshold": 45.0,
+    "n": 320,
+    "events": 0,
+    "points": 17,
+    "points_with_events": 0,
+    "brier": 0.0,
+    "base_rate": 0.0,
+    "skill": null,
+    "readable": false
+   },
+   {
+    "hazard": "heat",
+    "level": "red",
+    "lead_days": 2,
+    "threshold": 45.0,
+    "n": 252,
+    "events": 0,
+    "points": 17,
+    "points_with_events": 0,
+    "brier": 0.0,
+    "base_rate": 0.0,
+    "skill": null,
+    "readable": false
+   },
+   {
+    "hazard": "heat",
+    "level": "red",
+    "lead_days": 3,
+    "threshold": 45.0,
+    "n": 217,
+    "events": 0,
+    "points": 17,
+    "points_with_events": 0,
+    "brier": 0.0,
+    "base_rate": 0.0,
+    "skill": null,
+    "readable": false
+   },
+   {
+    "hazard": "heat",
+    "level": "red",
+    "lead_days": 4,
+    "threshold": 45.0,
+    "n": 170,
+    "events": 0,
+    "points": 17,
+    "points_with_events": 0,
+    "brier": 0.0,
+    "base_rate": 0.0,
+    "skill": null,
+    "readable": false
+   },
+   {
+    "hazard": "heat",
+    "level": "red",
+    "lead_days": 5,
+    "threshold": 45.0,
+    "n": 119,
+    "events": 0,
+    "points": 17,
+    "points_with_events": 0,
+    "brier": 0.0,
+    "base_rate": 0.0,
+    "skill": null,
+    "readable": false
+   },
+   {
+    "hazard": "heat",
+    "level": "red",
+    "lead_days": 6,
+    "threshold": 45.0,
+    "n": 68,
+    "events": 0,
+    "points": 17,
+    "points_with_events": 0,
+    "brier": 0.0,
+    "base_rate": 0.0,
+    "skill": null,
+    "readable": false
+   },
+   {
+    "hazard": "cold",
+    "level": "amber",
+    "lead_days": "all",
+    "threshold": -15.0,
+    "n": 1404,
+    "events": 0,
+    "points": 18,
+    "points_with_events": 0,
+    "brier": 0.0,
+    "base_rate": 0.0,
+    "skill": null,
+    "readable": false,
+    "reliability": [
+     {
+      "band": "Almost no chance",
+      "n": 1404,
+      "mean_p": 0.0,
+      "observed": 0.0
+     }
+    ]
+   },
+   {
+    "hazard": "cold",
+    "level": "amber",
+    "lead_days": 0,
+    "threshold": -15.0,
+    "n": 258,
+    "events": 0,
+    "points": 18,
+    "points_with_events": 0,
+    "brier": 0.0,
+    "base_rate": 0.0,
+    "skill": null,
+    "readable": false
+   },
+   {
+    "hazard": "cold",
+    "level": "amber",
+    "lead_days": 1,
+    "threshold": -15.0,
+    "n": 320,
+    "events": 0,
+    "points": 17,
+    "points_with_events": 0,
+    "brier": 0.0,
+    "base_rate": 0.0,
+    "skill": null,
+    "readable": false
+   },
+   {
+    "hazard": "cold",
+    "level": "amber",
+    "lead_days": 2,
+    "threshold": -15.0,
+    "n": 252,
+    "events": 0,
+    "points": 17,
+    "points_with_events": 0,
+    "brier": 0.0,
+    "base_rate": 0.0,
+    "skill": null,
+    "readable": false
+   },
+   {
+    "hazard": "cold",
+    "level": "amber",
+    "lead_days": 3,
+    "threshold": -15.0,
+    "n": 217,
+    "events": 0,
+    "points": 17,
+    "points_with_events": 0,
+    "brier": 0.0,
+    "base_rate": 0.0,
+    "skill": null,
+    "readable": false
+   },
+   {
+    "hazard": "cold",
+    "level": "amber",
+    "lead_days": 4,
+    "threshold": -15.0,
+    "n": 170,
+    "events": 0,
+    "points": 17,
+    "points_with_events": 0,
+    "brier": 0.0,
+    "base_rate": 0.0,
+    "skill": null,
+    "readable": false
+   },
+   {
+    "hazard": "cold",
+    "level": "amber",
+    "lead_days": 5,
+    "threshold": -15.0,
+    "n": 119,
+    "events": 0,
+    "points": 17,
+    "points_with_events": 0,
+    "brier": 0.0,
+    "base_rate": 0.0,
+    "skill": null,
+    "readable": false
+   },
+   {
+    "hazard": "cold",
+    "level": "amber",
+    "lead_days": 6,
+    "threshold": -15.0,
+    "n": 68,
+    "events": 0,
+    "points": 17,
+    "points_with_events": 0,
+    "brier": 0.0,
+    "base_rate": 0.0,
+    "skill": null,
+    "readable": false
+   },
+   {
+    "hazard": "cold",
+    "level": "red",
+    "lead_days": "all",
+    "threshold": -25.0,
+    "n": 1404,
+    "events": 0,
+    "points": 18,
+    "points_with_events": 0,
+    "brier": 0.0,
+    "base_rate": 0.0,
+    "skill": null,
+    "readable": false,
+    "reliability": [
+     {
+      "band": "Almost no chance",
+      "n": 1404,
+      "mean_p": 0.0,
+      "observed": 0.0
+     }
+    ]
+   },
+   {
+    "hazard": "cold",
+    "level": "red",
+    "lead_days": 0,
+    "threshold": -25.0,
+    "n": 258,
+    "events": 0,
+    "points": 18,
+    "points_with_events": 0,
+    "brier": 0.0,
+    "base_rate": 0.0,
+    "skill": null,
+    "readable": false
+   },
+   {
+    "hazard": "cold",
+    "level": "red",
+    "lead_days": 1,
+    "threshold": -25.0,
+    "n": 320,
+    "events": 0,
+    "points": 17,
+    "points_with_events": 0,
+    "brier": 0.0,
+    "base_rate": 0.0,
+    "skill": null,
+    "readable": false
+   },
+   {
+    "hazard": "cold",
+    "level": "red",
+    "lead_days": 2,
+    "threshold": -25.0,
+    "n": 252,
+    "events": 0,
+    "points": 17,
+    "points_with_events": 0,
+    "brier": 0.0,
+    "base_rate": 0.0,
+    "skill": null,
+    "readable": false
+   },
+   {
+    "hazard": "cold",
+    "level": "red",
+    "lead_days": 3,
+    "threshold": -25.0,
+    "n": 217,
+    "events": 0,
+    "points": 17,
+    "points_with_events": 0,
+    "brier": 0.0,
+    "base_rate": 0.0,
+    "skill": null,
+    "readable": false
+   },
+   {
+    "hazard": "cold",
+    "level": "red",
+    "lead_days": 4,
+    "threshold": -25.0,
+    "n": 170,
+    "events": 0,
+    "points": 17,
+    "points_with_events": 0,
+    "brier": 0.0,
+    "base_rate": 0.0,
+    "skill": null,
+    "readable": false
+   },
+   {
+    "hazard": "cold",
+    "level": "red",
+    "lead_days": 5,
+    "threshold": -25.0,
+    "n": 119,
+    "events": 0,
+    "points": 17,
+    "points_with_events": 0,
+    "brier": 0.0,
+    "base_rate": 0.0,
+    "skill": null,
+    "readable": false
+   },
+   {
+    "hazard": "cold",
+    "level": "red",
+    "lead_days": 6,
+    "threshold": -25.0,
+    "n": 68,
+    "events": 0,
+    "points": 17,
+    "points_with_events": 0,
+    "brier": 0.0,
+    "base_rate": 0.0,
+    "skill": null,
+    "readable": false
+   }
+  ],
+  "vis_published": {
+   "read": true,
+   "generated_at": "2026-11-26T20:26:57Z",
+   "same_store": true,
+   "agrees": true,
+   "differences": []
+  },
+  "stores": {
+   "pairs": {
+    "lines": 4154,
+    "sha256": "cebc87d4b1f4a5c0712684f7cd9db166b9202b63f0ca4c46168e1220cc33799b"
+   },
+   "observed": {
+    "lines": 1023,
+    "sha256": "37ec81d7e5f3e47e652d6d85c274e3c443050013d0d216ac6652c1ca2178958c"
+   }
+  }
+ }
+}
