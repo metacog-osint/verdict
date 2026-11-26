@@ -80,6 +80,23 @@
       locked log</a>.</p>
   </section>
 
+  <section class="card" aria-labelledby="vis-h">
+    <div class="card-head">
+      <h2 id="vis-h">Vis's weather forecasts, scored</h2>
+      <p class="muted small"><a href="https://vis.theintelligence.company/">Vis</a> gives each point a daily
+        probability of reaching an Amber and a Red threshold. Verdict joins each forecast to what the point's METARs
+        showed that UTC day, scores it with its own code, and checks its figures against Vis's. An event is the
+        threshold reached on two consecutive 3-hourly steps.</p>
+    </div>
+    <div id="vis-record" class="small"></div>
+    <p class="scores-note small">Thresholds are indicative (JP 3-59 gives no numeric limits). Vis's forecasts are not
+      official forecasts and are not for flight planning. They are model probabilities, not questions registered in
+      this ledger, so this record is kept apart from the Brier score above. Rain, snow, low cloud and icing are not
+      scored: METARs do not measure them as Vis forecasts them. Observations: METARs from the NOAA Aviation Weather
+      Center (aviationweather.gov), US public domain.
+      <a href="https://github.com/metacog-osint/verdict/blob/main/ledger/vis-skill.jsonl">The scoring log</a>.</p>
+  </section>
+
   <section class="card" aria-labelledby="list-h">
     <div class="card-head"><h2 id="list-h">The ledger in full</h2></div>
     <div id="list" data-tic-fold></div>
@@ -112,6 +129,7 @@
     <a href="data/forecasts.json">Forecasts (JSON)</a>
     <a href="data/scores.json">Scores (JSON)</a>
     <a href="data/calendar.geojson">Calendar (GeoJSON)</a>
+    <a href="data/vis.json">Vis scores (JSON)</a>
     <a href="https://github.com/metacog-osint/verdict">Source code and ledger</a></nav>
 </footer>
 <script src="app.js"></script>
