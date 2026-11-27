@@ -63,6 +63,18 @@ def program_entry(pid: str) -> dict:
     return next((p for p in registry()["programs"] if p["id"] == pid), {})
 
 
+def layers() -> list[dict]:
+    """The seven layers of the operational environment, top to bottom, as the hub draws them (kit 0.6.18):
+    [{key, name, short?}]."""
+    return registry()["layers"]["values"]
+
+
+def program_layer(pid: str) -> str | None:
+    """A program's one home layer: a key from layers(), "all" for a program that reads every layer (COP, Verdict),
+    or None for a program outside the drawing or not in the registry (kit 0.6.18)."""
+    return program_entry(pid).get("layer")
+
+
 def _iso(d: datetime) -> str:
     return d.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
