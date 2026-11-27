@@ -1,6 +1,6 @@
 {
  "schema": "tic-direction-record/1",
- "as_of": "2026-11-23T00:20:48Z",
+ "as_of": "2026-11-27T16:17:07Z",
  "what": "Each Monday COP locks one direction word per place. A word held if the layers that moved still passed COP's move test the following week, against the same baseline that earned the word.",
  "not_a_forecast": "A direction word says which measurements moved against their own recent normal. It is not a warning or a forecast and carries no probability, so this record is kept apart from the Brier score.",
  "first_week": "2026-11-23",
