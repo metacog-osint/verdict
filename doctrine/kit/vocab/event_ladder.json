@@ -1,0 +1,39 @@
+{
+  "vocab": "event_ladder",
+  "version": "1",
+  "basis": "Kit 0.6.13 (27 Nov 2026): docs/event-ladder.md. Event reports only; measurements and judgments are outside the ladder.",
+  "url": "https://github.com/metacog-osint/tic-doctrine/blob/main/docs/event-ladder.md",
+  "rule": {
+    "id": "ladder-1",
+    "text": "ladder-1: a report is a lead until a reviewer confirms it or it is verified by two independent origins, an official source within its own remit, or a published geolocation; a party's claims and state media count as one origin per government and never verify or raise an item alone"
+  },
+  "states": [
+    {"id": "lead", "step": 1, "label": "Lead",
+     "meaning": "Reported by one origin and screened into scope, but not checked. Read it as reported, not as fact."},
+    {"id": "confirmed", "step": 2, "label": "Confirmed",
+     "meaning": "A reviewer judged it a real event within scope. It still rests on one origin: nothing independent has checked it."},
+    {"id": "verified", "step": 3, "label": "Verified",
+     "meaning": "Checked independently: two or more independent origins, an official source within its own remit, or a published geolocation."}
+  ],
+  "earlier_names": {"reported": "lead", "corroborated": "verified"},
+  "basis_labels": {
+    "origins": "independent origins",
+    "official": "an official source within its own remit",
+    "geolocation": "a published geolocation"
+  },
+  "claim_labels": {
+    "party_claim": {"label": "Party claim", "meaning": "Rests only on a party to the conflict describing its own action or an adversary's loss. It raises nothing on its own."},
+    "state_media": {"label": "State media", "meaning": "Rests only on media a state owns or controls. It raises nothing on its own."}
+  },
+  "coverage": {
+    "format": "tic-coverage/1",
+    "rule": "several: 3 or more independent groups; few: 1 or 2; no_independent: none, but sources were read and set aside or not counted; none: not monitored",
+    "not_counted_source_types": ["suite_program", "derived", "model", "machine summary"],
+    "classes": [
+      {"id": "several", "label": "Several independent sources", "min": 3, "max": null},
+      {"id": "few", "label": "One or two sources", "min": 1, "max": 2},
+      {"id": "none", "label": "Not monitored", "min": 0, "max": 0},
+      {"id": "no_independent", "label": "No independent source", "min": 0, "max": 0, "uncounted": true}
+    ]
+  }
+}
