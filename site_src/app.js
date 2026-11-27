@@ -262,8 +262,63 @@
     })));
   }
 
+  /* Vis's forecasts against METARs (tools/vis_record.py): Brier, base rate and skill by hazard and level, with lead
+   * days and reliability folded below. Skill shows only where a row meets Vis's readable rule. */
+  var VIS_UNITS = { wind: " km/h", vis: " m", heat: " °C", cold: " °C" };
+  var VIS_DIR = { wind: "≥ ", vis: "≤ ", heat: "≥ ", cold: "≤ " };
+  function visRecord(v) {
+    var box = document.getElementById("vis-record");
+    if (!v) { box.replaceChildren(h("p", { "class": "empty" }, ["The Vis record could not be loaded."])); return; }
+    var x = v.latest;
+    if (!x) { box.replaceChildren(h("p", { "class": "empty" }, ["Vis's forecasts have not been scored yet."])); return; }
+    function n(k) { return Number(k).toLocaleString("en-GB"); }
+    function f3(k) { return k == null ? "—" : k.toFixed(3); }
+    function thr(c) { return c.threshold == null ? "—" : VIS_DIR[c.hazard] + n(c.threshold) + VIS_UNITS[c.hazard]; }
+    function name(c) { return (v.hazards[c.hazard] || c.hazard) + ", " + (c.level === "red" ? "Red" : "Amber"); }
+    function skill(c) { return c.readable ? (c.skill == null ? "—" : c.skill.toFixed(2)) : c.n ? "too few to read" : "—"; }
+    function row(c, first) {
+      return h("tr", null, [h("th", { scope: "row" }, [first]), h("td", null, [thr(c)]), h("td", null, [n(c.n)]),
+        h("td", null, [n(c.events) + (c.events ? " at " + c.points_with_events + (c.points_with_events === 1 ? " point" : " points") : "")]),
+        h("td", null, [f3(c.brier)]), h("td", null, [c.base_rate == null ? "—" : pct(c.base_rate)]), h("td", null, [skill(c)])]);
+    }
+    function table(head, rows) {
+      return h("div", { "class": "table-scroll" }, [h("table", { "class": "scores-table" }, [h("thead", null, [h("tr", null,
+        head.map(function (t) { return h("th", { scope: "col" }, [t]); }))]), h("tbody", null, rows)])]);
+    }
+    var head = ["Hazard", "Threshold", "Forecasts", "Events", "Brier", "Base rate", "Skill"];
+    var all = x.cells.filter(function (c) { return c.lead_days === "all"; });
+    var leadRows = x.cells.filter(function (c) { return c.lead_days !== "all"; }).map(function (c) {
+      return row(c, name(c) + ", day " + c.lead_days); });
+    var rel = x.cells.filter(function (c) { return c.reliability && c.events > 0; }).map(function (c) {
+      return h("p", { "class": "scores-note" }, [name(c) + (c.lead_days === "all" ? ", all lead days: " : ", day " + c.lead_days + ": ") +
+        c.reliability.map(function (b) { return b.band + ", " + n(b.n) + " forecasts, mean " + pct(b.mean_p) + ", observed " +
+          pct(b.observed); }).join("; ") + "."]);
+    });
+    var none = x.stations_without_reports || [];
+    var pub = x.vis_published || {};
+    var agree = !pub.read ? "Vis's own figures could not be read at this sync, so they were not compared."
+      : pub.same_store === false ? "Vis's own figures were built from a different copy of the stores, so they were not compared."
+      : pub.agrees ? "Verdict's figures match Vis's own, published " + when(pub.generated_at) + "."
+      : "Verdict's figures differ from Vis's own: " + pub.differences.join("; ") + ".";
+    box.replaceChildren(
+      h("p", null, ["Days " + day(x.first_day) + " to " + day(x.last_day) + " (UTC): " + n(x.resolved) + " of " + n(x.counted) +
+        " forecasts resolved, one per model run. " + none.length + " of " + x.stations + " stations sent no reports" +
+        (none.length ? " (" + none.join(", ") + "); their forecasts stay unresolved and are never filled in" : "") +
+        ". Scored " + when(v.as_of) + "."]),
+      table(head, all.map(function (c) { return row(c, name(c)); })),
+      h("p", { "class": "scores-note" }, ["Brier: 0 is perfect. Skill: against always forecasting the sample's own frequency " +
+        "(above 0 is better, below 0 worse). A row is read only with " + v.readable_when + ", so one station cannot decide it."]),
+      h("p", { "class": "scores-note" }, [agree]),
+      h("details", null, [h("summary", null, ["By lead day"]), table(head, leadRows)]),
+      h("details", null, [h("summary", null, ["Reliability, rows with events"])].concat(rel.length ? rel :
+        [h("p", { "class": "scores-note" }, ["No event has been observed yet."])])),
+      h("details", null, [h("summary", null, ["Why forecasts are unresolved"]), h("ul", null, x.unresolved_by_reason.map(function (u) {
+        return h("li", null, [(v.hazards[u.hazard] || u.hazard) + ": " + u.why + ", " + n(u.n)]); }))]));
+  }
+
   function render(data) {
     directionRecord(data.d);
+    visRecord(data.v);
     tiles(data.f.forecasts, data.s);
     board(data.f.forecasts);
     calibration(data.f.forecasts, data.s);
@@ -271,17 +326,20 @@
     list(data.f.forecasts);
     var asof = document.getElementById("asof");
     asof.setAttribute("datetime", data.f.as_of);
+    var read = document.getElementById("read");
+    if (read) read.setAttribute("datetime", new Date().toISOString());
     T.renderAll(document);
   }
 
   T.mountSettings(document.getElementById("time-settings"));
-  var directionData = fetch("data/direction.json", { cache: "no-cache" }).then(function (r) {
-    return r.ok ? r.json() : null;
-  }).catch(function () { return null; });
+  function optional(u) {
+    return fetch(u, { cache: "no-cache" }).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
+  }
+  var directionData = optional("data/direction.json"), visData = optional("data/vis.json");
   Promise.all(["data/forecasts.json", "data/scores.json", "data/calendar.geojson"].map(function (u) {
     return fetch(u, { cache: "no-cache" }).then(function (r) { if (!r.ok) throw new Error(u + " " + r.status); return r.json(); });
-  }).concat([directionData])).then(function (d) {
-    var data = { f: d[0], s: d[1], c: d[2], d: d[3] };
+  }).concat([directionData, visData])).then(function (d) {
+    var data = { f: d[0], s: d[1], c: d[2], d: d[3], v: d[4] };
     render(data);
     T.onChange(function () { render(data); });
   }).catch(function (e) {
