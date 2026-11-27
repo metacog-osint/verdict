@@ -3,7 +3,7 @@
  "as_of": "2026-11-27T13:20:34Z",
  "what": "Vis gives each point a daily probability of crossing an Amber and a Red threshold. Verdict joins each forecast to what the point's METARs showed that UTC day and scores it.",
  "caveat": "Thresholds are indicative (JP 3-59 gives no numeric limits). Vis's forecasts are not official forecasts and are not for flight planning. They are model probabilities, not questions registered in this ledger, so this record is kept apart from the ledger's Brier score.",
- "not_scored": "Rain, snow, low cloud and icing are not scored: METARs do not measure them as Vis forecasts them.",
+ "not_scored": "Rain, snow, low cloud cover and icing are not scored: METARs do not measure them as Vis forecasts them. Vis's low ceiling trial (from 27 Nov 2026) is scored by Vis against METAR ceilings, not by this record.",
  "readable_when": "at least 100 forecasts and 10 observed events, at 3 or more points",
  "first_day": "2026-11-19",
  "observations": "METARs from the NOAA Aviation Weather Center (aviationweather.gov), US public domain",
