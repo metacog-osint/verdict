@@ -43,7 +43,9 @@ FIRST_DAY = "2026-11-19"  # Vis stored no forecast before this day
 SCORED = ("wind", "vis", "heat", "cold")
 LEVELS = ("amber", "red")
 HAZARDS = {"wind": "Strong wind (gusts)", "vis": "Poor visibility", "heat": "Extreme heat", "cold": "Extreme cold"}
-NOT_SCORED = ("Rain, snow, low cloud and icing are not scored: METARs do not measure them as Vis forecasts them.")
+NOT_SCORED = ("Rain, snow, low cloud cover and icing are not scored: METARs do not measure them as Vis forecasts "
+              "them. Vis's low ceiling trial (from 27 Nov 2026) is scored by Vis against METAR ceilings, not by "
+              "this record.")
 # Vis's own rule for a row it will call readable (tools/verify.py READ_MIN_*). Verdict applies it to its own counts.
 READ_MIN_N, READ_MIN_EVENTS, READ_MIN_POINTS = 100, 10, 3
 READABLE_WHEN = (f"at least {READ_MIN_N} forecasts and {READ_MIN_EVENTS} observed events, at {READ_MIN_POINTS} or "
