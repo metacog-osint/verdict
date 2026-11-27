@@ -1,0 +1,12 @@
+.call { max-width: 52rem; padding-bottom: 32px; }
+.call h1 { font-size: clamp(24px, 4vw, 32px); line-height: 1.2; margin: 28px 0 8px; }
+.call h2 { font-size: 20px; margin: 0 0 8px; }
+.call h3 { font-size: 16px; margin: 16px 0 4px; }
+.call ul { margin: 0; padding-left: 20px; }
+.call li { margin-bottom: 4px; }
+.unsigned { color: var(--muted); font-style: italic; margin: 0; }
+.call-q { border-top: 1px solid var(--line); padding: 12px 0; }
+.call-q p { margin: 0 0 4px; }
+.call-q-title { font-weight: 600; }
+.call-q-num { font-variant-numeric: tabular-nums; }
+.credits { margin-top: 16px; }
